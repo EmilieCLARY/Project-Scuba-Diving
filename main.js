@@ -1,9 +1,8 @@
-const express = require('express')
-const multer = require('multer')
-const app = express()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
-
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const path = require("path");
 const session = require('express-session')({
     secret: "eb8fcc253281389225b4f7872f2336918ddc7f689e1fc41b64d5c4f378cdc438",
     resave: true,
@@ -14,12 +13,16 @@ const session = require('express-session')({
     }
 });
 const sharedsession = require("express-socket.io-session");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const {body, validationResult} = require('express-validator');
 
-const MongoClient = require('mongodb').MongoClient;
-const { GridFSBucket } = require('mongodb')
-const fs = require('fs')
-const port = 3000
+const jsonParser = bodyParser.json();
+//const urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+app.use(jsonParser);
+app.use(express.static(path.join(__dirname, "front")));
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session);
 
 const BDD = require('./back/bdd/bdd.js');
 
@@ -27,17 +30,14 @@ const BDD = require('./back/bdd/bdd.js');
 //BDD.getAllDivers();
 BDD.sizeBDD();
 
+io.use(
+    sharedsession(session, {
+        autoSave: true
+    })
+);
 
-app.use(express.static(__dirname + '/front/'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(session)
-app.use('/image', express.static('image'))
-
-
-
-io.use(sharedsession(session, {
-    autoSave: true
-}));
+const hostname = 'localhost';
+const port = 3000;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/front/html/index.html');
@@ -70,14 +70,20 @@ app.get('/admin', (req, res) => {
 /*                                   SOCKET                                   */
 /* -------------------------------------------------------------------------- */
 io.on('connection', (socket) =>{
-    console.log('a user connected');
+    console.log('User connected');
 
+    socket.on('getAllDiveSites', () => {
+        BDD.getAllDiveSites((tabDiveSites) => {
+            socket.emit('receiveAllDiveSites', tabDiveSites);
+            console.log("BDD : All dive sites sent to client.");
+        });
+    });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('User disconnected');
     });
 });
 
 http.listen(port, () => {
-    console.log("Server launched on port " + port);
+    console.log("Server launched on port " + "http://"+ hostname + ":" + port);
 })

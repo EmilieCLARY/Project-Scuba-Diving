@@ -4,7 +4,7 @@ var db;
 
 // open the database
 async function openDB(){
-    console.time("Connection to data base");
+    console.time("BDD : Connection to data base");
     try {
         db = await new sqlite3.Database('ScubaDB', (err) => {
             console.log('Connected to the database.');
@@ -13,7 +13,7 @@ async function openDB(){
                 if(err) {
                     return console.log(err.message); 
                 }
-                console.log('Row was added to the table: ${this.lastID}');
+                console.log('BDD : Row was added to the table: ${this.lastID}');
                 });
             });
     }
@@ -21,18 +21,17 @@ async function openDB(){
         console.log(err);
     }
     finally {
-		console.timeEnd("Connection to data base");
+		console.timeEnd("BDD : Connection to data base");
 	}
 }
 // close the database
 async function closeDB(){
-    console.time("Connection to data base");
     try {
         await db.close((err) => {
             if (err) {
                 console.error(err.message);
             }
-            console.log('Close the database connection.');
+            console.log('BDD : Close the database connection.');
         });
     }
     catch (err) {
@@ -46,7 +45,7 @@ function insertInDB(){
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
+        console.log('BDD : Connected to the database.');
     });
 
     // Diver
@@ -74,18 +73,18 @@ function insertInDB(){
         if (err) {
             console.error(err.message);
         }
-        console.log('Close the database connection.');
+        console.log('BDD : Close the database connection.');
     });
     
 }
 
 // Récupérer toutes les informations de la bdd
-function getAllDivers(){
+function getAllDiveSites(callback){
     db = new sqlite3.Database('./back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
+        console.log('BDD : Connected to the database.');
     });
 
     let sql = `SELECT * FROM Dive_Site`;
@@ -93,17 +92,19 @@ function getAllDivers(){
         if (err) {
             throw err;
         }
+        let tab = [];
         rows.forEach((row) => {
-        console.log(row);
-        return row;
+            //console.log(row);
+            tab.push(row);
         });
+        callback(tab);
     });
 
     db.close((err) => {
         if (err) {
             console.error(err.message);
         }
-        console.log('Close the database connection.');
+        console.log('BDD : Close the database connection.');
     });
     
 }
@@ -113,7 +114,7 @@ function sizeBDD(){
         if (err) {
             console.error(err.message);
         }
-        console.log('Connected to the database.');
+        console.log('BDD : Connected to the database.');
     });
 
     // Compter le nombre de ligne dans la table Dive_Site
@@ -134,6 +135,6 @@ module.exports = {
     openDB,
     closeDB,
     insertInDB,
-    getAllDivers,
+    getAllDiveSites,
     sizeBDD
 }
