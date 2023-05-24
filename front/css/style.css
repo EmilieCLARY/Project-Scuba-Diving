@@ -1,0 +1,135 @@
+@font-face {
+    font-family: 'Catamaran';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/catamaran/v17/o-0bIpQoyXQa2RxT7-5B6Ryxs2E_6n1iPHjd1ak.ttf) format('truetype');
+}
+
+a {
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: #231F20;
+    justify-content: center;
+    
+}
+
+body {
+  width:100%;
+  background-color: #f1f0ff;
+  color: #231F20;
+  font-family: 'Catamaran', sans-serif;
+  font-size: 2.5vh;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* --------_ Navbar _-------- */
+
+nav {
+    background-color: #c1c0ff;
+    position: fixed;
+
+}
+
+nav .navbar {
+  display: flex;
+  flex-direction: row;
+  background-color: none;
+  width: 100vw;
+  align-items: center;
+  height: 13vh;
+}
+
+
+nav .navbar .logo-main {
+  width: 10vw;
+}
+
+nav .navbar .logo-main img {
+    height: 10.4vh;
+    width: 12.06vh;  
+    margin-left: 1vw;
+    justify-self: center;
+}
+
+nav .navbar .nav-center {
+  width: 25vw;
+  margin-left: 55vw;
+}
+
+nav .navbar .nav-center .nav-name {
+  align-self: flex-end;
+}
+
+nav .navbar .login-container {
+  width: 10vw;
+}
+
+nav .navbar .login-container i {
+    padding: 0 3vw;
+    color: #231F20;
+    font-size: 2.5vh;
+}
+
+
+/* --------_ Containers Homepage _-------- */
+
+.home-list-container {
+  width  : 100vw;
+  background : lightblue;
+  display: flex;
+  flex-direction: column;
+  padding-top: 13vh;
+}
+
+.home-list-container .home-list-item {
+  width: 50vw;
+  height: 20vh;
+  background-color: #a1a0f9;
+  margin: 2vh 0 2vh 0;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  border-radius: 2vw;
+}
+
+.home-list-container .reversed {
+    flex-direction: row-reverse;
+}
+
+.home-list-container .reversed img{
+    border-radius: 0 2vw 2vw 0;
+}
+
+.home-list-item img{
+    width: 20vh;
+    height: 20vh;
+    border-radius: 2vw 0 0 2vw;
+}
+
+.home-list-item p {
+    padding: 0 2vw;
+    align-self: center;
+}
+
+/* --------_ Scrollbar _-------- */
+
+/* width */
+::-webkit-scrollbar {
+  width: 0;
+}
+
+/* --------_ Profile page _-------- */
+
+/*.profile-container .menu-container{
+  width  : 100vw;
+  background : lightblue;
+  display: flex;
+  flex-direction: column;
+  padding-top: 13vh;
+}*/
