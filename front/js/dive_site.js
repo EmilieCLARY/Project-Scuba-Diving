@@ -118,31 +118,38 @@ class dive_site {
     }
 }
 
-function create_element() {
-    // Création de l'affichage des sites de plongée
-    let ul = document.getElementById("liste_dive_site");
-    let bdd_length = 5;
-    
-    // Parcourir le tableau d'éléments et créer des <li> pour chaque élément
-    for (let i = 0; i < bdd_length; i++) {
-        // Créer un nouvel élément <li>
-        let li = document.createElement("li");
-
-        // Définir le texte de l'élément <li> en utilisant l'élément correspondant du tableau
-        li.appendChild(document.createTextNode("test\n"));
-
-        // Ajouter l'élément <li> à l'élément <ul>
-        ul.appendChild(li);
-    }
-}
-
 function LoadAllDiveSites(tab){
     tab.forEach(element => {
         let tmp = new dive_site(element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL);
         tabDiveSites.push(tmp);
     });
     console.log(tabDiveSites);
+    create_elements(tabDiveSites);
+}
 
+function create_elements(tab_dive_sites) {
+    // Création de l'affichage des sites de plongée
+    let container = document.getElementById("liste_dive_site");;
+    console.log(tab_dive_sites)
+    // Parcourir le tableau d'éléments et créer des <li> pour chaque élément
+    for (let i = 0; i < tab_dive_sites.length; i++) {
+        // Créer un nouvel élément div
+        let div = document.createElement('div');
+
+        if(i%2 == 0){ div.classList.add("dive-site-list-item");}
+        else{ div.classList.add("dive-site-list-item");
+            div.classList.add("reversed");}
+    
+            div.innerHTML = tab_dive_sites[i].get_site_name() + "<br>" + tab_dive_sites[i].get_track_type() + " " + tab_dive_sites[i].get_track_number() + " " + tab_dive_sites[i].get_track_name() + "<br>" + tab_dive_sites[i].get_zip_code() + " " + tab_dive_sites[i].get_city() + "<br>" + tab_dive_sites[i].get_country() + "<br>" + tab_dive_sites[i].get_aditionnal_info() + "<br>" + tab_dive_sites[i].get_telephone() + "<br>" + tab_dive_sites[i].get_url() + "<br>" + tab_dive_sites[i].get_gps_latitude() + " " + tab_dive_sites[i].get_gps_longitude() + "<br>" + "<br>";
+        // Ajouter du contenu ou des styles si nécessaire
+        for(let element of tab_dive_sites){
+            console.log(element);
+            div.innerHTML = element.get_site_name() + "<br>" + element.get_track_type() + " " + element.get_track_number() + " " + element.get_track_name() + "<br>" + element.get_zip_code() + " " + element.get_city() + "<br>" + element.get_country() + "<br>" + element.get_aditionnal_info() + "<br>" + element.get_telephone() + "<br>" + element.get_url() + "<br>" + element.get_gps_latitude() + " " + element.get_gps_longitude() + "<br>" + "<br>";
+        }
+
+        // Ajouter la div à l'élément parent
+        container.appendChild(div);
+    }
 }
 
 export default {

@@ -133,3 +133,43 @@ nav .navbar .login-container i {
   flex-direction: column;
   padding-top: 13vh;
 }*/
+
+
+/* --------_ Dive_site page _-------- */
+.dive-site-list-container {
+  width  : 100vw;
+  background : lightblue;
+  display: flex;
+  flex-direction: column;
+  padding-top: 13vh;
+}
+
+.dive-site-list-container .dive-site-list-item {
+  width: 50vw;
+  height: auto;
+  background-color: #a1a0f9;
+  margin: 2vh 0 2vh 0;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  border-radius: 2vw;
+}
+
+.dive-site-list-container .dive-site-list-item-reversed {
+    flex-direction: row-reverse;
+}
+
+.dive-site-list-container .dive-site-list-item-reversed img{
+    border-radius: 0 2vw 2vw 0;
+}
+
+.dive-site-list-item img{
+    width: 20vh;
+    height: 20vh;
+    border-radius: 2vw 0 0 2vw;
+}
+
+.dive-site-list-item p {
+    padding: 0 2vw;
+    align-self: center;
+}

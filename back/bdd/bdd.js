@@ -78,7 +78,7 @@ function insertInDB(){
     
 }
 
-// Récupérer toutes les informations de la bdd
+// get all the dive sites from the database and return them in a tab
 function getAllDiveSites(callback){
     db = new sqlite3.Database('./back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
@@ -109,7 +109,8 @@ function getAllDiveSites(callback){
     
 }
 
-function sizeBDD(){
+// get all the divers from the database and return them in a tab
+function getAllDivers(callback){
     db = new sqlite3.Database('./back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -117,17 +118,26 @@ function sizeBDD(){
         console.log('BDD : Connected to the database.');
     });
 
-    // Compter le nombre de ligne dans la table Dive_Site
-    let sql = `SELECT COUNT(*) FROM Dive_Site`;
+    let sql = `SELECT * FROM Diver`;
     db.all(sql, [], (err, rows) => {
         if (err) {
             throw err;
         }
+        let tab = [];
         rows.forEach((row) => {
-        console.log(row);
-        return row;
+            //console.log(row);
+            tab.push(row);
         });
-    });    
+        callback(tab);
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+    
 }
 
 // export the functions
@@ -136,5 +146,5 @@ module.exports = {
     closeDB,
     insertInDB,
     getAllDiveSites,
-    sizeBDD
+    getAllDivers,
 }

@@ -28,7 +28,7 @@ const BDD = require('./back/bdd/bdd.js');
 
 //BDD.insertInDB();
 //BDD.getAllDivers();
-BDD.sizeBDD();
+//BDD.sizeBDD();
 
 io.use(
     sharedsession(session, {
@@ -37,7 +37,7 @@ io.use(
 );
 
 const hostname = 'localhost';
-const port = 3000;
+const port = 5000;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/front/html/index.html');
@@ -56,6 +56,10 @@ app.get('/dive_site', (req, res) => {
     res.sendFile(__dirname + '/front/html/dive_site.html');
 })
 
+app.get('/diver', (req, res) => {
+    res.sendFile(__dirname + '/front/html/diver.html');
+})
+
 app.get('/admin', (req, res) => {
     if(req.session.loggedIn === true){
         res.sendFile(__dirname + '/front/html/admin.html')
@@ -70,7 +74,7 @@ app.get('/admin', (req, res) => {
 /*                                   SOCKET                                   */
 /* -------------------------------------------------------------------------- */
 io.on('connection', (socket) =>{
-    console.log('User connected');
+    console.log('SOCKET : User connected');
 
     socket.on('getAllDiveSites', () => {
         BDD.getAllDiveSites((tabDiveSites) => {
@@ -79,8 +83,15 @@ io.on('connection', (socket) =>{
         });
     });
 
+    socket.on('getAllDivers', () => {
+        BDD.getAllDivers((tabDivers) => {
+            socket.emit('receiveAllDivers', tabDivers);
+            console.log("BDD : All divers sent to client.");
+        });
+    });
+
     socket.on('disconnect', () => {
-        console.log('User disconnected');
+        console.log('SOCKET : User disconnected');
     });
 });
 
