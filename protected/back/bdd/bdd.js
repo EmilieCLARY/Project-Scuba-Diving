@@ -1,5 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
 
+var fs = require('fs');
+
 var db;
 
 // open the database
@@ -41,7 +43,7 @@ async function closeDB(){
 
 // insert a row into the database à la mano
 function insertInDB(){
-    db = new sqlite3.Database('./back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
         }
@@ -68,6 +70,43 @@ function insertInDB(){
         console.log('Row was added to the table');
     });*/
 
+    
+    // Test Insert Image:
+/*    let imageData = fs.readFileSync('./protected/front/img/boat.jpg');
+    let sql = `INSERT INTO Tmp_Image(Image) VALUES(?)`;
+    db.run(sql, [imageData], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('Row was added to the table');
+    });
+*/
+
+    // Test Sortir Image:
+    /*let query = `SELECT * FROM Tmp_Image`;
+    db.get(query, [], (err, row) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        else if(row) {
+            let imageData = row.Image;
+            let blob = new Blob([imageData], {type: "image/jpeg"});
+
+            let imgElement = document.createElement("img");
+            imgElement.src = URL.createObjectURL(blob);
+
+            let imageContainer = document.getElementById("imageContainer");
+            imageContainer.appendChild(imgElement);
+
+            console.log(blob);
+        }
+        else {
+            console.log("No image found"); 
+        }
+
+    });*/
+
+    
     
     db.close((err) => {
         if (err) {
@@ -208,15 +247,43 @@ function createEmergencyInDB(sos_number, emergency_plan, post_accident_procedure
         }
         console.log('BDD : Close the database connection.');
     });
+
     
 }
+
+function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_dive_price, instructor_dive_price, diver_price, instructor_price, dive_site_id_dive_site) {
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `INSERT INTO Planned_Dive(Id_Planned_Dive, Planned_Date, Planned_Time, Comment, Special_Needs, Status, Diver_Dive_Price, Instructor_Dive_Price, Diver_Price, Instructor_Price, Dive_Site_Id_Dive_Site)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?)`;
+
+    db.run(sql, [id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_dive_price, instructor_dive_price, diver_price, instructor_price, dive_site_id_dive_site], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('Planned dive was added to the table');
+    });
+    
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
 
 /*********************************************************************/
 /*                           GET FUNCTIONS                           */
 /*********************************************************************/
 
-// get all the dive sites from the database and return them in a tab
-function getAllDiveSites(callback){
+function getFromDB(callback, info) {
+    let sql;
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -224,16 +291,46 @@ function getAllDiveSites(callback){
         console.log('BDD : Connected to the database.');
     });
 
-    let sql = `SELECT * FROM Dive_Site`;
+    switch(info) {
+        case 'Dive_Site':
+            sql = `SELECT * FROM Dive_Site`;
+            break;
+
+        case 'Dive_Team':
+            sql = `SELECT * FROM Dive_Team`;
+            break;
+
+        case 'Dive':
+            sql = `SELECT * FROM Dive`;
+            break;
+
+        case 'Diver':
+            sql = `SELECT * FROM Diver`;
+            break;
+
+        case 'Emergency':
+            sql = `SELECT * FROM Emergency`;
+            break;
+
+        case 'Planned_Dive':
+            sql = `SELECT * FROM Planned_Dive`;
+            break;
+
+        default:
+            console.log('BDD : Error in getFromDB');
+            break;
+    }
+        
+        
     db.all(sql, [], (err, rows) => {
-        if (err) {
-            throw err;
-        }
+        if (err) { throw err;}
+
         let tab = [];
         rows.forEach((row) => {
             //console.log(row);
             tab.push(row);
         });
+        
         callback(tab);
     });
 
@@ -243,37 +340,7 @@ function getAllDiveSites(callback){
         }
         console.log('BDD : Close the database connection.');
     });
-    
-}
 
-// get all the divers from the database and return them in a tab
-function getAllDivers(callback){
-    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('BDD : Connected to the database.');
-    });
-
-    let sql = `SELECT * FROM Diver`;
-    db.all(sql, [], (err, rows) => {
-        if (err) {
-            throw err;
-        }
-        let tab = [];
-        rows.forEach((row) => {
-            //console.log(row);
-            tab.push(row);
-        });
-        callback(tab);
-    });
-
-    db.close((err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('BDD : Close the database connection.');
-    });
 }
 
 // export the functions
@@ -284,11 +351,13 @@ module.exports = {
     insertInDB, // à la mano
 
     // Get functions
-    getAllDiveSites,
-    getAllDivers,
+    getFromDB,
 
     // Creation functions
     createDiverInDB,
     createDiveSiteInDB,
-    
+    createPlannedDiveInDB,
+    createDiveInDB,
+    createDiveTeamInDB,
+    createEmergencyInDB
 }

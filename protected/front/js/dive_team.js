@@ -1,5 +1,11 @@
-// Classe privée pour une palanquée
+import SocketManager from './SocketManager/SocketDiveTeam.js'
 
+SocketManager.getAllDiveTeams();
+
+let tabDiveTeams = [];
+
+
+// Classe privée pour une palanquée
 class dive_team {
     constructor() {
         this.max_depth = max_depth;

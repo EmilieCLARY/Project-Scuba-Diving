@@ -19,11 +19,8 @@ const bodyParser = require('body-parser');
 const {body, validationResult} = require('express-validator');
 
 const jsonParser = bodyParser.json();
-//const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(jsonParser);
-//app.use(express.static(path.join(__dirname, "front")));
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session);
 const passport = require("passport");
 const appID = require("ibmcloud-appid");
@@ -32,17 +29,6 @@ const WebAppStrategy = appID.WebAppStrategy;
 
 const CALLBACK_URL = "/ibm/cloud/appid/callback";
 const port = process.env.PORT || 3000;
-
-//app.use(session({
-//	secret: "eb8fcc253281389225b4f7872f2336918ddc7f689e1fc41b64d5c4f378cdc438",
-//	resave: true,
-//	saveUninitialized: true,
-//	proxy: true,
-//    cookie: {
-//        maxAge: 2 * 60 * 60 * 1000,
-//        secure: false
-//    }
-//}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -98,6 +84,7 @@ const BDD = require('./protected/back/bdd/bdd.js');
 //BDD.getAllDivers();
 //BDD.sizeBDD();
 
+
 io.use(
     sharedsession(session, {
         autoSave: true
@@ -143,17 +130,49 @@ io.on('connection', (socket) =>{
     console.log('SOCKET : User connected');
 
     socket.on('getAllDiveSites', () => {
-        BDD.getAllDiveSites((tabDiveSites) => {
+        BDD.getFromDB((tabDiveSites) => {
             socket.emit('receiveAllDiveSites', tabDiveSites);
             console.log("BDD : All dive sites sent to client.");
-        });
+        }, "Dive_Site");
     });
 
     socket.on('getAllDivers', () => {
-        BDD.getAllDivers((tabDivers) => {
+        BDD.getFromDB((tabDivers) => {
             socket.emit('receiveAllDivers', tabDivers);
             console.log("BDD : All divers sent to client.");
-        });
+        }, "Diver");
+    });
+
+    socket.on('getAllDives', () => {
+        BDD.getFromDB((tabDives) => {
+            socket.emit('receiveAllDives', tabDives);
+            console.log("BDD : All dives sent to client.");
+        }, "Dive");
+    });
+
+    socket.on('getAllDiveTeams', () => {
+        BDD.getFromDB((tabDiveTeams) => {
+            socket.emit('receiveAllDiveTeams', tabDiveTeams);
+            console.log("BDD : All dive teams sent to client.");
+        }, "Dive_Team");
+    });
+
+    socket.on('getAllEmergencies', () => {
+        BDD.getFromDB((tabEmergencies) => {
+            socket.emit('receiveAllEmergencies', tabEmergencies);
+            console.log("BDD : All emergencies sent to client.");
+        }, "Emergency");
+    });
+
+    socket.on('getAllPlannedDives', () => {
+        BDD.getFromDB((tabPlannedDives) => {
+            socket.emit('receiveAllPlannedDives', tabPlannedDives);
+            console.log("BDD : All planned dives sent to client.");
+        }, "Planned_Dive");
+    });
+
+    socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {
+        BDD.createDiverInDB(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     });
 
     socket.on('disconnect', () => {

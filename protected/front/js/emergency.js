@@ -1,3 +1,9 @@
+import SocketManager from './SocketManager/SocketEmergency.js'
+
+SocketManager.getAllEmergencies();
+
+let tabEmergencies = [];
+
 // Classe privée de plan d'urgence
 
 class emergency {

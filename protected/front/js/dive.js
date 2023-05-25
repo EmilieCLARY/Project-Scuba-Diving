@@ -1,3 +1,10 @@
+import SocketManager from './SocketManager/SocketDives.js'
+
+SocketManager.getAllDives();
+
+let tabDives = [];
+
+
 // Classe privée de plongée
 
 class dive {

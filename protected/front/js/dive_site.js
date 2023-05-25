@@ -138,7 +138,7 @@ function create_elements(tab_dive_sites) {
         siteElement.classList.add("dive-site-list-item");
 
         let siteElementTop = document.createElement('div');
-        siteElementTop.classList.add("dive-site-list-item-top");
+        siteElementTop.classList.add("top-part");
         let siteElementTopName = document.createElement('h1');
         siteElementTopName.innerHTML = tab_dive_sites[i].get_site_name();
         siteElementTop.appendChild(siteElementTopName);
@@ -148,14 +148,20 @@ function create_elements(tab_dive_sites) {
         siteElement.appendChild(siteElementTop);
 
         let siteElementBottom = document.createElement('div');
-        siteElementBottom.classList.add("dive-site-list-item-bottom");
+        siteElementBottom.classList.add("bottom-part");
         let siteElementBottomInfo = document.createElement('div');
-        siteElementBottomInfo.classList.add("dive-site-list-item-bottom-info");
-        let siteElementBottomInfoTrack = document.createElement('p');
-        siteElementBottomInfoTrack.innerHTML = tab_dive_sites[i].get_track_type() + " " + tab_dive_sites[i].get_track_number() + " " + tab_dive_sites[i].get_track_name();
-        siteElementBottomInfo.appendChild(siteElementBottomInfoTrack);
+        siteElementBottomInfo.classList.add("bottom-left");
+        let siteElementBottomInfoTrackType = document.createElement('p');
+        siteElementBottomInfoTrackType.innerHTML = tab_dive_sites[i].get_track_type();
+        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackType);
+        let siteElementBottomInfoTrackName = document.createElement('p');
+        siteElementBottomInfoTrackName.innerHTML = tab_dive_sites[i].get_track_name();
+        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackName);
+        let siteElementBottomInfoTrackNumber = document.createElement('p');
+        siteElementBottomInfoTrackNumber.innerHTML = tab_dive_sites[i].get_track_number();
+        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackNumber);
         let siteElementBottomContact = document.createElement('div');
-        siteElementBottomContact.classList.add("dive-site-list-item-bottom-contact");
+        siteElementBottomContact.classList.add("bottom-right");
         let siteElementBottomContactTel = document.createElement('p');
         siteElementBottomContactTel.innerHTML = tab_dive_sites[i].get_telephone();
         siteElementBottomContact.appendChild(siteElementBottomContactTel);
@@ -166,10 +172,13 @@ function create_elements(tab_dive_sites) {
         siteElementBottom.appendChild(siteElementBottomContact);
         siteElement.appendChild(siteElementBottom);
 
+        let siteElementHoverContainer = document.createElement('div');
+        siteElementHoverContainer.classList.add("hover-container");
         let siteElementHover = document.createElement('div');
-        siteElementHover.classList.add("dive-site-list-item-hover");
+        siteElementHover.classList.add("hover-div");
+        siteElementHoverContainer.appendChild(siteElementHover);
         let siteElementHoverTop = document.createElement('div');
-        siteElementHoverTop.classList.add("dive-site-list-item-hover-top");
+        siteElementHoverTop.classList.add("top-part");
         let siteElementHoverTopCity = document.createElement('h1');
         siteElementHoverTopCity.innerHTML = tab_dive_sites[i].get_city() + ", " + tab_dive_sites[i].get_zip_code();
         siteElementHoverTop.appendChild(siteElementHoverTopCity);
@@ -178,9 +187,13 @@ function create_elements(tab_dive_sites) {
         siteElementHoverTop.appendChild(siteElementHoverTopCountry);
         siteElementHover.appendChild(siteElementHoverTop);
         let siteElementHoverBottom = document.createElement('div');
-        siteElementHoverBottom.classList.add("dive-site-list-item-hover-bottom");
+        siteElementHoverBottom.classList.add("bottom-part");
+        let siteElementHoverBottomMap = document.createElement('div');
+        siteElementHoverBottomMap.classList.add("map");
+        siteElementHoverBottomMap.innerHTML = "Map";
+        siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
         let siteElementHoverBottomLocation = document.createElement('div');
-        siteElementHoverBottomLocation.classList.add("dive-site-list-item-hover-bottom-Location");
+        siteElementHoverBottomLocation.classList.add("location");
         let siteElementHoverBottomLocationZip = document.createElement('p');
         siteElementHoverBottomLocationZip.innerHTML = tab_dive_sites[i].get_zip_code();
         siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationZip);
@@ -191,11 +204,9 @@ function create_elements(tab_dive_sites) {
         siteElementHoverBottomLocationPosition.innerHTML = tab_dive_sites[i].get_gps_latitude() + " " + tab_dive_sites[i].get_gps_longitude();
         siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationPosition);
         siteElementHoverBottom.appendChild(siteElementHoverBottomLocation);
-        let siteElementHoverBottomMap = document.createElement('p');
-        siteElementHoverBottomMap.innerHTML = "Map";
-        siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
+        
         siteElementHover.appendChild(siteElementHoverBottom);
-        siteElement.appendChild(siteElementHover);
+        siteElementBottom.appendChild(siteElementHoverContainer);
         
 
 

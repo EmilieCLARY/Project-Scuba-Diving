@@ -1,3 +1,9 @@
+import SocketManager from './SocketManager/SocketPlannedDive.js'
+
+SocketManager.getAllPlannedDives();
+
+let tabPlannedDives = [];
+
 // Classe privée planned_dives
 
 class planned_dives {

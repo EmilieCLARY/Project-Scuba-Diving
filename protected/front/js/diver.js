@@ -111,6 +111,46 @@ function LoadAllDivers(tab){
     console.log(tabDivers);
 }
 
+document.getElementById("validate").addEventListener("click", (e) => {
+    // Get all input
+    let first_name = document.getElementById("diver-firstname").value;
+    let last_name = document.getElementById("diver-lastname").value;
+    let diver_qualification = document.getElementById("diver-qualification").value;
+    let instructor_qualification = document.getElementById("diver-instructor-qualification").value;
+    let nox_level = document.getElementById("diver-nox-level").value;
+    let additionnal_qualification = document.getElementById("diver-additionnal-qualification").value;
+    let licence_number = document.getElementById("diver-license-number").value;
+    let licence_expiration_date = document.getElementById("diver-license-expiration-date").value;
+    let medical_certificate_expiration_date = document.getElementById("diver-medical-certificate-expiration-date").value;
+    let birth_date = document.getElementById("diver-birthdate").value;
+
+    // Send to server
+    let id = tabDivers.length+1;
+    SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+    console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+
+    // Clear all input
+    document.getElementById("diver-firstname").value = "";
+    document.getElementById("diver-lastname").value = "";
+    document.getElementById("diver-qualification").value = "";
+    document.getElementById("diver-instructor-qualification").value = "";
+    document.getElementById("diver-nox-level").value = "";
+    document.getElementById("diver-additionnal-qualification").value = "";
+    document.getElementById("diver-license-number").value = "";
+    document.getElementById("diver-license-expiration-date").value = "";
+    document.getElementById("diver-medical-certificate-expiration-date").value = "";
+    document.getElementById("diver-birthdate").value = "";
+
+    updateDiver();//PB async
+});
+
+function updateDiver(){
+    tabDivers = [];
+    SocketManager.getAllDivers();
+}
+
+
+
 export default {
     LoadAllDivers,
 }
