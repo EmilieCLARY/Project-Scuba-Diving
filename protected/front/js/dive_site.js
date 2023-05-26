@@ -343,7 +343,7 @@ function updateDiveSite(){
     SocketManager.getAllDiveSites();
 }
 
-window.initMap = initMap;
+//window.initMap = initMap;
 
 export default {
     LoadAllDiveSites,
