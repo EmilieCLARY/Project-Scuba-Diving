@@ -146,7 +146,7 @@ document.getElementById("validate").addEventListener("click", (e) => {
 
 function updateDiver(){
     tabDivers = [];
-    SocketManager.getAllDivers();
+    SocketManager.getAllDivers(); //boules
 }
 
 
