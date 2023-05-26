@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="/protected/front/css/style.css" />
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap">
+    </script>
     <title>Scuba-Diving Manager</title>
 </head>
 <body>
@@ -14,7 +17,7 @@
         <div class="navbar">
             <span class="logo-main">
                 <a href="/protected/protected.html">
-                   <img src="/protected/front/img/logo.jpg" alt="logo" onclick="location.href='/';" style="cursor: pointer;"/>
+                    <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
                 </a>
             </span>
             <span class="nav-center">
@@ -31,6 +34,86 @@
     <div class="dive-site-list-container" id = "liste_dive_site">
 
 
+    </div>
+
+    <div id="teeeeeest"></div>
+
+    <div class="form-dive-site-container">
+        <div class="form-dive-site-title">
+            <h1>Create a new dive site</h1>
+        </div>
+        <div class="form-dive-site-input">
+            <!-- Dive Site name text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-name">Dive site name</label>
+                <input type="text" id="dive-site-name" name="dive-site-name" placeholder="Dive site name" required>
+            </div>
+            <!-- GPS Latitude text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-gps-latitude">GPS Latitude</label>
+                <input type="text" id="dive-site-gps-latitude" name="dive-site-gps-latitude" placeholder="GPS Latitude" required>
+            </div>
+            <!-- GPS Longitude text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-gps-longitude">GPS Longitude</label>
+                <input type="text" id="dive-site-gps-longitude" name="dive-site-gps-longitude" placeholder="GPS Longitude" required>
+            </div>
+            <!-- Track type text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-track-type">Track type</label>
+                <input type="text" id="dive-site-track-type" name="dive-site-track-type" placeholder="Track type" required>
+            </div>
+            <!-- Track number text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-track-number">Track number</label>
+                <input type="text" id="dive-site-track-number" name="dive-site-track-number" placeholder="Track number" required>
+            </div>
+            <!-- Track name text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-track-name">Track name</label>
+                <input type="text" id="dive-site-track-name" name="dive-site-track-name" placeholder="Track name" required>
+            </div>
+            <!-- Zip code text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-zip-code">Zip code</label>
+                <input type="text" id="dive-site-zip-code" name="dive-site-zip-code" placeholder="Zip code" required>
+            </div>
+            <!-- City text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-city">City</label>
+                <input type="text" id="dive-site-city" name="dive-site-city" placeholder="City" required>
+            </div>
+            <!-- Country text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-country">Country</label>
+                <input type="text" id="dive-site-country" name="dive-site-country" placeholder="Country" required>
+            </div>
+            <!-- Aditionnal info text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-aditionnal-info">Aditionnal info</label>
+                <input type="text" id="dive-site-aditionnal-info" name="dive-site-aditionnal-info" placeholder="Aditionnal info" required>
+            </div>
+            <!-- Telephone text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-telephone">Telephone</label>
+                <input type="text" id="dive-site-telephone" name="dive-site-telephone" placeholder="Telephone" required>
+            </div>
+            <!-- Url text -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-url">Url</label>
+                <input type="text" id="dive-site-url" name="dive-site-url" placeholder="Url" required>
+            </div>
+
+            <!-- Dive Site image -->
+            <div class="form-dive-site-input-item">
+                <label for="dive-site-image">Dive site image</label>
+                <input type="file" id="dive-site-image" name="dive-site-image" placeholder="Dive site image"  accept="image/*" required>
+            </div>  
+        </div>
+
+        <div class="form-dive-site-button">
+            <button id="validate-dive-site">Create Dive Site</button>
+        </div>
     </div>
 
 </body>

@@ -175,6 +175,10 @@ io.on('connection', (socket) =>{
         BDD.createDiverInDB(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     });
 
+    socket.on('addDiveSite', (id,name,latitude,longitude,track_type,track_number,track_name,zip_code,city,coutntry,aditionnal_info,telephone,url,image) => {
+        BDD.createDiveSiteInDB(id,name,latitude,longitude,track_type,track_number,track_name,zip_code,city,coutntry,aditionnal_info,telephone,url,image);
+    });
+
     socket.on('disconnect', () => {
         console.log('SOCKET : User disconnected');
     });

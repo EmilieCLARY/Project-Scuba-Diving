@@ -13,7 +13,9 @@
     <nav>
         <div class="navbar">
             <span class="logo-main">
-                <img src="/protected/front/img/logo.jpg" alt="logo" />
+                <a href="/protected/protected.html">
+                    <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
+                </a>
             </span>
             <span class="nav-center">
                 <span class ="nav-name"> <p>Alexis Sauteuse</p> </span>
@@ -56,19 +58,54 @@
                 <input type="text" id="diver-lastname" name="diver-lastname" placeholder="Lastname" required>
             </div>
             <!-- Diver Qualification text-->
-            <div class="form-diver-input-item">
+            <!--<div class="form-diver-input-item">
                 <label for="diver-qualification">Qualification</label>
                 <input type="text" id="diver-qualification" name="diver-qualification" placeholder="Qualification" required>
+            </div>-->
+            <div class="form-diver-input-item">
+                <label for="diver-qualification">Qualification</label>
+                <select type="text" id="diver-qualification" name="diver-qualification" placeholder="Qualification" required>
+                    <option value="11">Aucun</option>
+                    <option value="1">Etoile de Mer 1</option>
+                    <option value="12">Etoile de Mer 2</option>
+                    <option value="13">Etoile de Mer 3</option>
+                    <option value="2">Bronze</option>
+                    <option value="3">Argent</option>
+                    <option value="4">Or</option>
+                    <option value="5">N1</option>
+                    <option value="6">N2</option>
+                    <option value="7">N3</option>
+                    <option value="8">N4</option>
+                </select>
             </div>
             <!-- Instructor Qualification text -->
-            <div class="form-diver-input-item">
+            <!--<div class="form-diver-input-item">
                 <label for="diver-instructor-qualification">Instructor Qualification</label>
                 <input type="text" id="diver-instructor-qualification" name="diver-instructor-qualification" placeholder="Instructor Qualification" required>
+            </div>-->
+            <div class="form-diver-input-item">
+                <label for="diver-instructor-qualification">Instructor Qualification</label>
+                <select type="text" id="diver-instructor-qualification" name="diver-instructor-qualification" placeholder="Instructor Qualification" required>
+                    <option value="1">Aucun</option>
+                    <option value="2">E1</option>
+                    <option value="3">E2</option>
+                    <option value="4">E3</option>
+                    <option value="5">E4</option>
+                </select>
             </div>
             <!-- Nox Level text -->
-            <div class="form-diver-input-item">
+            <!--<div class="form-diver-input-item">
                 <label for="diver-nox-level">Nox Level</label>
                 <input type="text" id="diver-nox-level" name="diver-nox-level" placeholder="Nox Level" required>
+            </div>-->
+            <div class="form-diver-input-item">
+                <label for="diver-nox-level">Nox Level</label>
+                <select type="text" id="diver-nox-level" name="diver-nox-level" placeholder="Nox Level" required>
+                    <option value="1">Aucun</option>
+                    <option value="2">NITROX</option>
+                    <option value="3">NITROX Confirmé</option>
+                    <option value="4">Moniteur NITROX</option>
+                </select>
             </div>
             <!-- Additionnal Qualification text -->
             <div class="form-diver-input-item">
@@ -95,9 +132,12 @@
                 <label for="diver-birthdate">Birthdate</label>
                 <input type="date" id="diver-birthdate" name="diver-birthdate" placeholder="Birthdate" required>
             </div>
+
+
+
         </div>
         <div class="form-diver-button">
-            <button id="validate">Create Diver</button>
+            <button id="validate-diver">Create Diver</button>
         </div>
     </div>
 </body>

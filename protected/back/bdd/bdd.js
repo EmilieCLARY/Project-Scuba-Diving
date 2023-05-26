@@ -99,12 +99,31 @@ function insertInDB(){
             imageContainer.appendChild(imgElement);
 
             console.log(blob);
-        }
+        }   
         else {
             console.log("No image found"); 
         }
 
     });*/
+
+    db.run(`CREATE TABLE Planned_Dive(
+        Id_Planned_Dive TEXT NOT NULL,
+        Planned_Date NUMERIC NOT NULL,
+        Planned_Time TEXT NOT NULL,
+        Comments TEXT,
+        Special_Needs TEXT,
+        Status TEXT,
+        Diver_Price NUMERIC(15,2),
+        Instructor_Price NUMERIC(15,2),
+        Dive_Site_Id_Dive_Site TEXT NOT NULL,
+        CONSTRAINT PK_Planned_Dive PRIMARY KEY(Id_Planned_Dive),
+        CONSTRAINT FK_Planned_Dive_Dive_Site FOREIGN KEY(Dive_Site_Id_Dive_Site) REFERENCES Dive_Site(Id_Dive_Site)
+     );`, (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('Row was deleted from the table');  
+    });
 
     
     
@@ -147,7 +166,7 @@ function createDiverInDB(id_diver, lastname, firstname, diver_qualifications, in
 }
 
 // create a dive site in the database
-function createDiveSiteInDB(id_dive_site, site_name, gps_latitude, gps_longitude, track_type, track_number, track_name, zip_code, city_name, country_name, additional_address, tel_number, information_url){
+function createDiveSiteInDB(id_dive_site, site_name, gps_latitude, gps_longitude, track_type, track_number, track_name, zip_code, city_name, country_name, additional_address, tel_number, information_url, image){
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -155,9 +174,9 @@ function createDiveSiteInDB(id_dive_site, site_name, gps_latitude, gps_longitude
         console.log('BDD : Connected to the database.');
     });
 
-    let sql = `INSERT INTO Dive_Site(Id_Dive_Site,Site_Name, Gps_Latitude, Gps_Longitude, Track_Type, Track_Number, Track_Name, Zip_Code, City_Name, Country_Name, Additional_Address, Tel_Number, Information_URL )
-    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-    db.run(sql, [id_dive_site, site_name, gps_latitude, gps_longitude, track_type, track_number, track_name, zip_code, city_name, country_name, additional_address, tel_number, information_url], (err) => {
+    let sql = `INSERT INTO Dive_Site(Id_Dive_Site,Site_Name, Gps_Latitude, Gps_Longitude, Track_Type, Track_Number, Track_Name, Zip_Code, City_Name, Country_Name, Additional_Address, Tel_Number, Information_URL, Image )
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+    db.run(sql, [id_dive_site, site_name, gps_latitude, gps_longitude, track_type, track_number, track_name, zip_code, city_name, country_name, additional_address, tel_number, information_url, image], (err) => {
         if(err) {
             return console.log(err.message);
         }
@@ -283,44 +302,14 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
 /*********************************************************************/
 
 function getFromDB(callback, info) {
-    let sql;
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
         }
         console.log('BDD : Connected to the database.');
     });
-
-    switch(info) {
-        case 'Dive_Site':
-            sql = `SELECT * FROM Dive_Site`;
-            break;
-
-        case 'Dive_Team':
-            sql = `SELECT * FROM Dive_Team`;
-            break;
-
-        case 'Dive':
-            sql = `SELECT * FROM Dive`;
-            break;
-
-        case 'Diver':
-            sql = `SELECT * FROM Diver`;
-            break;
-
-        case 'Emergency':
-            sql = `SELECT * FROM Emergency`;
-            break;
-
-        case 'Planned_Dive':
-            sql = `SELECT * FROM Planned_Dive`;
-            break;
-
-        default:
-            console.log('BDD : Error in getFromDB');
-            break;
-    }
-        
+    
+    let sql = `SELECT * FROM ` + info;     
         
     db.all(sql, [], (err, rows) => {
         if (err) { throw err;}

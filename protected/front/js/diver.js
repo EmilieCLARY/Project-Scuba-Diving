@@ -111,7 +111,7 @@ function LoadAllDivers(tab){
     console.log(tabDivers);
 }
 
-document.getElementById("validate").addEventListener("click", (e) => {
+document.getElementById("validate-diver").addEventListener("click", (e) => {
     // Get all input
     let first_name = document.getElementById("diver-firstname").value;
     let last_name = document.getElementById("diver-lastname").value;
@@ -125,6 +125,7 @@ document.getElementById("validate").addEventListener("click", (e) => {
     let birth_date = document.getElementById("diver-birthdate").value;
 
     // Send to server
+    console.log(tabDivers);
     let id = tabDivers.length+1;
     SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
@@ -132,8 +133,8 @@ document.getElementById("validate").addEventListener("click", (e) => {
     // Clear all input
     document.getElementById("diver-firstname").value = "";
     document.getElementById("diver-lastname").value = "";
-    document.getElementById("diver-qualification").value = "";
-    document.getElementById("diver-instructor-qualification").value = "";
+    document.getElementById("diver-qualification").value = "11";
+    document.getElementById("diver-instructor-qualification").value = "1";
     document.getElementById("diver-nox-level").value = "";
     document.getElementById("diver-additionnal-qualification").value = "";
     document.getElementById("diver-license-number").value = "";
@@ -141,7 +142,9 @@ document.getElementById("validate").addEventListener("click", (e) => {
     document.getElementById("diver-medical-certificate-expiration-date").value = "";
     document.getElementById("diver-birthdate").value = "";
 
-    updateDiver();//PB async
+    // Update the list
+    console.log("Adding diver in database");
+    setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
 });
 
 function updateDiver(){

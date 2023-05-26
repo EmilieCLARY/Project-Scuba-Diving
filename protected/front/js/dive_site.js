@@ -6,7 +6,7 @@ let tabDiveSites = [];
 
 // Classe privée Site de plongée
 class dive_site {
-    constructor(site_name_, gps_latitude_, gps_longitude_, track_type_, track_number_, track_name_, zip_code_, city_, country_, aditionnal_info_, telephone_, url_) {
+    constructor(site_name_, gps_latitude_, gps_longitude_, track_type_, track_number_, track_name_, zip_code_, city_, country_, aditionnal_info_, telephone_, url_, image_) {
         this.site_name = site_name_;
         this.gps_latitude = gps_latitude_;
         this.gps_longitude = gps_longitude_;
@@ -19,6 +19,7 @@ class dive_site {
         this.aditionnal_info = aditionnal_info_;
         this.telephone = telephone_;
         this.url = url_;
+        this.image = image_;
     }
 
     get_site_name() {
@@ -116,16 +117,78 @@ class dive_site {
     set_url(url) {
         this.url = url;
     }
+
+    get_image() {
+        return this.image;
+    }
+
+    set_image(image) {
+        this.image = image;
+    }
 }
 
 function LoadAllDiveSites(tab){
     tab.forEach(element => {
-        let tmp = new dive_site(element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL);
+        let tmp = new dive_site(element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL, element.Image);
         tabDiveSites.push(tmp);
     });
     console.log(tabDiveSites);
     create_elements(tabDiveSites);
+    hoverlistener();
 }
+
+document.getElementById("validate-dive-site").addEventListener("click", (e) => {
+    // Get all input
+    let name = document.getElementById("dive-site-name").value;
+    let latitude = document.getElementById("dive-site-gps-latitude").value;
+    let longitude = document.getElementById("dive-site-gps-longitude").value;
+    let track_type = document.getElementById("dive-site-track-type").value;
+    let track_number = document.getElementById("dive-site-track-number").value;
+    let track_name = document.getElementById("dive-site-track-name").value;
+    let zip_code = document.getElementById("dive-site-zip-code").value;
+    let city = document.getElementById("dive-site-city").value;
+    let coutntry = document.getElementById("dive-site-country").value;
+    let aditionnal_info = document.getElementById("dive-site-aditionnal-info").value;
+    let telephone = document.getElementById("dive-site-telephone").value;
+    let url = document.getElementById("dive-site-url").value;
+    let image = document.getElementById('dive-site-image').files[0];
+
+    if(name == "" || latitude == "" || longitude == "" || track_type == "" || track_number == "" || track_name == "" || zip_code == "" || city == "" || coutntry == "" || aditionnal_info == "" || telephone == "" || url == ""){
+        alert("Il manque des informations connard ! On t'appelle pas Gilbert pour rien !");
+        return;
+    }
+    else if(image == null){
+        alert("l'image connard !");
+        return;
+    }
+    
+
+    // Send to server
+    console.log(tabDiveSites);
+    let id = tabDiveSites.length+1;
+    SocketManager.addDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+    console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+
+    // Clear all input
+    document.getElementById("dive-site-name").value = "";
+    document.getElementById("dive-site-gps-latitude").value = "";
+    document.getElementById("dive-site-gps-longitude").value = "";
+    document.getElementById("dive-site-track-type").value = "";
+    document.getElementById("dive-site-track-number").value = "";
+    document.getElementById("dive-site-track-name").value = "";
+    document.getElementById("dive-site-zip-code").value = "";
+    document.getElementById("dive-site-city").value = "";
+    document.getElementById("dive-site-country").value = "";
+    document.getElementById("dive-site-aditionnal-info").value = "";
+    document.getElementById("dive-site-telephone").value = "";
+    document.getElementById("dive-site-url").value = "";
+    document.getElementById("dive-site-image").value = "";
+    
+        
+    // Update the list
+    console.log("Updating dive site in database");
+    setTimeout(function() {updateDiveSite()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
+});
 
 function create_elements(tab_dive_sites) {
     // Création de l'affichage des sites de plongée
@@ -133,9 +196,23 @@ function create_elements(tab_dive_sites) {
     console.log(tab_dive_sites)
     // Parcourir le tableau d'éléments et créer des <li> pour chaque élément
     for (let i = 0; i < tab_dive_sites.length; i++) {
+
+        /*let siteImage = tab_dive_sites[i].get_image();
+        let blob = new Blob([siteImage], {type: "image/jpeg"});
+        let imgElement = document.createElement("img");
+        imgElement.src = URL.createObjectURL(blob);
+        let imageContainer = document.getElementById("teeeeeest");
+        imageContainer.appendChild(imgElement);
+        console.log(imageContainer);*/
+        
+        
         // Créer un nouvel élément div
         let siteElement = document.createElement('div');
         siteElement.classList.add("dive-site-list-item");
+
+        let siteElementLeft = document.createElement('div');
+        siteElementLeft.classList.add("left-part");
+        
 
         let siteElementTop = document.createElement('div');
         siteElementTop.classList.add("top-part");
@@ -143,7 +220,12 @@ function create_elements(tab_dive_sites) {
         siteElementTopName.innerHTML = tab_dive_sites[i].get_site_name();
         siteElementTop.appendChild(siteElementTopName);
         let siteElementTopTown = document.createElement('h2');
+        siteElementTopTown.classList.add("linkhover");
         siteElementTopTown.innerHTML = tab_dive_sites[i].get_city();
+        let siteElementTopTownIcon = document.createElement('i');
+        siteElementTopTownIcon.classList.add("fa-solid");
+        siteElementTopTownIcon.classList.add("fa-circle-info");
+        siteElementTopTown.appendChild(siteElementTopTownIcon);
         siteElementTop.appendChild(siteElementTopTown);
         siteElement.appendChild(siteElementTop);
 
@@ -191,6 +273,18 @@ function create_elements(tab_dive_sites) {
         let siteElementHoverBottomMap = document.createElement('div');
         siteElementHoverBottomMap.classList.add("map");
         siteElementHoverBottomMap.innerHTML = "Map";
+        // Ajouter la map ici
+        //async function initMap() {
+        //    const { Map } = await google.maps.importLibrary("maps");
+        //    map = new Map(), {
+        //      center: { lat : tab_dive_sites[i].get_gps_latitude(), lng : tab_dive_sites[i].get_gps_longitude() },
+        //      zoom: 8,
+        //    });
+        //}
+          
+
+
+
         siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
         let siteElementHoverBottomLocation = document.createElement('div');
         siteElementHoverBottomLocation.classList.add("location");
@@ -206,7 +300,7 @@ function create_elements(tab_dive_sites) {
         siteElementHoverBottom.appendChild(siteElementHoverBottomLocation);
         
         siteElementHover.appendChild(siteElementHoverBottom);
-        siteElementBottom.appendChild(siteElementHoverContainer);
+        siteElementTopTown.appendChild(siteElementHoverContainer);
         
 
 
@@ -225,6 +319,29 @@ function create_elements(tab_dive_sites) {
         // Ajouter la div à l'élément parent
         container.appendChild(siteElement);
     }
+}
+
+
+function hoverlistener() {
+    let town_hover = document.getElementsByClassName("linkhover");
+    for (let i = 0 ; i < town_hover.length; i++) {
+        town_hover[i].addEventListener("mouseover", function( event ){
+        let current_target = event.currentTarget.getElementsByTagName("div")[0];
+        current_target.style.visibility = 'visible';
+        
+        }, false);
+        town_hover[i].addEventListener("mouseleave", function( event ){
+            let current_target = event.currentTarget.getElementsByTagName("div")[0];
+            current_target.style.visibility = 'hidden';
+        }, false); 
+     }
+
+
+}
+
+function updateDiveSite(){
+    tabDiveSites = [];
+    SocketManager.getAllDiveSites();
 }
 
 export default {
