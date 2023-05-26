@@ -70,17 +70,50 @@ function insertInDB(){
         console.log('Row was added to the table');
     });*/
 
+/*
+    let image1 = fs.readFileSync('./protected/front/img/Image_site/Image site/Adeps.jpg');
+    let image2 = fs.readFileSync('./protected/front/img/Image_site/Image site/Barges.jpg');
+    let image3 = fs.readFileSync('./protected/front/img/Image_site/Image site/Barrage-eau-heure.jpg');
+    let image4 = fs.readFileSync('./protected/front/img/Image_site/Image site/BERGSEDIEPSLUIS.jpg');
+    let image5 = fs.readFileSync('./protected/front/img/Image_site/Image site/Cap-Blanc.jpeg');
+    let image6 = fs.readFileSync('./protected/front/img/Image_site/Image site/Carriere-de-trélon.jpg');
+    let image7 = fs.readFileSync('./protected/front/img/Image_site/Image site/CARRIERE-DU-FLATO.jpg');
+    let image8 = fs.readFileSync('./protected/front/img/Image_site/Image site/chera-Gombe.jpg');
+    let image9 = fs.readFileSync('./protected/front/img/Image_site/Image site/DEN-OSSE-DIVE-SPOT.jpg');
+    let image10 = fs.readFileSync('./protected/front/img/Image_site/Image site/dour.jpg');
+    let image11 = fs.readFileSync('./protected/front/img/Image_site/Image site/duiktank.jpg');
+    let image12 = fs.readFileSync('./protected/front/img/Image_site/Image site/EKEREN.jpg');
+    let image13 = fs.readFileSync('./protected/front/img/Image_site/Image site/forme4.jpg');
+    let image14 = fs.readFileSync('./protected/front/img/Image_site/Image site/fosse-emeraude.jpg');
+    let image15 = fs.readFileSync('./protected/front/img/Image_site/Image site/FOSSE-GEORGES-GUYNEMER.jpg');
+    let image16 = fs.readFileSync('./protected/front/img/Image_site/Image site/FOSSE-VILLENEUVE-LA-GARENNE.jpg');
+    let image17 = fs.readFileSync('./protected/front/img/Image_site/Image site/LA-CROISETTE.jpg');
+    let image18 = fs.readFileSync('./protected/front/img/Image_site/Image site/Lac-Bleu.jpg');
+    let image19 = fs.readFileSync('./protected/front/img/Image_site/Image site/lille.jpg');
+    let image20 = fs.readFileSync('./protected/front/img/Image_site/Image site/nautilus.jpg');
+    let image21 = fs.readFileSync('./protected/front/img/Image_site/Image site/nemo33.jpg');
+    let image22 = fs.readFileSync('./protected/front/img/Image_site/Image site/PISCINE-DE-SAINT-ANDRE-LEZ-LILLE.jpg');
+    let image23 = fs.readFileSync('./protected/front/img/Image_site/Image site/PORTO-SAN-POLO.jpg');
+    let image24 = fs.readFileSync('./protected/front/img/Image_site/Image site/ROCHEFONTAINE.jpg');
+    let image25 = fs.readFileSync('./protected/front/img/Image_site/Image site/todi.jpg');
+    let image26 = fs.readFileSync('./protected/front/img/Image_site/Image site/Vodelee.jpg');
+  */  
     
+    
+
+    /*
     // Test Insert Image:
-/*    let imageData = fs.readFileSync('./protected/front/img/boat.jpg');
-    let sql = `INSERT INTO Tmp_Image(Image) VALUES(?)`;
+    let imageData = fs.readFileSync('./protected/front/img/boat.jpg');
+    let tmp_id = 1;
+    let sql = 'UPDATE Dive_Site SET Image = ? WHERE Id_Dive_Site = ' + tmp_id;
     db.run(sql, [imageData], (err) => {
         if(err) {
             return console.log(err.message);
         }
         console.log('Row was added to the table');
-    });
-*/
+    });*/
+
+
 
     // Test Sortir Image:
     /*let query = `SELECT * FROM Tmp_Image`;
@@ -105,25 +138,30 @@ function insertInDB(){
         }
 
     });*/
-
-    db.run(`CREATE TABLE Planned_Dive(
-        Id_Planned_Dive TEXT NOT NULL,
-        Planned_Date NUMERIC NOT NULL,
-        Planned_Time TEXT NOT NULL,
-        Comments TEXT,
-        Special_Needs TEXT,
-        Status TEXT,
-        Diver_Price NUMERIC(15,2),
-        Instructor_Price NUMERIC(15,2),
-        Dive_Site_Id_Dive_Site TEXT NOT NULL,
-        CONSTRAINT PK_Planned_Dive PRIMARY KEY(Id_Planned_Dive),
-        CONSTRAINT FK_Planned_Dive_Dive_Site FOREIGN KEY(Dive_Site_Id_Dive_Site) REFERENCES Dive_Site(Id_Dive_Site)
-     );`, (err) => {
+/*
+    
+    db.run(`CREATE TABLE Dive_Site(
+        Id_Dive_Site TEXT NOT NULL,
+        Site_Name TEXT NOT NULL,
+        Gps_Latitude NUMERIC(11,8),
+        Gps_Longitude NUMERIC(11,8),
+        Track_Type TEXT,
+        Track_Number TEXT,
+        Track_Name TEXT,
+        Zip_Code TEXT,
+        City_Name TEXT,
+        Country_Name TEXT NOT NULL,
+        Additional_Address TEXT,
+        Tel_Number TEXT,
+        Information_URL TEXT,
+        CONSTRAINT PK_Dive_Site PRIMARY KEY(Id_Dive_Site)
+     
+          );`, (err) => {
         if(err) {
             return console.log(err.message);
         }
         console.log('Row was deleted from the table');  
-    });
+    });*/
 
     
     
@@ -297,6 +335,57 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
 }
 
 
+
+function login(id, first_name, last_name){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+
+    //Check if the user is in the database by id
+    let sql = `SELECT * FROM Application_User WHERE Id_Application_User = ?`;
+    let userAlreadyExist = false;
+    db.get(sql, [id], (err, row) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        //console.log(row);
+        if(row != undefined){
+            userAlreadyExist = true;
+        }
+
+        console.log(userAlreadyExist);
+        if(userAlreadyExist == false){
+            //Create the user in the database
+            let sql = `INSERT INTO Application_User(Id_Application_User, Firstname, Lastname)
+            VALUES(?,?,?)`;
+            db.run(sql, [id, first_name, last_name], (err) => {
+                if(err) {
+                    return console.log(err.message);
+                }
+                console.log('BDD : User was added to the table');
+            });
+        }
+        else{
+            console.log("BDD : User already exist");
+        }
+
+    });
+    
+
+    
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+
+}
+
+
 /*********************************************************************/
 /*                           GET FUNCTIONS                           */
 /*********************************************************************/
@@ -348,5 +437,8 @@ module.exports = {
     createPlannedDiveInDB,
     createDiveInDB,
     createDiveTeamInDB,
-    createEmergencyInDB
+    createEmergencyInDB,
+
+    // Login function
+    login
 }

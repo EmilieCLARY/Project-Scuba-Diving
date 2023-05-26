@@ -210,10 +210,6 @@ function create_elements(tab_dive_sites) {
         let siteElement = document.createElement('div');
         siteElement.classList.add("dive-site-list-item");
 
-        let siteElementLeft = document.createElement('div');
-        siteElementLeft.classList.add("left-part");
-        
-
         let siteElementTop = document.createElement('div');
         siteElementTop.classList.add("top-part");
         let siteElementTopName = document.createElement('h1');
@@ -231,27 +227,39 @@ function create_elements(tab_dive_sites) {
 
         let siteElementBottom = document.createElement('div');
         siteElementBottom.classList.add("bottom-part");
+        let siteElementBottomPicture = document.createElement('div');
+        siteElementBottomPicture.classList.add("picture");
+        let siteImage = tab_dive_sites[i].get_image();
+        let blob = new Blob([siteImage], {type: "image/jpeg"});
+        let imgElement = document.createElement("img");
+        imgElement.src = URL.createObjectURL(blob);
+        siteElementBottomPicture.appendChild(imgElement);
+        siteElementBottom.appendChild(siteElementBottomPicture);
         let siteElementBottomInfo = document.createElement('div');
         siteElementBottomInfo.classList.add("bottom-left");
-        let siteElementBottomInfoTrackType = document.createElement('p');
-        siteElementBottomInfoTrackType.innerHTML = tab_dive_sites[i].get_track_type();
-        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackType);
-        let siteElementBottomInfoTrackName = document.createElement('p');
-        siteElementBottomInfoTrackName.innerHTML = tab_dive_sites[i].get_track_name();
-        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackName);
-        let siteElementBottomInfoTrackNumber = document.createElement('p');
-        siteElementBottomInfoTrackNumber.innerHTML = tab_dive_sites[i].get_track_number();
-        siteElementBottomInfo.appendChild(siteElementBottomInfoTrackNumber);
-        let siteElementBottomContact = document.createElement('div');
-        siteElementBottomContact.classList.add("bottom-right");
-        let siteElementBottomContactTel = document.createElement('p');
-        siteElementBottomContactTel.innerHTML = tab_dive_sites[i].get_telephone();
-        siteElementBottomContact.appendChild(siteElementBottomContactTel);
-        let siteElementBottomContactUrl = document.createElement('p');
-        siteElementBottomContactUrl.innerHTML = tab_dive_sites[i].get_url();
-        siteElementBottomContact.appendChild(siteElementBottomContactUrl);
+        let siteElementBottomInfoAddress = document.createElement('p');
+        if(tab_dive_sites[i].get_track_number() != null){
+        siteElementBottomInfoAddress.innerHTML += " " + tab_dive_sites[i].get_track_number();
+        }
+        if(tab_dive_sites[i].get_track_type() != null){
+        siteElementBottomInfoAddress.innerHTML += " " + tab_dive_sites[i].get_track_type();
+        }
+        if(tab_dive_sites[i].get_track_name() != null){
+        siteElementBottomInfoAddress.innerHTML += " " + tab_dive_sites[i].get_track_name();
+        }
+        siteElementBottomInfo.appendChild(siteElementBottomInfoAddress);
+        let siteElementBottomInfoTel = document.createElement('p');
+        if(tab_dive_sites[i].get_telephone() == null){
+            siteElementBottomInfoTel.innerHTML = "06 06 06 06 06";
+        }
+        else{
+        siteElementBottomInfoTel.innerHTML = tab_dive_sites[i].get_telephone();
+        }
+        siteElementBottomInfo.appendChild(siteElementBottomInfoTel);
+        //let siteElementBottomContactUrl = document.createElement('p');
+        //siteElementBottomContactUrl.innerHTML = tab_dive_sites[i].get_url();
+        //siteElementBottomInfo.appendChild(siteElementBottomContactUrl);
         siteElementBottom.appendChild(siteElementBottomInfo);
-        siteElementBottom.appendChild(siteElementBottomContact);
         siteElement.appendChild(siteElementBottom);
 
         let siteElementHoverContainer = document.createElement('div');
@@ -273,18 +281,7 @@ function create_elements(tab_dive_sites) {
         let siteElementHoverBottomMap = document.createElement('div');
         siteElementHoverBottomMap.classList.add("map");
         siteElementHoverBottomMap.innerHTML = "Map";
-        // Ajouter la map ici
-        //async function initMap() {
-        //    const { Map } = await google.maps.importLibrary("maps");
-        //    map = new Map(), {
-        //      center: { lat : tab_dive_sites[i].get_gps_latitude(), lng : tab_dive_sites[i].get_gps_longitude() },
-        //      zoom: 8,
-        //    });
-        //}
-          
-
-
-
+        siteElementHoverBottomMap.setAttribute('id', 'map' + i);          
         siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
         let siteElementHoverBottomLocation = document.createElement('div');
         siteElementHoverBottomLocation.classList.add("location");
@@ -300,15 +297,8 @@ function create_elements(tab_dive_sites) {
         siteElementHoverBottom.appendChild(siteElementHoverBottomLocation);
         
         siteElementHover.appendChild(siteElementHoverBottom);
-        siteElementTopTown.appendChild(siteElementHoverContainer);
-        
+        siteElementTopTown.appendChild(siteElementHoverContainer);                
 
-
-
-
-        
-
-        
         //siteElement.innerHTML = tab_dive_sites[i].get_site_name() + "<br>" + tab_dive_sites[i].get_track_type() + " " + tab_dive_sites[i].get_track_number() + " " + tab_dive_sites[i].get_track_name() + "<br>" + tab_dive_sites[i].get_zip_code() + " " + tab_dive_sites[i].get_city() + "<br>" + tab_dive_sites[i].get_country() + "<br>" + tab_dive_sites[i].get_aditionnal_info() + "<br>" + tab_dive_sites[i].get_telephone() + "<br>" + tab_dive_sites[i].get_url() + "<br>" + tab_dive_sites[i].get_gps_latitude() + " " + tab_dive_sites[i].get_gps_longitude() + "<br>" + "<br>";
         // Ajouter du contenu ou des styles si nécessaire
         //for(let element of tab_dive_sites){
@@ -318,6 +308,7 @@ function create_elements(tab_dive_sites) {
 
         // Ajouter la div à l'élément parent
         container.appendChild(siteElement);
+        //initMap(tab_dive_sites[i],i);
     }
 }
 
@@ -339,10 +330,20 @@ function hoverlistener() {
 
 }
 
+//async function initMap(tab_dive_sites,i) {
+//            const { Map } = await google.maps.importLibrary("maps");
+//            const map = new google.maps.Map(document.getElementById('map'+i), {
+//                zoom: 4,
+//                center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
+//              });
+//}
+
 function updateDiveSite(){
     tabDiveSites = [];
     SocketManager.getAllDiveSites();
 }
+
+window.initMap = initMap;
 
 export default {
     LoadAllDiveSites,

@@ -147,6 +147,7 @@ document.getElementById("validate-diver").addEventListener("click", (e) => {
     setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
 });
 
+
 function updateDiver(){
     tabDivers = [];
     SocketManager.getAllDivers(); //boules

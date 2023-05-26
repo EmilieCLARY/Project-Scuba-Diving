@@ -80,7 +80,7 @@ function getAppIDConfig() {
 
 const BDD = require('./protected/back/bdd/bdd.js');
 
-//BDD.insertInDB();
+BDD.insertInDB();
 //BDD.getAllDivers();
 //BDD.sizeBDD();
 
@@ -129,10 +129,20 @@ app.get('/admin', (req, res) => {
 io.on('connection', (socket) =>{
     console.log('SOCKET : User connected');
 
+    socket.on('userLogin', (id, first_name, last_name)=>{
+        socket.handshake.session.loggedIn = true;
+        socket.handshake.session.first_name = first_name;
+        socket.handshake.session.last_name = last_name;
+        socket.handshake.session.id = id;
+        socket.handshake.session.save();
+        console.log("SOCKET : " + first_name + " " + last_name+ " logged in.");
+        BDD.login(id, first_name, last_name);
+    });
+
     socket.on('getAllDiveSites', () => {
         BDD.getFromDB((tabDiveSites) => {
             socket.emit('receiveAllDiveSites', tabDiveSites);
-            console.log("BDD : All dive sites sent to client.");
+            console.log("BDD : All dive sites sent to "+ socket.handshake.session.first_name+ " "+ socket.handshake.session.last_name);
         }, "Dive_Site");
     });
 

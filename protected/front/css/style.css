@@ -165,6 +165,14 @@ nav .navbar .login-container i {
   height: 10vh;
 }
 
+.dive-site-list-item .left-part {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 30vw;
+}
+
 .top-part h1 {
   margin-left: 2vw;
   font-size: 3.5vh;
@@ -265,4 +273,29 @@ nav .navbar .login-container i {
   display: flex;
   flex-direction: row;
   text-decoration: underline;
+}
+
+.profile-container .profile-container-right h1 {
+  text-decoration: underline;
+  padding: 2vh 0 0 2vw;
+}
+
+.profile-container .profile-container-right {
+  width: 85vw;
+  height: 100vh;
+  margin-left: 15vw;
+  align-self: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-container .profile-container-right p {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-container .profile-container-right .profile-container-right-item {
+  display: block;
+  padding: 3vh 0 0 2vw;
 }
