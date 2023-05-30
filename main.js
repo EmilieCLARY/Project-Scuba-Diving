@@ -80,9 +80,11 @@ function getAppIDConfig() {
 
 const BDD = require('./protected/back/bdd/bdd.js');
 
-BDD.insertInDB();
+//BDD.insertInDB();
 //BDD.getAllDivers();
 //BDD.sizeBDD();
+//let tmp;
+//BDD.updateDb(tmp, "Application_User", "isAdmin", 1, "6f62d1c4-2522-44d6-a1f4-4e84d21800d7")
 
 
 io.use(
@@ -130,10 +132,11 @@ io.on('connection', (socket) =>{
     console.log('SOCKET : User connected');
 
     socket.on('userLogin', (id, first_name, last_name)=>{
+        console.log(id);
         socket.handshake.session.loggedIn = true;
         socket.handshake.session.first_name = first_name;
         socket.handshake.session.last_name = last_name;
-        socket.handshake.session.id = id;
+        socket.handshake.session.idUser = id;
         socket.handshake.session.save();
         console.log("SOCKET : " + first_name + " " + last_name+ " logged in.");
         BDD.login(id, first_name, last_name);
@@ -182,7 +185,7 @@ io.on('connection', (socket) =>{
     });
 
     socket.on('getUserProfile', () => {
-        BDD.getUserProfile(socket.handshake.session.id, (userProfile) => {
+        BDD.getUserProfile(socket.handshake.session.idUser, (userProfile) => {
             socket.emit('receiveUserProfile', userProfile);
             console.log("BDD : User profile sent to client.");
         });

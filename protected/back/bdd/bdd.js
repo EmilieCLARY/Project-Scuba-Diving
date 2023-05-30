@@ -421,6 +421,7 @@ function getFromDB(callback, info) {
 
 }
 
+// Get the user profile from the database with the id
 function getUserProfile(id, callback) {
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
@@ -428,9 +429,7 @@ function getUserProfile(id, callback) {
         }
         console.log('BDD : Connected to the database.');
     });
-    // A corriger
-    console.log("BDD : id = " + id);
-    let sql = `SELECT * FROM Diver, Application_User 
+    let sql = `SELECT Diver.Id_Diver, Diver.Lastname, Diver.Firstname, Diver.Diver_Qualifications, Diver.Instructor_Qualification, Diver.Instructor_Qualification, Diver.Nox_Level, Diver.Additional_Qualifications, Diver.License_Number, Diver.License_Expiration_Date, Diver.Medical_Certificate_Expiration_Date, Diver.Birthdate FROM Diver, Application_User 
     WHERE Application_User.Id_Application_User = ?
     AND Diver.Id_Diver = Application_User.Id_Diver`;
 
@@ -438,10 +437,38 @@ function getUserProfile(id, callback) {
         if(err) {
             return console.log(err.message);
         }
-        console.log(row);
+        //console.log(row);
         callback(row);
     });
 
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
+/*********************************************************************/
+/*                           SET FUNCTIONS                           */
+/*********************************************************************/
+
+function updateDb(callback, table, column, value, id){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `UPDATE ` + table + ` SET ` + column + ` = ? WHERE Id_` + table + ` = ?`;
+    db.run(sql, [value, id], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('BDD : ' + table + ' was updated');
+    });
 
     db.close((err) => {
         if (err) {
@@ -461,6 +488,9 @@ module.exports = {
     // Get functions
     getFromDB,
     getUserProfile,
+
+    // Set functions
+    updateDb,
 
     // Creation functions
     createDiverInDB,
