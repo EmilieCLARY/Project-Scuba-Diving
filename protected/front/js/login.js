@@ -9,7 +9,7 @@ function loadInfo() {
 		first_name = id_token.given_name;
         last_name = id_token.family_name;
         id = id_token.sub;
-        console.log(first_name, last_name, id);
+        //console.log(first_name, last_name, id);
 		//$('#idTokenPayload').jsonViewer(id_token, {collapsed: false});
         SocketManager.SocketLogin(id, first_name, last_name);
     });

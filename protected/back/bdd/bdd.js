@@ -356,7 +356,7 @@ function login(id, first_name, last_name){
             userAlreadyExist = true;
         }
 
-        console.log(userAlreadyExist);
+        //console.log(userAlreadyExist);
         if(userAlreadyExist == false){
             //Create the user in the database
             let sql = `INSERT INTO Application_User(Id_Application_User, Firstname, Lastname)
@@ -421,6 +421,36 @@ function getFromDB(callback, info) {
 
 }
 
+function getUserProfile(id, callback) {
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+    // A corriger
+    console.log("BDD : id = " + id);
+    let sql = `SELECT * FROM Diver, Application_User 
+    WHERE Application_User.Id_Application_User = ?
+    AND Diver.Id_Diver = Application_User.Id_Diver`;
+
+    db.get(sql, [id], (err, row) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log(row);
+        callback(row);
+    });
+
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
 // export the functions
 module.exports = {
     // Connection functions
@@ -430,6 +460,7 @@ module.exports = {
 
     // Get functions
     getFromDB,
+    getUserProfile,
 
     // Creation functions
     createDiverInDB,

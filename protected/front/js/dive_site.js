@@ -1,3 +1,4 @@
+//import e from 'express';
 import SocketManager from './SocketManager/SocketDiveSite.js'
 
 SocketManager.getAllDiveSites();
@@ -6,7 +7,8 @@ let tabDiveSites = [];
 
 // Classe privée Site de plongée
 class dive_site {
-    constructor(site_name_, gps_latitude_, gps_longitude_, track_type_, track_number_, track_name_, zip_code_, city_, country_, aditionnal_info_, telephone_, url_, image_) {
+    constructor(id_,site_name_, gps_latitude_, gps_longitude_, track_type_, track_number_, track_name_, zip_code_, city_, country_, aditionnal_info_, telephone_, url_, image_) {
+        this.id = id_;
         this.site_name = site_name_;
         this.gps_latitude = gps_latitude_;
         this.gps_longitude = gps_longitude_;
@@ -20,6 +22,14 @@ class dive_site {
         this.telephone = telephone_;
         this.url = url_;
         this.image = image_;
+    }
+
+    get_id() {
+        return this.id;
+    }
+
+    set_id(id) {
+        this.id = id;
     }
 
     get_site_name() {
@@ -129,7 +139,7 @@ class dive_site {
 
 function LoadAllDiveSites(tab){
     tab.forEach(element => {
-        let tmp = new dive_site(element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL, element.Image);
+        let tmp = new dive_site(element.Id_Dive_Site,element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL, element.Image);
         tabDiveSites.push(tmp);
     });
     console.log(tabDiveSites);
@@ -165,7 +175,14 @@ document.getElementById("validate-dive-site").addEventListener("click", (e) => {
 
     // Send to server
     console.log(tabDiveSites);
-    let id = tabDiveSites.length+1;
+    // Search the id max
+    let id = 0;
+    tabDiveSites.forEach(element => {
+        if(element.get_id() > id){
+            id = parseInt(element.get_id());
+        }
+    });
+    id++;
     SocketManager.addDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
     console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
 
@@ -308,7 +325,7 @@ function create_elements(tab_dive_sites) {
 
         // Ajouter la div à l'élément parent
         container.appendChild(siteElement);
-        //initMap(tab_dive_sites[i],i);
+        initMap(tab_dive_sites[i],i);
     }
 }
 
@@ -330,20 +347,22 @@ function hoverlistener() {
 
 }
 
-//async function initMap(tab_dive_sites,i) {
-//            const { Map } = await google.maps.importLibrary("maps");
-//            const map = new google.maps.Map(document.getElementById('map'+i), {
-//                zoom: 4,
-//                center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
-//              });
-//}
+async function initMap(tab_dive_sites,i) {
+            const { Map } = await google.maps.importLibrary("maps");
+            const map = new google.maps.Map(document.getElementById('map'+i), {
+                zoom: 4,
+                center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
+              });
+}
+
+
 
 function updateDiveSite(){
     tabDiveSites = [];
     SocketManager.getAllDiveSites();
 }
 
-window.initMap = initMap;
+//window.initMap = initMap;
 
 export default {
     LoadAllDiveSites,

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/protected/front/css/style.css" />
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
-    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <title>Scuba-Diving Manager</title>
 </head>
@@ -30,12 +30,16 @@
         </div>
     </nav>
 
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+
     <div class="dive-site-list-container" id = "liste_dive_site">
 
 
     </div>
 
     <div id="teeeeeest"></div>
+    
 
     <div class="form-dive-site-container">
         <div class="form-dive-site-title">
@@ -116,9 +120,10 @@
     </div>
 
 </body>
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap">
-    </script>
+
 <script type="module" src="/protected/front/js/dive_site.js"></script>
 <script type="module" src="/protected/front/js/user_info.js"></script>
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD8NK4QLSxvtPZrIbA8qvbDQ35-EYYDTg&callback=initMap">
+    </script>
 </html>

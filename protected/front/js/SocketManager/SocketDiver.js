@@ -1,6 +1,6 @@
 import Divers from "../diver.js";
 
-console.log("SocketDiver.js OUAIS");
+//console.log("SocketDiver.js OUAIS");
 
 let socket = io();
 

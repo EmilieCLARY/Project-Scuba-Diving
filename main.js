@@ -181,6 +181,12 @@ io.on('connection', (socket) =>{
         }, "Planned_Dive");
     });
 
+    socket.on('getUserProfile', () => {
+        BDD.getUserProfile(socket.handshake.session.id, (userProfile) => {
+            socket.emit('receiveUserProfile', userProfile);
+            console.log("BDD : User profile sent to client.");
+        });
+    });
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {
         BDD.createDiverInDB(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     });

@@ -7,7 +7,8 @@ let tabDivers = [];
 // Classe privée pour un plongeur
 
 class diver {
-    constructor(last_name_,first_name_,diver_qualification_,instructor_qualification_,nox_level_,additionnal_qualification_,licence_number_,licence_expiration_date_,medical_certificate_expiration_date_,birth_date_) {
+    constructor(id_,last_name_,first_name_,diver_qualification_,instructor_qualification_,nox_level_,additionnal_qualification_,licence_number_,licence_expiration_date_,medical_certificate_expiration_date_,birth_date_) {
+        this.id = id_;
         this.last_name = last_name_;
         this.first_name = first_name_;
         this.diver_qualification = diver_qualification_;
@@ -18,6 +19,14 @@ class diver {
         this.licence_expiration_date = licence_expiration_date_;
         this.medical_certificate_expiration_date = medical_certificate_expiration_date_;
         this.birth_date = birth_date_;
+    }
+
+    get_id() {
+        return this.id;
+    }
+
+    set_id(id) {
+        this.id = id;
     }
 
     get_last_name() {
@@ -105,7 +114,7 @@ class diver {
 
 function LoadAllDivers(tab){
     tab.forEach(element => {
-        let tmp = new diver(element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additionnal_Qualifications,element.Licence_Number,element.Licence_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
+        let tmp = new diver(element.Id_Diver,element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additionnal_Qualifications,element.Licence_Number,element.Licence_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
         tabDivers.push(tmp);
     });
     console.log(tabDivers);
@@ -126,7 +135,15 @@ document.getElementById("validate-diver").addEventListener("click", (e) => {
 
     // Send to server
     console.log(tabDivers);
-    let id = tabDivers.length+1;
+    // Search the id max
+    let id = 0;
+    tabDivers.forEach(element => {
+        if(element.get_id() > id){
+            id = parseInt(element.get_id());
+        }
+    });
+    id++;
+    //console.log(id);
     SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
 
