@@ -136,7 +136,7 @@ nav .navbar .login-container i {
 }
 
 .dive-site-list-item {
-  width: 50vw;
+  width: 75vw;
   height: 40vh;
   background-color: #a1a0f9;
   margin: 2vh 0 2vh 0;
@@ -144,12 +144,7 @@ nav .navbar .login-container i {
   display: flex;
   flex-direction: column;
   border-radius: 2vw;
-}
-
-.dive-site-list-item img{
-    width: 20vh;
-    height: 20vh;
-    border-radius: 2vw 0 0 2vw;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .dive-site-list-item p {
@@ -162,16 +157,22 @@ nav .navbar .login-container i {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  height: 9vh;
+  border-radius: 0 0 2vw 2vw;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 0.3vh 0.5vh;
+
 }
 
-.dive-site-list-item .left-part {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 30vw;
+
+.dive-site-list-item img{
+  object-fit: cover;
+  width: 28vw;
+  height: 24vh;
+  max-height: 24vh;
+  max-width: 24vh;
+  border-radius: 2vw;
 }
+
 
 .top-part h1 {
   margin-left: 2vw;
@@ -187,18 +188,26 @@ nav .navbar .login-container i {
 .dive-site-list-item .bottom-part {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  height: 20vh;
+  height: 25vh;
 }
 
 .dive-site-list-item .bottom-part .bottom-left {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 28vw;
+}
+
+.dive-site-list-item .bottom-part .bottom-right {
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   height: 20vh;
-  width: 50vw;
+  width: 42vw;
 }
 
 .linkhover {
@@ -275,27 +284,26 @@ nav .navbar .login-container i {
   text-decoration: underline;
 }
 
-.profile-container .profile-container-right h1 {
-  text-decoration: underline;
-  padding: 2vh 0 0 2vw;
-}
-
 .profile-container .profile-container-right {
   width: 85vw;
   height: 100vh;
+  position: fixed;
   margin-left: 15vw;
   align-self: right;
   display: flex;
   flex-direction: column;
 }
 
-.profile-container .profile-container-right p {
-  align-self: center;
-  display: flex;
-  flex-direction: row;
+.profile-container .profile-container-right h1 {
+  text-decoration: underline;
+  padding: 2vh 0 0 2vw;
 }
 
 .profile-container .profile-container-right .profile-container-right-item {
   display: block;
   padding: 3vh 0 0 2vw;
+}
+
+.profile-item {
+  padding: 1vh 0 1vh 0;
 }

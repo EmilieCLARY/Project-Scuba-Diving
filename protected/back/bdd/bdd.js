@@ -70,50 +70,16 @@ function insertInDB(){
         console.log('Row was added to the table');
     });*/
 
-/*
-    let image1 = fs.readFileSync('./protected/front/img/Image_site/Image site/Adeps.jpg');
-    let image2 = fs.readFileSync('./protected/front/img/Image_site/Image site/Barges.jpg');
-    let image3 = fs.readFileSync('./protected/front/img/Image_site/Image site/Barrage-eau-heure.jpg');
-    let image4 = fs.readFileSync('./protected/front/img/Image_site/Image site/BERGSEDIEPSLUIS.jpg');
-    let image5 = fs.readFileSync('./protected/front/img/Image_site/Image site/Cap-Blanc.jpeg');
-    let image6 = fs.readFileSync('./protected/front/img/Image_site/Image site/Carriere-de-trélon.jpg');
-    let image7 = fs.readFileSync('./protected/front/img/Image_site/Image site/CARRIERE-DU-FLATO.jpg');
-    let image8 = fs.readFileSync('./protected/front/img/Image_site/Image site/chera-Gombe.jpg');
-    let image9 = fs.readFileSync('./protected/front/img/Image_site/Image site/DEN-OSSE-DIVE-SPOT.jpg');
-    let image10 = fs.readFileSync('./protected/front/img/Image_site/Image site/dour.jpg');
-    let image11 = fs.readFileSync('./protected/front/img/Image_site/Image site/duiktank.jpg');
-    let image12 = fs.readFileSync('./protected/front/img/Image_site/Image site/EKEREN.jpg');
-    let image13 = fs.readFileSync('./protected/front/img/Image_site/Image site/forme4.jpg');
-    let image14 = fs.readFileSync('./protected/front/img/Image_site/Image site/fosse-emeraude.jpg');
-    let image15 = fs.readFileSync('./protected/front/img/Image_site/Image site/FOSSE-GEORGES-GUYNEMER.jpg');
-    let image16 = fs.readFileSync('./protected/front/img/Image_site/Image site/FOSSE-VILLENEUVE-LA-GARENNE.jpg');
-    let image17 = fs.readFileSync('./protected/front/img/Image_site/Image site/LA-CROISETTE.jpg');
-    let image18 = fs.readFileSync('./protected/front/img/Image_site/Image site/Lac-Bleu.jpg');
-    let image19 = fs.readFileSync('./protected/front/img/Image_site/Image site/lille.jpg');
-    let image20 = fs.readFileSync('./protected/front/img/Image_site/Image site/nautilus.jpg');
-    let image21 = fs.readFileSync('./protected/front/img/Image_site/Image site/nemo33.jpg');
-    let image22 = fs.readFileSync('./protected/front/img/Image_site/Image site/PISCINE-DE-SAINT-ANDRE-LEZ-LILLE.jpg');
-    let image23 = fs.readFileSync('./protected/front/img/Image_site/Image site/PORTO-SAN-POLO.jpg');
-    let image24 = fs.readFileSync('./protected/front/img/Image_site/Image site/ROCHEFONTAINE.jpg');
-    let image25 = fs.readFileSync('./protected/front/img/Image_site/Image site/todi.jpg');
-    let image26 = fs.readFileSync('./protected/front/img/Image_site/Image site/Vodelee.jpg');
-  */  
-    
-    
 
-    /*
+    /*let image1 = fs.readFileSync('./protected/front/img/Image_site/Adeps.jpg');//
     // Test Insert Image:
-    let imageData = fs.readFileSync('./protected/front/img/boat.jpg');
-    let tmp_id = 1;
-    let sql = 'UPDATE Dive_Site SET Image = ? WHERE Id_Dive_Site = ' + tmp_id;
-    db.run(sql, [imageData], (err) => {
+    let sql = 'UPDATE Dive_Site SET Image = ? WHERE Id_Dive_Site = ' + 2;
+    db.run(sql, [image1], (err) => {
         if(err) {
             return console.log(err.message);
         }
         console.log('Row was added to the table');
     });*/
-
-
 
     // Test Sortir Image:
     /*let query = `SELECT * FROM Tmp_Image`;

@@ -168,7 +168,7 @@ document.getElementById("validate-dive-site").addEventListener("click", (e) => {
         return;
     }
     else if(image == null){
-        alert("l'image connard !");
+        alert("L'image connard !");
         return;
     }
     
@@ -209,8 +209,9 @@ document.getElementById("validate-dive-site").addEventListener("click", (e) => {
 
 function create_elements(tab_dive_sites) {
     // Création de l'affichage des sites de plongée
-    let container = document.getElementById("liste_dive_site");;
-    console.log(tab_dive_sites)
+    let container = document.getElementById("liste_dive_site");
+    container.innerHTML = "";
+    console.log(tab_dive_sites);
     // Parcourir le tableau d'éléments et créer des <li> pour chaque élément
     for (let i = 0; i < tab_dive_sites.length; i++) {
 
@@ -223,10 +224,11 @@ function create_elements(tab_dive_sites) {
         console.log(imageContainer);*/
         
         
-        // Créer un nouvel élément div
+        // Création dynamique des éléments HTML pour chaque site de plongée
         let siteElement = document.createElement('div');
         siteElement.classList.add("dive-site-list-item");
 
+        // Partie haute avec le nom du site et la ville
         let siteElementTop = document.createElement('div');
         siteElementTop.classList.add("top-part");
         let siteElementTopName = document.createElement('h1');
@@ -242,10 +244,11 @@ function create_elements(tab_dive_sites) {
         siteElementTop.appendChild(siteElementTopTown);
         siteElement.appendChild(siteElementTop);
 
+        // Partie basse avec l'image et les infos
         let siteElementBottom = document.createElement('div');
         siteElementBottom.classList.add("bottom-part");
         let siteElementBottomPicture = document.createElement('div');
-        siteElementBottomPicture.classList.add("picture");
+        siteElementBottomPicture.classList.add("bottom-left");
         let siteImage = tab_dive_sites[i].get_image();
         let blob = new Blob([siteImage], {type: "image/jpeg"});
         let imgElement = document.createElement("img");
@@ -253,7 +256,7 @@ function create_elements(tab_dive_sites) {
         siteElementBottomPicture.appendChild(imgElement);
         siteElementBottom.appendChild(siteElementBottomPicture);
         let siteElementBottomInfo = document.createElement('div');
-        siteElementBottomInfo.classList.add("bottom-left");
+        siteElementBottomInfo.classList.add("bottom-right");
         let siteElementBottomInfoAddress = document.createElement('p');
         if(tab_dive_sites[i].get_track_number() != null){
         siteElementBottomInfoAddress.innerHTML += " " + tab_dive_sites[i].get_track_number();
@@ -273,17 +276,26 @@ function create_elements(tab_dive_sites) {
         siteElementBottomInfoTel.innerHTML = tab_dive_sites[i].get_telephone();
         }
         siteElementBottomInfo.appendChild(siteElementBottomInfoTel);
-        //let siteElementBottomContactUrl = document.createElement('p');
-        //siteElementBottomContactUrl.innerHTML = tab_dive_sites[i].get_url();
-        //siteElementBottomInfo.appendChild(siteElementBottomContactUrl);
         siteElementBottom.appendChild(siteElementBottomInfo);
         siteElement.appendChild(siteElementBottom);
 
+        // Partie avec le bouton
+        let siteElementButtonContainer = document.createElement('div');
+        siteElementButtonContainer.classList.add("button");
+        let siteElementButton = document.createElement('button');
+        siteElementButton.classList.add("button");
+        siteElementButton.innerHTML = "Voir planning";
+        siteElementButtonContainer.appendChild(siteElementButton);
+        siteElement.appendChild(siteElementButtonContainer);
+
+        // Div qui s'affiche lors du hover du nom de la ville
         let siteElementHoverContainer = document.createElement('div');
         siteElementHoverContainer.classList.add("hover-container");
         let siteElementHover = document.createElement('div');
         siteElementHover.classList.add("hover-div");
         siteElementHoverContainer.appendChild(siteElementHover);
+
+        // Partie haute avec le nom de la ville et le pays
         let siteElementHoverTop = document.createElement('div');
         siteElementHoverTop.classList.add("top-part");
         let siteElementHoverTopCity = document.createElement('h1');
@@ -293,6 +305,8 @@ function create_elements(tab_dive_sites) {
         siteElementHoverTopCountry.innerHTML = tab_dive_sites[i].get_country();
         siteElementHoverTop.appendChild(siteElementHoverTopCountry);
         siteElementHover.appendChild(siteElementHoverTop);
+
+        // Partie basse avec la map et les coordonnées
         let siteElementHoverBottom = document.createElement('div');
         siteElementHoverBottom.classList.add("bottom-part");
         let siteElementHoverBottomMap = document.createElement('div');
@@ -302,9 +316,6 @@ function create_elements(tab_dive_sites) {
         siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
         let siteElementHoverBottomLocation = document.createElement('div');
         siteElementHoverBottomLocation.classList.add("location");
-        let siteElementHoverBottomLocationZip = document.createElement('p');
-        siteElementHoverBottomLocationZip.innerHTML = tab_dive_sites[i].get_zip_code();
-        siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationZip);
         let siteElementHoverBottomLocationAddress = document.createElement('p');
         siteElementHoverBottomLocationAddress.innerHTML = tab_dive_sites[i].get_aditionnal_info();
         siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationAddress);
@@ -348,11 +359,11 @@ function hoverlistener() {
 }
 
 async function initMap(tab_dive_sites,i) {
-            const { Map } = await google.maps.importLibrary("maps");
-            const map = new google.maps.Map(document.getElementById('map'+i), {
-                zoom: 4,
-                center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
-              });
+    const { Map } = await google.maps.importLibrary("maps");
+    const map = new google.maps.Map(document.getElementById('map'+i), {
+        zoom: 4,
+        center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
+      });
 }
 
 

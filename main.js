@@ -132,7 +132,6 @@ io.on('connection', (socket) =>{
     console.log('SOCKET : User connected');
 
     socket.on('userLogin', (id, first_name, last_name)=>{
-        console.log(id);
         socket.handshake.session.loggedIn = true;
         socket.handshake.session.first_name = first_name;
         socket.handshake.session.last_name = last_name;
