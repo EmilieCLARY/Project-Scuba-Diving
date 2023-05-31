@@ -115,6 +115,19 @@ app.get('/diver', (req, res) => {
     res.sendFile(__dirname + '/protected/front/html/diver.html');
 })
 
+app.get('/planned_dive', (req, res) => {
+    res.sendFile(__dirname + '/protected/front/html/planned_dive.html');
+})
+
+app.get('/app_user', (req, res) => {
+    if(req.session.isAdmin === 1){
+        res.sendFile(__dirname + '/protected/front/html/app_user.html');
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
 app.get('/admin', (req, res) => {
     if(req.session.loggedIn === true){
         res.sendFile(__dirname + '/front/html/admin.html')
@@ -136,9 +149,13 @@ io.on('connection', (socket) =>{
         socket.handshake.session.first_name = first_name;
         socket.handshake.session.last_name = last_name;
         socket.handshake.session.idUser = id;
-        socket.handshake.session.save();
+        
         console.log("SOCKET : " + first_name + " " + last_name+ " logged in.");
-        BDD.login(id, first_name, last_name);
+        BDD.login(id, first_name, last_name, (isAdmin) => {
+            socket.handshake.session.isAdmin = isAdmin; //isAdmin = 1 if admin, 0 if not
+            socket.handshake.session.save();
+            //console.log(socket.handshake.session.isAdmin + "-----" + socket.handshake.session.idUser);
+        });
     });
 
     socket.on('getAllDiveSites', () => {
@@ -189,12 +206,24 @@ io.on('connection', (socket) =>{
             console.log("BDD : User profile sent to client.");
         });
     });
+
+    socket.on('getAllAppUsers', () => {
+        BDD.getFromDB((tabAppUsers) => {
+            socket.emit('receiveAllAppUsers', tabAppUsers);
+            console.log("BDD : All app users sent to client.");
+        }, "Application_User");
+    });
+
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {
         BDD.createDiverInDB(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     });
 
     socket.on('addDiveSite', (id,name,latitude,longitude,track_type,track_number,track_name,zip_code,city,coutntry,aditionnal_info,telephone,url,image) => {
         BDD.createDiveSiteInDB(id,name,latitude,longitude,track_type,track_number,track_name,zip_code,city,coutntry,aditionnal_info,telephone,url,image);
+    });
+
+    socket.on('addPlannedDive', (id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site) => {
+        BDD.createPlannedDiveInDB(id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site);
     });
 
     socket.on('disconnect', () => {

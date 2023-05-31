@@ -271,10 +271,9 @@ function createEmergencyInDB(sos_number, emergency_plan, post_accident_procedure
         console.log('BDD : Close the database connection.');
     });
 
-    
 }
 
-function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_dive_price, instructor_dive_price, diver_price, instructor_price, dive_site_id_dive_site) {
+function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_price, instructor_price, dive_site_id_dive_site) {
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -282,10 +281,10 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
         console.log('BDD : Connected to the database.');
     });
 
-    let sql = `INSERT INTO Planned_Dive(Id_Planned_Dive, Planned_Date, Planned_Time, Comment, Special_Needs, Status, Diver_Dive_Price, Instructor_Dive_Price, Diver_Price, Instructor_Price, Dive_Site_Id_Dive_Site)
-    VALUES(?,?,?,?,?,?,?,?,?,?,?)`;
+    let sql = `INSERT INTO Planned_Dive(Id_Planned_Dive, Planned_Date, Planned_Time, Comments, Special_Needs, Status, Diver_Price, Instructor_Price, Dive_Site_Id_Dive_Site)
+    VALUES(?,?,?,?,?,?,?,?,?)`;
 
-    db.run(sql, [id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_dive_price, instructor_dive_price, diver_price, instructor_price, dive_site_id_dive_site], (err) => {
+    db.run(sql, [id_planned_dive, planned_date, planned_time, comment, special_needs, status, diver_price, instructor_price, dive_site_id_dive_site], (err) => {
         if(err) {
             return console.log(err.message);
         }
@@ -302,7 +301,7 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
 
 
 
-function login(id, first_name, last_name){
+function login(id, first_name, last_name, callback){
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -323,6 +322,7 @@ function login(id, first_name, last_name){
         }
 
         //console.log(userAlreadyExist);
+        //If the user is not in the database, create it
         if(userAlreadyExist == false){
             //Create the user in the database
             let sql = `INSERT INTO Application_User(Id_Application_User, Firstname, Lastname)
@@ -332,15 +332,28 @@ function login(id, first_name, last_name){
                     return console.log(err.message);
                 }
                 console.log('BDD : User was added to the table');
+                callback(0);
             });
         }
         else{
+            //The user is already in the database
+            //Check if the user is admin
+            let sql = `SELECT isAdmin FROM Application_User WHERE Id_Application_User = ?`;
+            db.get(sql, [id], (err, row) => {
+                if(err) {
+                    return console.log(err.message);
+                }
+                if(row.isAdmin == 1){
+                    callback(1);
+                }
+                else{
+                    callback(0);
+                }
+            });
             console.log("BDD : User already exist");
         }
 
     });
-    
-
     
     db.close((err) => {
         if (err) {

@@ -4,6 +4,39 @@ import SocketManager from './SocketManager/SocketDiveSite.js'
 SocketManager.getAllDiveSites();
 
 let tabDiveSites = [];
+let modal = document.getElementById("site-creation-form");
+let openModal = document.getElementById("open-site-modal");
+let closeModal = document.getElementById("close-site-modal");
+let choseImage = document.getElementById("dive-site-image-button");
+let closeButton = document.getElementById("site-close-button");
+
+
+
+openModal.onclick = function() {
+    modal.style.display = "block";
+}
+
+closeModal.onclick = function() {
+    modal.style.display = "none";
+}
+
+closeModal.onmouseover = function() {
+    closeButton.classList.add("fa-shake");
+}
+
+closeModal.onmouseout = function() {
+    closeButton.classList.remove("fa-shake");
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+}
+
+choseImage.onclick = function() {
+    document.getElementById("dive-site-image").click();
+}
 
 // Classe privée Site de plongée
 class dive_site {
@@ -281,7 +314,7 @@ function create_elements(tab_dive_sites) {
 
         // Partie avec le bouton
         let siteElementButtonContainer = document.createElement('div');
-        siteElementButtonContainer.classList.add("button");
+        siteElementButtonContainer.classList.add("button-container");
         let siteElementButton = document.createElement('button');
         siteElementButton.classList.add("button");
         siteElementButton.innerHTML = "Voir planning";
@@ -358,6 +391,7 @@ function hoverlistener() {
 
 }
 
+
 async function initMap(tab_dive_sites,i) {
     const { Map } = await google.maps.importLibrary("maps");
     const map = new google.maps.Map(document.getElementById('map'+i), {
@@ -372,6 +406,9 @@ function updateDiveSite(){
     tabDiveSites = [];
     SocketManager.getAllDiveSites();
 }
+
+// CALENDAR :
+
 
 //window.initMap = initMap;
 
