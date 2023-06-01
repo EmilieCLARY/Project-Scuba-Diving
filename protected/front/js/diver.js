@@ -162,6 +162,7 @@ function setButtonListener(){
         let instructor_qualification = document.getElementById("diver-instructor-qualification").value;
         let nox_level = document.getElementById("diver-nox-level").value;
         let additionnal_qualification = document.getElementById("diver-additionnal-qualification").value;
+        console.log(additionnal_qualification);
         let licence_number = document.getElementById("diver-license-number").value;
         let licence_expiration_date = document.getElementById("diver-license-expiration-date").value;
         let medical_certificate_expiration_date = document.getElementById("diver-medical-certificate-expiration-date").value;
@@ -184,7 +185,7 @@ function setButtonListener(){
 
 
         // Send to server
-        console.log(tabDivers);
+        //console.log(tabDivers);
         // Search the id max
         let id = 0;
         tabDivers.forEach(element => {
@@ -222,7 +223,7 @@ function setButtonListener(){
             console.log("Adding diver in database");
         }
         else{
-            console.log("Modifying diver" + modifiedDiver + "in database");
+            console.log("Modifying diver " + modifiedDiver + " in database");
             modifyMode = false;
             modifiedDiver = -1;
         }
@@ -510,6 +511,7 @@ function modifierDiver(id){
     modifiedDiver = id;
 
     let tabElement = getDiverById(id);
+
     document.getElementById("diver-firstname").value = tabElement.get_first_name();
     document.getElementById("diver-lastname").value = tabElement.get_last_name();
     document.getElementById("diver-qualification").value = tabElement.get_diver_qualification();

@@ -294,7 +294,7 @@ nav .navbar .login-container i {
   box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
 }
 
-.form-dive-site {
+.form-dive-site{
   width  : 70vw;
   height: 80vh;
   background : var(--bg-color);
@@ -487,6 +487,201 @@ nav .navbar .login-container i {
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
 
+/* --------_ Modal Planning _-------- */
+
+
+.div-modal{
+  width  : 70vw;
+  height: 80vh;
+  background : var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  margin-top: 15vh;
+  margin-left: 15vw;
+  border-radius: 3vw;
+}
+
+.div-modal .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  padding-left: 2vw;
+}
+
+.div-modal .title h1 {
+  font-size: 3.5vh;
+  margin-left: 2vw;
+}
+
+.div-modal .title span {
+  font-size: 3.5vh;
+  margin-right: 2.5vw;
+}
+
+.div-modal .title span:hover {
+  cursor: pointer;
+}
+
+
+.div-modal .form-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 60vh;
+  width: 70vw;
+}
+
+.div-modal .form-body .labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 60vh;
+  width: 30vw;
+  margin-right: 2.5vw;
+}
+
+.div-modal .form-body .labels label {
+  font-size: 2.5vh;
+  height: 5vh;
+  padding-top: 0.5vh;
+}
+
+.div-modal .form-body .inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  width: 30vw;
+  margin: 0 2.5vw;
+}
+
+.div-modal .form-body .inputs input[type=text] {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  padding-left: 1vw;
+  font-size: 2vh;
+}
+
+.div-modal .form-body .inputs input[type=file] {
+  width: 25vw;
+  height: 5vh;
+  display: none;
+}
+
+.div-modal .form-body .inputs #dive-site-image-button {
+  width: 15vw;
+  height: 4vh;
+  margin-left: 4vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.div-modal .form-body .inputs #dive-site-image-button:hover {
+  transition: all .1s ease;
+  color: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
+}
+
+
+.div-modal .form-dive-site-validation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+}
+
+.div-modal .form-dive-site-validation #validate-dive-site {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.div-modal .form-dive-site-validation #validate-dive-site:hover{
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+
+.div-modal .form-dive-site-validation #validate-diver {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.div-modal .form-dive-site-validation #validate-diver:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+
+#open-planning-modal {
+  position: fixed;
+  top: 50vh;
+  left: 90vw;
+  width: 8vw;
+  height: 5vw;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 2.5vh;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+#open-planning-modal:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
 
 /* --------_ Profile page _-------- */
 
@@ -682,13 +877,13 @@ nav .navbar .login-container i {
 
 
 /* Planned_Dive Page */
+
+
 .planned-dive-list-container{
   width  : 100vw;
   background : var(--bg-color);
   align-items: center;
 }
-
-
 
 .cards {
   display: flex;
@@ -754,7 +949,33 @@ nav .navbar .login-container i {
   text-align: right;
 }
 
+.div_haut{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.div_milieuTop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.div_milieuBot{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.div_bas{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
 /* --------_ Modals _-------- */
 
@@ -773,5 +994,31 @@ nav .navbar .login-container i {
 
 /* --------_ Calendar _-------- */
 
+#calendar {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin-bottom: 4%;
+}
 
+.calendar-parent {
+  height: 100vh;
+}
 
+.fc-event {
+  border-width: 3px;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  border-style: solid;
+  border-radius: 1vh;
+  border-width: 0.5vh;
+}
+
+.fc {
+  background-color: lightcyan;
+}
+
+.fc-col-header {
+  background-color: var(--main-color);
+}

@@ -42,7 +42,33 @@
             </div>
         </a>
     </div>
-            
+    
+    <div id="form-appuser-container" class="modal">
+        <div class="form-dive-site">
+            <div class="title">
+                <h1>Modification d'un utilisateur</h1>
+                <span id="close-site-modal"><i id="diver-close-button" class="fa-regular fa-circle-xmark"></i></span>
+            </div>
+
+            <div class="form-body">
+                <div class="labels">
+                    <label for="app-user-diver">Id de Diver correspondant</label>
+                    <label for="app-user-admin">Administrateur</label>
+                </div>
+                <div class="inputs">
+                    <input type="text" id="app-user-diver" name="app-user-diver" placeholder="Entrez ici">
+                    <select type="text" id="app-user-admin" name="app-user-admin" placeholder="Administrateur">
+                        <option value="0">Non</option>
+                        <option value="1">Oui</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-dive-site-validation">
+                <button id="validate-diver">Modifier l'utilisateur</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 <script type="module" src="/protected/front/js/app_user.js"></script>

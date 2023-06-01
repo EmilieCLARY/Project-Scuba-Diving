@@ -250,11 +250,16 @@ io.on('connection', (socket) =>{
         BDD.updateDb("Diver", "Diver_Qualifications", diver_qualification, id);
         BDD.updateDb("Diver", "Instructor_Qualification", instructor_qualification, id);
         BDD.updateDb("Diver", "Nox_Level", nox_level, id);
-        BDD.updateDb("Diver", "Additionnal_Qualifications", additionnal_qualification, id);
+        BDD.updateDb("Diver", "Additional_Qualifications", additionnal_qualification, id);
         BDD.updateDb("Diver", "License_Number", licence_number, id);
         BDD.updateDb("Diver", "License_Expiration_Date", licence_expiration_date, id);
         BDD.updateDb("Diver", "Medical_Certificate_Expiration_Date", medical_certificate_expiration_date, id);
         BDD.updateDb("Diver", "Birthdate", birth_date, id);
+    });
+
+    socket.on('modifyAppUser', (id, id_diver, isAdmin) => {
+        BDD.updateDb("Application_User", "Id_Diver", id_diver, id);
+        BDD.updateDb("Application_User", "isAdmin", isAdmin, id);
     });
 });
 

@@ -48,6 +48,21 @@ choseImage.onclick = function() {
     document.getElementById("dive-site-image").click();
 }
 
+let modal2 = document.getElementById("container-modal");
+let closeModal2 = document.getElementById("close-planning-modal");
+let closeButton2 = document.getElementById("planning-close-button");
+closeModal2.onclick = function() {
+    modal2.style.display = "none";
+}
+
+closeModal2.onmouseover = function() {
+    closeButton2.classList.add("fa-shake");
+}
+
+closeModal2.onmouseout = function() {
+    closeButton2.classList.remove("fa-shake");
+}
+
 // Classe privée Site de plongée
 class dive_site {
     constructor(id_,site_name_, gps_latitude_, gps_longitude_, track_type_, track_number_, track_name_, zip_code_, city_, country_, aditionnal_info_, telephone_, url_, image_) {
@@ -234,7 +249,7 @@ class planned_dives {
     }
 
     get_status() {
-        return this.status;
+        return this.statut;
     }
 
     set_status(status) {
@@ -410,7 +425,7 @@ function create_elements(tab_dive_sites) {
         siteElementBottomInfo.appendChild(siteElementBottomInfoAddress);
         let siteElementBottomInfoTel = document.createElement('p');
         if(tab_dive_sites[i].get_telephone() == null){
-            siteElementBottomInfoTel.innerHTML = "06 06 06 06 06";
+            siteElementBottomInfoTel.innerHTML = "Numéro de téléphone indisponible";
         }
         else{
         siteElementBottomInfoTel.innerHTML = tab_dive_sites[i].get_telephone();
@@ -513,6 +528,7 @@ function createListener(){
         document.getElementById("calBtn" + tabDiveSites[i].get_id()).addEventListener("click", (e) => {
             let tmp = tabDiveSites[i].get_id();
             createCalendar(tmp); 
+            modal2.style.display = "block";
         });
     }
 }
@@ -520,15 +536,17 @@ function createListener(){
 function createCalendar(id) {
     //document.addEventListener('DOMContentLoaded', function() {
         let id_planned = id;
+        let statut_color;
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',
-        slotDuration: '00:30:00',
+        slotDuration: '01:00:00',
         //slotMinTime: '08:00:00',
         //slotMaxTime: '18:00:00',
 
         allDaySlot: false,
+        defaultTimedEventDuration: '02:00:00',
         headerToolbar: {
         left: 'prev custom1 next',
         center: 'title',
@@ -563,17 +581,33 @@ function createCalendar(id) {
 
         });
 
-        //calendar.addEvent({
-        //      title: 'event ADD',
-        //      start  : '2023-05-30T11:00:00',
-        //      end    : '2023-05-30T17:43:00',
-        //});
 
         tabPlannedDives.forEach(element => {
             if(element.get_id_dive_site() == id_planned) {
+                console.log(element);
+                console.log("Test : " + element.get_status());
+                switch(element.get_status()) {
+                    case "Ouverte":
+                        statut_color = "lime";
+                        break;
+                    case "Close":
+                        statut_color = "red";
+                        break;
+                    case "Prévue":
+                        statut_color = "#F3DE8A";
+                        break;
+                    default:
+                        console.log("Erreur de statut");
+                        statut_color = "blue";
+                        break;
+                }
+
                 calendar.addEvent({
                     title: "Plongée",
                     start  : element.get_planned_date() + "T" + element.get_planned_time(),
+                    textColor   : '#1C0B19',
+                    borderColor : '#140D4F',
+                    backgroundColor: statut_color,
                 });    
             }
         });
@@ -581,6 +615,10 @@ function createCalendar(id) {
 
         calendar.setOption('locale', 'fr');
         calendar.render();
+        setTimeout(function() {
+            calendar.changeView('timeGridWeek');
+        }, 1);
+
     //});
 }
 
