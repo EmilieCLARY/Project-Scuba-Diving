@@ -16,6 +16,16 @@ function addDiver(id,first_name,last_name,diver_qualification,instructor_qualifi
     //console.log("emitAddDiver");
 }
 
+function deleteDiver(id){
+    socket.emit('deleteInDb', "Diver", id);
+    //console.log("emitDeleteDiver");
+}
+
+function modifyDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date){
+    socket.emit('modifyDiver',id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+    //console.log("emitModifyDiver");
+}
+
 // SOCKET ON
 
 socket.on('receiveAllDivers', (tabDivers) => {
@@ -27,4 +37,6 @@ socket.on('receiveAllDivers', (tabDivers) => {
 export default {
     getAllDivers,
     addDiver,
+    deleteDiver,
+    modifyDiver,
 }

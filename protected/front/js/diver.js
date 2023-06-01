@@ -3,6 +3,10 @@ import SocketManager from './SocketManager/SocketDiver.js'
 SocketManager.getAllDivers();
 
 let tabDivers = [];
+
+let modifyMode = false;
+let modifiedDiver = -1;
+
 let modal = document.getElementById("form-diver-container");
 let openModal = document.getElementById("open-site-modal");
 let closeModal = document.getElementById("close-site-modal");
@@ -145,69 +149,89 @@ function LoadAllDivers(tab){
         tabDivers.push(tmp);
     });
     createDiverTable(tabDivers);
-    console.log(tabDivers);
+    setListeners();
+    //console.log(tabDivers);
 }
 
-document.getElementById("validate-diver").addEventListener("click", (e) => {
-    // Get all input
-    let first_name = document.getElementById("diver-firstname").value;
-    let last_name = document.getElementById("diver-lastname").value;
-    let diver_qualification = document.getElementById("diver-qualification").value;
-    let instructor_qualification = document.getElementById("diver-instructor-qualification").value;
-    let nox_level = document.getElementById("diver-nox-level").value;
-    let additionnal_qualification = document.getElementById("diver-additionnal-qualification").value;
-    let licence_number = document.getElementById("diver-license-number").value;
-    let licence_expiration_date = document.getElementById("diver-license-expiration-date").value;
-    let medical_certificate_expiration_date = document.getElementById("diver-medical-certificate-expiration-date").value;
-    let birth_date = document.getElementById("diver-birthdate").value;
+function setButtonListener(){
+    document.getElementById("validate-diver").addEventListener("click", (e) => {
+        // Get all input
+        let first_name = document.getElementById("diver-firstname").value;
+        let last_name = document.getElementById("diver-lastname").value;
+        let diver_qualification = document.getElementById("diver-qualification").value;
+        let instructor_qualification = document.getElementById("diver-instructor-qualification").value;
+        let nox_level = document.getElementById("diver-nox-level").value;
+        let additionnal_qualification = document.getElementById("diver-additionnal-qualification").value;
+        let licence_number = document.getElementById("diver-license-number").value;
+        let licence_expiration_date = document.getElementById("diver-license-expiration-date").value;
+        let medical_certificate_expiration_date = document.getElementById("diver-medical-certificate-expiration-date").value;
+        let birth_date = document.getElementById("diver-birthdate").value;
 
-    // Check if all input are filled
-    if(first_name == "" || last_name == "" || diver_qualification == "" || instructor_qualification == "" || nox_level == "" || additionnal_qualification == "" || licence_number == "" || licence_expiration_date == "" || medical_certificate_expiration_date == "" || birth_date == ""){
-        alert("Veuillez remplir tous les champs");
-        return;
-    }
-
-    // Vérification de la date
-    let birth_date__ = new Date(document.getElementById("diver-birthdate").value);
-    let medical_certificate_expiration_date__ = new Date(document.getElementById("diver-medical-certificate-expiration-date").value);
-    let licence_expiration_date__ = new Date(document.getElementById("diver-license-expiration-date").value);
-    let dateActuelle = new Date(); 
-    if ((birth_date__ < dateActuelle) || medical_certificate_expiration_date__ < dateActuelle || licence_expiration_date__ < dateActuelle) {
-            alert("Une date n'est pas valide");
-        return;
-    }
-
-
-    // Send to server
-    console.log(tabDivers);
-    // Search the id max
-    let id = 0;
-    tabDivers.forEach(element => {
-        if(element.get_id() > id){
-            id = parseInt(element.get_id());
+        // Check if all input are filled
+        if(first_name == "" || last_name == "" || diver_qualification == "" || instructor_qualification == "" || nox_level == "" || additionnal_qualification == "" || licence_number == "" || licence_expiration_date == "" || medical_certificate_expiration_date == "" || birth_date == ""){
+            alert("Veuillez remplir tous les champs");
+            return;
         }
+
+        // Vérification de la date
+        let medical_certificate_expiration_date__ = new Date(document.getElementById("diver-medical-certificate-expiration-date").value);
+        let licence_expiration_date__ = new Date(document.getElementById("diver-license-expiration-date").value);
+        let dateActuelle = new Date(); 
+        if (medical_certificate_expiration_date__ < dateActuelle || licence_expiration_date__ < dateActuelle || birth_date > dateActuelle) {
+                alert("Une date n'est pas valide");
+            return;
+        }
+
+
+        // Send to server
+        console.log(tabDivers);
+        // Search the id max
+        let id = 0;
+        tabDivers.forEach(element => {
+            if(element.get_id() > id){
+                id = parseInt(element.get_id());
+            }
+        });
+        id++;
+        //console.log(id);
+        if(modifyMode == false){
+            SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+            console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+        }
+        else{
+            SocketManager.modifyDiver(modifiedDiver,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+        }
+
+        // Clear all input
+        document.getElementById("diver-firstname").value = "";
+        document.getElementById("diver-lastname").value = "";
+        document.getElementById("diver-qualification").value = "11";
+        document.getElementById("diver-instructor-qualification").value = "1";
+        document.getElementById("diver-nox-level").value = "";
+        document.getElementById("diver-additionnal-qualification").value = "";
+        document.getElementById("diver-license-number").value = "";
+        document.getElementById("diver-license-expiration-date").value = "";
+        document.getElementById("diver-medical-certificate-expiration-date").value = "";
+        document.getElementById("diver-birthdate").value = "";
+
+        // Closing modal
+        modal.style.display = "none";
+
+        // Update the list
+        if(modifyMode == false){
+            console.log("Adding diver in database");
+        }
+        else{
+            console.log("Modifying diver" + modifiedDiver + "in database");
+            modifyMode = false;
+            modifiedDiver = -1;
+        }
+        
+        setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
     });
-    id++;
-    //console.log(id);
-    SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
-    console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+}
 
-    // Clear all input
-    document.getElementById("diver-firstname").value = "";
-    document.getElementById("diver-lastname").value = "";
-    document.getElementById("diver-qualification").value = "11";
-    document.getElementById("diver-instructor-qualification").value = "1";
-    document.getElementById("diver-nox-level").value = "";
-    document.getElementById("diver-additionnal-qualification").value = "";
-    document.getElementById("diver-license-number").value = "";
-    document.getElementById("diver-license-expiration-date").value = "";
-    document.getElementById("diver-medical-certificate-expiration-date").value = "";
-    document.getElementById("diver-birthdate").value = "";
-
-    // Update the list
-    console.log("Adding diver in database");
-    setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
-});
+setButtonListener();
 
 
 function updateDiver(){
@@ -220,7 +244,7 @@ function updateDiver(){
 function createDiverTable(tabDivers){
     let table = document.getElementById("liste_diver");
     table.innerHTML = "";
-    console.log(tabDivers);
+    //console.log(tabDivers);
 
     let tableau = document.createElement("table");
     tableau.classList.add("blueTable");
@@ -290,6 +314,12 @@ function createDiverTable(tabDivers){
     let th12 = document.createElement("th");
     th12.classList.add("th12");
     th12.innerHTML = "Modifier";
+    tr.appendChild(th12);
+
+    let th13 = document.createElement("th");
+    th13.classList.add("th13");
+    th13.innerHTML = "Supprimer";
+    tr.appendChild(th13);
     
     head.appendChild(tr);
     tableau.appendChild(head);
@@ -409,7 +439,25 @@ function createDiverTable(tabDivers){
         cellule10.innerHTML = tabDivers[i].get_birth_date();
 
         let cellule11 = document.createElement("td");
-        /*  A FAIRE */
+        let span_c11 = document.createElement("span");
+        let i_c11 = document.createElement("i");
+        i_c11.setAttribute("id", "btn_modif" + tabDivers[i].get_id());
+        i_c11.classList.add("fa-solid");
+        i_c11.classList.add("fa-pen-to-square"); 
+
+        span_c11.appendChild(i_c11);
+        cellule11.appendChild(span_c11);
+
+        let cellule12 = document.createElement("td");
+        let span_c12 = document.createElement("span");
+        let i_c12 = document.createElement("i");
+        i_c12.setAttribute("id", "btn_suppr" + tabDivers[i].get_id());
+        i_c12.classList.add("fa-solid");
+        i_c12.classList.add("fa-trash-can");
+
+        span_c12.appendChild(i_c12);
+        cellule12.appendChild(span_c12);
+
 
         ligne.appendChild(cellule);
         ligne.appendChild(cellule1);
@@ -422,16 +470,73 @@ function createDiverTable(tabDivers){
         ligne.appendChild(cellule8);
         ligne.appendChild(cellule9);
         ligne.appendChild(cellule10);
+        ligne.appendChild(cellule11);
+        ligne.appendChild(cellule12);
 
         tbody.appendChild(ligne);
 
         tableau.appendChild(tbody);
 
         table.appendChild(tableau);
-
     }
+}
 
+function setListeners(){
+    for (let i = 0; i < tabDivers.length; i++){
+        let btn_modif = document.getElementById("btn_modif" + tabDivers[i].get_id());
+        let btn_suppr = document.getElementById("btn_suppr" + tabDivers[i].get_id());
 
+        btn_modif.addEventListener("click", function(){
+            console.log("Modification du plongeur " + tabDivers[i].get_id());
+            modifierDiver(tabDivers[i].get_id());
+        });
+
+        btn_suppr.addEventListener("click", function(){
+            // Demande de confirmation
+            let text = "Êtes-vous sûr de vouloir supprimer " + tabDivers[i].get_first_name()+ " " + tabDivers[i].get_last_name() + "de la base de données ?\nCette action est irréversible !";
+            if(confirm(text) == true){
+                console.log("Suppression du plongeur " + tabDivers[i].get_id());
+                supprimerDiver(tabDivers[i].get_id());
+            }
+            else{
+                console.log("Suppression annulée");
+            }
+        });
+    }
+}
+
+function modifierDiver(id){
+    modifyMode = true;
+    modifiedDiver = id;
+
+    let tabElement = getDiverById(id);
+    document.getElementById("diver-firstname").value = tabElement.get_first_name();
+    document.getElementById("diver-lastname").value = tabElement.get_last_name();
+    document.getElementById("diver-qualification").value = tabElement.get_diver_qualification();
+    document.getElementById("diver-instructor-qualification").value = tabElement.get_instructor_qualification();
+    document.getElementById("diver-nox-level").value = tabElement.get_nox_level();
+    document.getElementById("diver-additionnal-qualification").value = tabElement.get_additionnal_qualification();
+    document.getElementById("diver-license-number").value = tabElement.get_licence_number();
+    document.getElementById("diver-license-expiration-date").value = tabElement.get_licence_expiration_date();
+    document.getElementById("diver-medical-certificate-expiration-date").value = tabElement.get_medical_certificate_expiration_date();
+    document.getElementById("diver-birthdate").value = tabElement.get_birth_date();
+
+    modal.style.display = "block";
+}
+
+function supprimerDiver(id){
+    SocketManager.deleteDiver(id);
+    // Update de la page
+    setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
+}
+
+function getDiverById(id){
+    for(let i = 0; i < tabDivers.length; i++){
+        if(tabDivers[i].get_id() == id){
+            return tabDivers[i];
+        }
+    }
+    return null;
 }
 
 export default {

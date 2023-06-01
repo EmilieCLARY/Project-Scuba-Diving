@@ -99,6 +99,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/front/html/index.html');
 })
 
+app.get('/login', (req, res) => {
+    res.redirect('/');
+})
+
 app.get('/app', (req, res) => {
     res.sendFile(__dirname + '/protected/front/html/app.html');
 })
@@ -158,6 +162,8 @@ io.on('connection', (socket) =>{
         });
     });
 
+    /* ----------------------------- GET FUNCTIONS ----------------------------- */
+
     socket.on('getAllDiveSites', () => {
         BDD.getFromDB((tabDiveSites) => {
             socket.emit('receiveAllDiveSites', tabDiveSites);
@@ -214,6 +220,8 @@ io.on('connection', (socket) =>{
         }, "Application_User");
     });
 
+    /* ------------------------------ ADD FUNCTIONS ----------------------------- */
+
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {
         BDD.createDiverInDB(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
     });
@@ -228,6 +236,25 @@ io.on('connection', (socket) =>{
 
     socket.on('disconnect', () => {
         console.log('SOCKET : User disconnected');
+    });
+
+    /* ------------------------------ UPDATE FUNCTIONS ----------------------------- */
+
+    socket.on('deleteInDb', (table, id) => {
+        BDD.deleteRowInDb(table, id);
+    });
+
+    socket.on('modifyDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {
+        BDD.updateDb("Diver", "Lastname", last_name, id);
+        BDD.updateDb("Diver", "Firstname", first_name, id);
+        BDD.updateDb("Diver", "Diver_Qualifications", diver_qualification, id);
+        BDD.updateDb("Diver", "Instructor_Qualification", instructor_qualification, id);
+        BDD.updateDb("Diver", "Nox_Level", nox_level, id);
+        BDD.updateDb("Diver", "Additionnal_Qualifications", additionnal_qualification, id);
+        BDD.updateDb("Diver", "License_Number", licence_number, id);
+        BDD.updateDb("Diver", "License_Expiration_Date", licence_expiration_date, id);
+        BDD.updateDb("Diver", "Medical_Certificate_Expiration_Date", medical_certificate_expiration_date, id);
+        BDD.updateDb("Diver", "Birthdate", birth_date, id);
     });
 });
 

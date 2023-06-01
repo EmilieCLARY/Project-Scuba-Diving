@@ -61,12 +61,12 @@ class planned_dives {
         this.special_needs = special_needs;
     }
 
-    get_status() {
-        return this.status;
+    get_statut() {
+        return this.statut;
     }
 
-    set_status(status) {
-        this.status = status;
+    set_statut(status) {
+        this.statut = statut;
     }
 
 
@@ -84,6 +84,14 @@ class planned_dives {
 
     set_instructor_dive_price(instructor_dive_price) {
         this.instructor_dive_price = instructor_dive_price;
+    }
+
+    get_id_dive_site() {
+        return this.id_dive_site;
+    }
+
+    set_id_dive_site(id_dive_site) {
+        this.id_dive_site = id_dive_site;
     }
 
 }
@@ -225,7 +233,7 @@ function LoadAllPlannedDives(tab) {
         let tmp = new planned_dives(element.Id_Planned_Dive,element.Planned_Date, element.Planned_Time, element.Comments, element.Special_Needs, element.Status, element.Diver_Price, element.Instructor_Price, element.Dive_Site_Id_Dive_Site);
         tabPlannedDives.push(tmp);
     });
-    createCardsPlannedDive(tabPlannedDives);
+    createCardsPlannedDive(tabPlannedDives, tabDiveSites);
     console.log(tabPlannedDives);
 }
 
@@ -236,7 +244,7 @@ function LoadAllDiveSites(tab){
     });
     console.log(tabDiveSites);
     
-    createDiveSitesList();
+    createDiveSitesList(tabPlannedDives);
 }
 
 function createDiveSitesList(){
@@ -311,26 +319,85 @@ function updatePlannedDive(){
     SocketManager.getAllPlannedDives();
 }
 
-function createCardsPlannedDive(tabPlannedDives){
+function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
 
     let ul = document.getElementById("liste_planned_dive");
     ul.innerHTML = "";
     ul.classList.add("cards");
 
+    /* Cartes des Planned_Dive*/
+
     for(let i = 0; i < tabPlannedDives.length; i++){
+
+        /* Création des cartes */
 
         let li = document.createElement("li");
         li.classList.add("cards_item");
-        li.innerHTML = tabPlannedDives[i].get_planned_date();
+
+        /* Remplissage des cartes */
 
         let div = document.createElement("div");
         div.classList.add("card");
 
-        ul.appendChild(li);
+        let dive_ville = document.createElement("h1");
+        dive_ville.innerHTML = "Plongée à " + getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city();
+        dive_ville.classList.add("card_title");
+        div.appendChild(dive_ville);
 
+        let dive_site_name = document.createElement("h2");
+        dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
+        dive_site_name.classList.add("card_title");
+        div.appendChild(dive_site_name);
+
+        let dive_date = document.createElement("h2");
+        dive_date.innerHTML = "Prévue le : " + tabPlannedDives[i].get_planned_date();
+        dive_date.classList.add("card_title");
+        dive_date.classList.add("card_date");
+        div.appendChild(dive_date);
+
+        let dive_time = document.createElement("h2");
+        dive_time.innerHTML = "À : " + tabPlannedDives[i].get_planned_time();
+        dive_time.classList.add("card_title");
+        dive_time.classList.add("card_date");
+        div.appendChild(dive_time);
+
+        let dive_price_diver = document.createElement("p");
+        if(tabPlannedDives[i].get_diver_dive_price() == 0){
+            dive_price_diver.innerHTML = "Prix plongeur : Gratuit";
+        }else{
+            dive_price_diver.innerHTML = "Prix plongeur : " + tabPlannedDives[i].get_diver_dive_price() + "€";
+        }
+        dive_price_diver.classList.add("card_text");
+        div.appendChild(dive_price_diver);
+
+        let dive_price_instructor = document.createElement("p");
+        if(tabPlannedDives[i].get_instructor_dive_price() == 0){
+            dive_price_instructor.innerHTML = "Prix moniteur : Gratuit";
+        }else{
+            dive_price_instructor.innerHTML = "Prix moniteur : " + tabPlannedDives[i].get_instructor_dive_price() + "€";
+        }
+        dive_price_instructor.classList.add("card_text");
+        div.appendChild(dive_price_instructor);
+
+        let dive_status = document.createElement("p");
+        dive_status.innerHTML = "Statut : " + tabPlannedDives[i].get_statut();
+        dive_status.classList.add("card_text");
+        div.appendChild(dive_status);
+
+        li.appendChild(div);
+        ul.appendChild(li);
 
     }
 
+}
+
+// Fonction réalisée par Alexis Sauteuse mais surtout par la touche tab (merci Copilot)
+function getDiveSiteById(id){  
+    for(let i = 0; i < tabDiveSites.length; i++){
+        if(tabDiveSites[i].get_id() == id){
+            return tabDiveSites[i];
+        }
+    }
 }
 
 export default {

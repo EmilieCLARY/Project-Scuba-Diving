@@ -9,6 +9,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <title>Scuba-Diving Manager</title>
 </head>
 <body>
@@ -83,11 +84,14 @@
         </div>
     </div>
 
+    <div id='calendar'></div>
+
 </body>
 
 <script type="module" src="/protected/front/js/dive_site.js"></script>
 <script type="module" src="/protected/front/js/user_info.js"></script>
-<script defer
+
+<!--<script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD8NK4QLSxvtPZrIbA8qvbDQ35-EYYDTg&callback=initMap">
-    </script>
+</script>-->
 </html>

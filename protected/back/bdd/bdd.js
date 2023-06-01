@@ -430,10 +430,10 @@ function getUserProfile(id, callback) {
 }
 
 /*********************************************************************/
-/*                           SET FUNCTIONS                           */
+/*                          EDIT FUNCTIONS                           */
 /*********************************************************************/
 
-function updateDb(callback, table, column, value, id){
+function updateDb(table, column, value, id){
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
             console.error(err.message);
@@ -457,6 +457,30 @@ function updateDb(callback, table, column, value, id){
     });
 }
 
+function deleteRowInDb(table, id){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `DELETE FROM ` + table + ` WHERE Id_` + table + ` = ?`;
+    db.run(sql, [id], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('BDD : ' + table + id + ' was deleted');
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
 // export the functions
 module.exports = {
     // Connection functions
@@ -468,8 +492,9 @@ module.exports = {
     getFromDB,
     getUserProfile,
 
-    // Set functions
+    // Edit functions
     updateDb,
+    deleteRowInDb,
 
     // Creation functions
     createDiverInDB,

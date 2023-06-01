@@ -682,6 +682,12 @@ nav .navbar .login-container i {
 
 
 /* Planned_Dive Page */
+.planned-dive-list-container{
+  width  : 100vw;
+  background : var(--bg-color);
+  align-items: center;
+}
+
 
 
 .cards {
@@ -689,35 +695,37 @@ nav .navbar .login-container i {
   flex-wrap: wrap;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding-top: 14vh;
 }
 
 .cards_item {
   display: flex;
   padding: 1rem;
+  margin: 5%;
 }
 
 @media (min-width: 40rem) {
   .cards_item {
-    width: 28vw;
-    max-width: 30vh;
+    width: 50%;
   }
 }
 
 @media (min-width: 56rem) {
   .cards_item {
-    width: 20vw;
-    max-width: 20vh;
+    width: 33.3333%;
   }
 }
 
 .card {
-  background-color: white;
+  background-color: var(--main-color);
   border-radius: 0.25rem;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 100%;
+  min-width: 25vw;
+  min-height: 20vh;
 }
 
 .card_content {
@@ -726,7 +734,7 @@ nav .navbar .login-container i {
 }
 
 .card_title {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -735,11 +743,15 @@ nav .navbar .login-container i {
 }
 
 .card_text {
-  color: #ffffff;
+  color: var(--text-color);
   font-size: 0.875rem;
   line-height: 1.5;
   margin-bottom: 1.25rem;    
   font-weight: 400;
+}
+
+.card_date {
+  text-align: right;
 }
 
 
@@ -758,3 +770,8 @@ nav .navbar .login-container i {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
+/* --------_ Calendar _-------- */
+
+
+
