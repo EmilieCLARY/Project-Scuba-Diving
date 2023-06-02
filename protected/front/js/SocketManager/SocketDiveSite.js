@@ -28,6 +28,10 @@ function modifyDiveSite(id, name, latitude, longitude, track_type, track_number,
     //console.log("emitModifyDiveSite");
 }
 
+function getIsAdmin(){
+    socket.emit('getIsAdmin');
+}
+
 // SOCKET ON
 
 socket.on('receiveAllDiveSites', (tabDiveSites) => {
@@ -38,6 +42,10 @@ socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
     DiveSite.LoadAllPlannedDives(tabPlannedDives);
 });
 
+socket.on('receiveIsAdmin', (isAdmin) => {
+    DiveSite.LoadIsAdmin(isAdmin);
+});
+
 // EXPORT
 export default {
     getAllDiveSites,
@@ -45,4 +53,5 @@ export default {
     addDiveSite,
     deleteDiveSite,
     modifyDiveSite,
+    getIsAdmin,
 }

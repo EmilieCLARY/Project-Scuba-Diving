@@ -226,6 +226,10 @@ io.on('connection', (socket) =>{
         }, "Application_User");
     });
 
+    socket.on('getIsAdmin', () => {
+        socket.emit('receiveIsAdmin', socket.handshake.session.isAdmin);
+    });
+
     /* ------------------------------ ADD FUNCTIONS ----------------------------- */
 
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {

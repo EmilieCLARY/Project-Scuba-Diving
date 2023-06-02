@@ -27,6 +27,10 @@ openModal.onclick = function() {
     document.getElementById("diver-license-expiration-date").value = "";
     document.getElementById("diver-medical-certificate-expiration-date").value = "";
     document.getElementById("diver-birthdate").value = "";
+
+    document.getElementById("title-diver-modal").innerHTML = "Ajout d'un plongeur";
+    document.getElementById("validate-diver").innerHTML = "Créer le plongeur";
+
     modal.style.display = "block";
 }
 
@@ -543,6 +547,9 @@ function modifierDiver(id){
     document.getElementById("diver-license-expiration-date").value = tabElement.get_licence_expiration_date();
     document.getElementById("diver-medical-certificate-expiration-date").value = tabElement.get_medical_certificate_expiration_date();
     document.getElementById("diver-birthdate").value = tabElement.get_birth_date();
+
+    document.getElementById("title-diver-modal").innerHTML = "Modification d'un plongeur";
+    document.getElementById("validate-diver").innerHTML = "Modifier le plongeur";
 
     modal.style.display = "block";
 }

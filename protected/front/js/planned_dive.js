@@ -37,6 +37,35 @@ window.onclick = function(event) {
     }
 }
 */
+
+let formModal = document.getElementById("planned-dive-creation-form");
+let openformModal = document.getElementById("open-planned-dive-form");
+let closeformModal = document.getElementById("close-planned-dive-form");
+let closeformButton = document.getElementById("planned-dive-form-close-button");
+
+openformModal.onclick = function() {
+    formModal.style.display = "block";
+}
+
+closeformModal.onclick = function() {
+    formModal.style.display = "none";
+}
+
+
+closeformButton.onmouseover = function() {
+    closeformButton.classList.add("fa-shake");
+}
+
+closeformButton.onmouseout = function() {
+    closeformButton.classList.remove("fa-shake");
+}
+
+window.onclick = function(event) {
+    if (event.target == formModal) {
+        formModal.style.display = "none";
+    }
+}
+
 // Classe privée planned_dives
 
 class planned_dives {
@@ -280,14 +309,6 @@ function LoadAllDiveSites(tab){
     createDiveSitesList(tabPlannedDives);
 }
 
-function getPlannedDiveById(id){
-    for(let i = 0; i < tabPlannedDives.length; i++){
-        if(tabPlannedDives[i].get_id() == id){
-            return tabPlannedDives[i];
-        }
-    }
-    return null;
-}
 
 function createDiveSitesList(){
     let select = document.getElementById("planned-dive-site");
@@ -384,9 +405,8 @@ function setListeners(){
 
 function createInfoPlannedDive(id) { 
     let PlannedDiveInfo = getPlannedDiveById(id);
-
+    let PlannedDiveInfoDiveSite = getDiveSiteById(PlannedDiveInfo.get_dive_site_id());
     console.log(PlannedDiveInfo);
-
 }
 
 function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
@@ -508,6 +528,39 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
             li.appendChild(div);
             ul.appendChild(li);
 
+            /* Modal d'infos des planned dives */
+
+            /*let modal = document.createElement("div");
+            modal.classList.add("modal");
+
+            let modal_content = document.createElement("div");
+            modal_content.classList.add("modal_content");*/
+
+            /* Div Haut : Titre, prix et planning */
+            /*let div_hautModal = document.createElement("div");
+            div_hautModal.classList.add("div_hautModal");
+
+                /* Titre + prix */
+            /*let div_hautGaucheModal = document.createElement("div");
+            let titleModal = document.createElement("h1");
+            titleModal.innerHTML = "Plongée à " + tabPlannedDives[i].get_site_name();
+            div_hautGaucheModal.appendChild(titleModal);
+
+            let div_prixModal = document.createElement("div");
+
+            let div_prixPlongeurModal = document.createElement("div");
+            let priceModal = document.createElement("p");
+            priceModal.innerHTML = "Prix plongeur : " + .get_diver_dive_price() + "€";
+            div_prixPlongeurModal.appendChild(priceModal);
+            let div_prixMoniteurModal = document.createElement("div");
+            let priceModal2 = document.createElement("p");
+            priceModal2.innerHTML = "Prix encadrant : " + .get_instructor_dive_price() + "€";
+            div_prixMoniteurModal.appendChild(priceModal2);
+
+            div_prixModal.appendChild(div_prixPlongeurModal);
+            div_hautGaucheModal.appendChild(div_prixModal);*/
+
+
         }
     }
 
@@ -520,6 +573,16 @@ function getDiveSiteById(id){
             return tabDiveSites[i];
         }
     }
+}
+
+// Fonction réalisée par Gabindetroa mais sutout par la touche tab influencée par Alexis Sauteuse et Copilot (merci à eux) 
+function getPlannedDiveById(id){
+    for(let i = 0; i < tabPlannedDives.length; i++){
+        if(tabPlannedDives[i].get_id() == id){
+            return tabPlannedDives[i];
+        }
+    }
+    return null;
 }
 
 export default {

@@ -245,7 +245,7 @@ nav .navbar .login-container i {
 .hover-container {
   visibility: hidden;
   position:relative ;
-  top: 5vh; left: -55vw;
+  top: 16.5vh; left: -66.5vw;
   width: 0;
 }
 
@@ -255,9 +255,10 @@ nav .navbar .login-container i {
   background-color: var(--secondary-color);
   color: #FFF;
   text-shadow: var(--text-color) 0 0.3vh 0.6vh;
-  width: 40vw;
-  height: 40vh;
+  width: 60vw;
+  height: 46vh;
   border-radius: 2vw;
+  font-size: 2vh;
 }
 
 .hover-div .bottom-part {
@@ -640,32 +641,6 @@ nav .navbar .login-container i {
 }
 
 
-.div-modal .form-dive-site-validation #validate-diver {
-  width: 25vw;
-  height: 7vh;
-  margin-left: 22.5vw;
-  margin-top: 0.5vh;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 1vh;
-  padding: 1.3vh 2.5vw;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 1.5vh;
-}
-
-.div-modal .form-dive-site-validation #validate-diver:hover {
-  transition: all .1s ease;
-  color: var(--text-color);
-  background: var(--accent-color);
-  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
-}
-
-
 #open-planning-modal {
   position: fixed;
   top: 50vh;
@@ -1031,7 +1006,198 @@ nav .navbar .login-container i {
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
 
+.form-planned-dive{
+  width  : 70vw;
+  height: 80vh;
+  background : var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  margin-top: 15vh;
+  margin-left: 15vw;
+  border-radius: 3vw;
+}
 
+.form-planned-dive .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  padding-left: 2vw;
+}
+
+.form-planned-dive .title h1 {
+  font-size: 3.5vh;
+  margin-left: 2vw;
+}
+
+.form-planned-dive .title span {
+  font-size: 3.5vh;
+  margin-right: 2.5vw;
+}
+
+.form-planned-dive .title span:hover {
+  cursor: pointer;
+}
+
+
+.form-planned-dive .form-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 60vh;
+  width: 70vw;
+}
+
+.form-planned-dive .form-body .labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 60vh;
+  width: 30vw;
+  margin-right: 2.5vw;
+}
+
+.form-planned-dive .form-body .labels label {
+  font-size: 2.5vh;
+  height: 5vh;
+  padding-top: 0.5vh;
+  
+}
+
+.form-planned-dive .form-body .inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  width: 30vw;
+  margin: 0 2.5vw;
+}
+
+.form-planned-dive .form-body .inputs input[type=text] {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  padding-left: 1vw;
+  font-size: 2vh;
+}
+
+.form-planned-dive .form-body .inputs input[type=file] {
+  width: 25vw;
+  height: 5vh;
+  display: none;
+}
+
+.form-planned-dive .form-body .inputs input[type="date"]{
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-planned-dive .form-body .inputs input[type="time"]{
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-planned-dive .form-body .inputs select{
+  background-color: white;
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-planned-dive .form-body .inputs #dive-site-image-button {
+  width: 15vw;
+  height: 4vh;
+  margin-left: 4vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-planned-dive .form-body .inputs #dive-site-image-button:hover {
+  transition: all .1s ease;
+  color: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
+}
+
+
+.form-planned-dive .form-planned-dive-validation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+}
+
+.form-planned-dive .form-planned-dive-validation #validate-planned-dive {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-planned-dive .form-planned-dive-validation #validate-planned-dive:hover{
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+
+.form-planned-dive .form-planned-dive-validation #validate-diver {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-planned-dive .form-planned-dive-validation #validate-diver:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
 /* --------_ Modals _-------- */
 
 .modal {
