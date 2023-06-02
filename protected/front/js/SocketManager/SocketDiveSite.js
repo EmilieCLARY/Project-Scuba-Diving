@@ -18,6 +18,16 @@ function addDiveSite(id, name, latitude, longitude, track_type, track_number, tr
     //console.log("emitAddDiveSite");
 }
 
+function deleteDiveSite(id) {
+    socket.emit('deleteInDb', "Dive_Site", id);
+    //console.log("emitDeleteDiveSite");
+}
+
+function modifyDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image) {
+    socket.emit('modifyDiveSite', id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+    //console.log("emitModifyDiveSite");
+}
+
 // SOCKET ON
 
 socket.on('receiveAllDiveSites', (tabDiveSites) => {
@@ -33,4 +43,6 @@ export default {
     getAllDiveSites,
     getAllPlannedDives,
     addDiveSite,
+    deleteDiveSite,
+    modifyDiveSite,
 }

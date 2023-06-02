@@ -116,7 +116,12 @@ app.get('/dive_site', (req, res) => {
 })
 
 app.get('/diver', (req, res) => {
-    res.sendFile(__dirname + '/protected/front/html/diver.html');
+    if(req.session.isAdmin === 1){
+        res.sendFile(__dirname + '/protected/front/html/diver.html');
+    }
+    else{
+        res.redirect('/')
+    }
 })
 
 app.get('/planned_dive', (req, res) => {
@@ -158,6 +163,7 @@ io.on('connection', (socket) =>{
         BDD.login(id, first_name, last_name, (isAdmin) => {
             socket.handshake.session.isAdmin = isAdmin; //isAdmin = 1 if admin, 0 if not
             socket.handshake.session.save();
+            socket.emit('loginSuccess', isAdmin);
             //console.log(socket.handshake.session.isAdmin + "-----" + socket.handshake.session.idUser);
         });
     });
@@ -256,6 +262,25 @@ io.on('connection', (socket) =>{
         BDD.updateDb("Diver", "Medical_Certificate_Expiration_Date", medical_certificate_expiration_date, id);
         BDD.updateDb("Diver", "Birthdate", birth_date, id);
     });
+
+    socket.on('modifyDiveSite', (id,name,latitude,longitude,track_type,track_number,track_name,zip_code,city,coutntry,aditionnal_info,telephone,url,image) => {
+        BDD.updateDb("Dive_Site", "Site_Name", name, id);
+        BDD.updateDb("Dive_Site", "Gps_Latitude", latitude, id);
+        BDD.updateDb("Dive_Site", "Gps_Longitude", longitude, id);
+        BDD.updateDb("Dive_Site", "Track_Type", track_type, id);
+        BDD.updateDb("Dive_Site", "Track_Number", track_number, id);
+        BDD.updateDb("Dive_Site", "Track_Name", track_name, id);
+        BDD.updateDb("Dive_Site", "Zip_Code", zip_code, id);
+        BDD.updateDb("Dive_Site", "City_Name", city, id);
+        BDD.updateDb("Dive_Site", "Country_Name", coutntry, id);
+        BDD.updateDb("Dive_Site", "Additional_Address", aditionnal_info, id);
+        BDD.updateDb("Dive_Site", "Tel_Number", telephone, id);
+        BDD.updateDb("Dive_Site", "Information_URL", url, id);
+        if(image != null){
+            BDD.updateDb("Dive_Site", "Image", image, id);
+        }
+    });
+        
 
     socket.on('modifyAppUser', (id, id_diver, isAdmin) => {
         BDD.updateDb("Application_User", "Id_Diver", id_diver, id);

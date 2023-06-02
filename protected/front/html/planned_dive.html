@@ -29,66 +29,87 @@
         </div>
     </nav>
 
+    <button class="creation-button" id="open-planned-dive-form"> Planifier une plongée</button>
+
     <div class="planned-dive-list-container" id = "liste_planned_dive"></div>
+
+
+    <div id="container-modal2" class="modal">
+        <div class="div-modal"> 
+            <div class="title"> 
+                <h1> Informations complémentaires </h1>
+                <span id="close-pd-modal"><i id="pd-close-button" class="fa-regular fa-circle-xmark"></i></span>
+            </div>
+
+        </div>
+    </div>
+
     
     <!-- Formulaire de création Planned Dive -->
-    <div class="form-planned-dive-container">
-        <div class="form-planned-dive-title">
-            <h1>Create a new Planned dive</h1>
-        </div>
-        <div class="form-planned-dive-input">
-            <!-- Planned Date text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-date">Planned Date</label>
-                <input type="date" id="planned-dive-date" name="planned-dive-date" placeholder="Planned Date" required>
-            </div> 
-            <!-- Planned Time text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-time">Planned Time</label>
-                <input type="time" id="planned-dive-time" name="planned-dive-time" placeholder="Planned Time" required>
+    <div id="planned-dive-creation-form" class="modal"> 
+        <div class="form-planned-dive-container">
+            <div class="form-planned-dive-title">
+                <h1>Create a new Planned dive</h1>
             </div>
-            <!-- Comments text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-comments">Comments</label>
-                <input type="text" id="planned-dive-comments" name="planned-dive-comments" placeholder="Comments" required>
-            </div>
-            <!-- Planned Dive special needs text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-special-needs">Special Needs</label>
-                <input type="text" id="planned-dive-special-needs" name="planned-dive-special-needs" placeholder="Special Needs" required>
-            </div>
-            <!-- Planned Dive statut select -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-statut">Statut</label>
-                <select id="planned-dive-statut" name="planned-dive-statut" required>
-                    <option value="Ouverte">Ouverte</option>
-                    <option value="Close">Fermée</option>
-                    <option value="Prévue">Prévue</option>
-                </select>
-            <!-- Planned Dive diver dive price text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-diver-dive-price">Diver Dive Price</label>
-                <input type="text" id="planned-dive-diver-dive-price" name="planned-dive-diver-dive-price" placeholder="Diver Dive Price" required>
-            </div>
-            <!-- Planned Dive instructor dive price text -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-instructor-dive-price">Instructor Dive Price</label>
-                <input type="text" id="planned-dive-instructor-dive-price" name="planned-dive-instructor-dive-price" placeholder="Instructor Dive Price" required>
+            <div class="form-planned-dive-input">
+                <!-- Planned Date text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-date">Planned Date</label>
+                    <input type="date" id="planned-dive-date" name="planned-dive-date" placeholder="Planned Date" required>
+                </div> 
+                <!-- Planned Time text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-time">Planned Time</label>
+                    <input type="time" id="planned-dive-time" name="planned-dive-time" placeholder="Planned Time" required>
+                </div>
+                <!-- Comments text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-comments">Comments</label>
+                    <input type="text" id="planned-dive-comments" name="planned-dive-comments" placeholder="Comments" required>
+                </div>
+                <!-- Planned Dive special needs text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-special-needs">Special Needs</label>
+                    <input type="text" id="planned-dive-special-needs" name="planned-dive-special-needs" placeholder="Special Needs" required>
+                </div>
+                <!-- Planned Dive statut select -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-statut">Statut</label>
+                    <select id="planned-dive-statut" name="planned-dive-statut" required>
+                        <option value="Ouverte">Ouverte</option>
+                        <option value="Close">Fermée</option>
+                        <option value="Prévue">Prévue</option>
+                    </select>
+                </div>
+                <!-- Planned Dive diver dive price text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-diver-dive-price">Diver Dive Price</label>
+                    <input type="text" id="planned-dive-diver-dive-price" name="planned-dive-diver-dive-price" placeholder="Diver Dive Price" required>
+                </div>
+                <!-- Planned Dive instructor dive price text -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-instructor-dive-price">Instructor Dive Price</label>
+                    <input type="text" id="planned-dive-instructor-dive-price" name="planned-dive-instructor-dive-price" placeholder="Instructor Dive Price" required>
+                </div>
+
+                <!-- Planned Dive dive site select -->
+                <div class="form-planned-dive-input-item">
+                    <label for="planned-dive-site">Dive Site</label>
+                    <select id="planned-dive-site" name="planned-dive-site" required>
+                    </select>
+                </div>
+
             </div>
 
-            <!-- Planned Dive dive site select -->
-            <div class="form-planned-dive-input-item">
-                <label for="planned-dive-site">Dive Site</label>
-                <select id="planned-dive-site" name="planned-dive-site" required>
-                </select>
+            <div class="form-planned-dive-button">
+                <button id="validate-planned-dive">Create Planned Dive</button>
             </div>
-
+                
+            <div id="ring-loading" class="ring">Chargement
+                <span class="span-ring"></span>
+            </div>
         </div>
-
-        <div class="form-planned-dive-button">
-            <button id="validate-planned-dive">Create Planned Dive</button>
-        </div>
-            
+    </div>
 
 </body>
 <script type="module" src="/protected/front/js/planned_dive.js"></script>

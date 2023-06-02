@@ -1,18 +1,15 @@
-//import e from 'express';
 import SocketManager from './SocketManager/SocketDiveSite.js'
-//const Calendar = require('@fullcalendar/core');
-//const timeGridPlugin = require('@fullcalendar/timegrid');
-
-// Calendrier
-//import { Calendar } from './@fullcalendar/core';
-//import timeGridPlugin from './@fullcalendar/timegrid';
-
 
 SocketManager.getAllDiveSites();
 SocketManager.getAllPlannedDives();
 
 let tabDiveSites = [];
 let tabPlannedDives = [];
+
+let modifyMode = false;
+let modifiedDiveSite= -1;
+
+document.getElementById("ring-loading").style.display = "none";
 
 let modal = document.getElementById("site-creation-form");
 let openModal = document.getElementById("open-site-modal");
@@ -23,6 +20,19 @@ let closeButton = document.getElementById("site-close-button");
 
 
 openModal.onclick = function() {
+    document.getElementById("dive-site-name").value = "";
+    document.getElementById("dive-site-gps-latitude").value = "";
+    document.getElementById("dive-site-gps-longitude").value = "";
+    document.getElementById("dive-site-track-type").value = "";
+    document.getElementById("dive-site-track-number").value = "";
+    document.getElementById("dive-site-track-name").value = "";
+    document.getElementById("dive-site-zip-code").value = "";
+    document.getElementById("dive-site-city").value = "";
+    document.getElementById("dive-site-country").value = "";
+    document.getElementById("dive-site-aditionnal-info").value = "";
+    document.getElementById("dive-site-telephone").value = "";
+    document.getElementById("dive-site-url").value = "";
+    document.getElementById("dive-site-image").value = "";
     modal.style.display = "block";
 }
 
@@ -291,6 +301,7 @@ function LoadAllDiveSites(tab){
     console.log(tabDiveSites);
     create_elements(tabDiveSites);
     hoverlistener();
+    setListeners();
 }
 
 function LoadAllPlannedDives(tab){
@@ -299,68 +310,92 @@ function LoadAllPlannedDives(tab){
         tabPlannedDives.push(tmp);
     });
     console.log(tabPlannedDives);
-    createListener();
 }
 
-document.getElementById("validate-dive-site").addEventListener("click", (e) => {
-    // Get all input
-    let name = document.getElementById("dive-site-name").value;
-    let latitude = document.getElementById("dive-site-gps-latitude").value;
-    let longitude = document.getElementById("dive-site-gps-longitude").value;
-    let track_type = document.getElementById("dive-site-track-type").value;
-    let track_number = document.getElementById("dive-site-track-number").value;
-    let track_name = document.getElementById("dive-site-track-name").value;
-    let zip_code = document.getElementById("dive-site-zip-code").value;
-    let city = document.getElementById("dive-site-city").value;
-    let coutntry = document.getElementById("dive-site-country").value;
-    let aditionnal_info = document.getElementById("dive-site-aditionnal-info").value;
-    let telephone = document.getElementById("dive-site-telephone").value;
-    let url = document.getElementById("dive-site-url").value;
-    let image = document.getElementById('dive-site-image').files[0];
-
-    if(name == "" || latitude == "" || longitude == "" || track_type == "" || track_number == "" || track_name == "" || zip_code == "" || city == "" || coutntry == "" || aditionnal_info == "" || telephone == "" || url == ""){
-        alert("Il manque des informations connard ! On t'appelle pas Gilbert pour rien !");
-        return;
-    }
-    else if(image == null){
-        alert("L'image connard !");
-        return;
-    }
+function setButtonListener(){
+    document.getElementById("validate-dive-site").addEventListener("click", (e) => {
+        // Get all input
+        let name = document.getElementById("dive-site-name").value;
+        let latitude = document.getElementById("dive-site-gps-latitude").value;
+        let longitude = document.getElementById("dive-site-gps-longitude").value;
+        let track_type = document.getElementById("dive-site-track-type").value;
+        let track_number = document.getElementById("dive-site-track-number").value;
+        let track_name = document.getElementById("dive-site-track-name").value;
+        let zip_code = document.getElementById("dive-site-zip-code").value;
+        let city = document.getElementById("dive-site-city").value;
+        let coutntry = document.getElementById("dive-site-country").value;
+        let aditionnal_info = document.getElementById("dive-site-aditionnal-info").value;
+        let telephone = document.getElementById("dive-site-telephone").value;
+        let url = document.getElementById("dive-site-url").value;
+        let image = document.getElementById('dive-site-image').files[0];
     
-
-    // Send to server
-    console.log(tabDiveSites);
-    // Search the id max
-    let id = 0;
-    tabDiveSites.forEach(element => {
-        if(element.get_id() > id){
-            id = parseInt(element.get_id());
+        if(name == "" || latitude == "" || longitude == "" || track_type == "" || track_number == "" || track_name == "" || zip_code == "" || city == "" || coutntry == "" || telephone == "" || url == ""){
+            alert("Des champs sont vides. Veuillez les remplir s'il vous plait.");
+            return;
         }
-    });
-    id++;
-    SocketManager.addDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
-    console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
-
-    // Clear all input
-    document.getElementById("dive-site-name").value = "";
-    document.getElementById("dive-site-gps-latitude").value = "";
-    document.getElementById("dive-site-gps-longitude").value = "";
-    document.getElementById("dive-site-track-type").value = "";
-    document.getElementById("dive-site-track-number").value = "";
-    document.getElementById("dive-site-track-name").value = "";
-    document.getElementById("dive-site-zip-code").value = "";
-    document.getElementById("dive-site-city").value = "";
-    document.getElementById("dive-site-country").value = "";
-    document.getElementById("dive-site-aditionnal-info").value = "";
-    document.getElementById("dive-site-telephone").value = "";
-    document.getElementById("dive-site-url").value = "";
-    document.getElementById("dive-site-image").value = "";
-    
+        else if(image == null && modifyMode == false){
+            alert("Image manquante. Veuillez ajouter une image s'il vous plait.");
+            return;
+        }
         
-    // Update the list
-    console.log("Updating dive site in database");
-    setTimeout(function() {updateDiveSite()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
-});
+    
+        // Send to server
+        console.log(tabDiveSites);
+        // Search the id max
+        let id = 0;
+        tabDiveSites.forEach(element => {
+            if(element.get_id() > id){
+                id = parseInt(element.get_id());
+            }
+        });
+        id++;
+        if(modifyMode == false){
+            SocketManager.addDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+            console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+        }
+        else{
+            SocketManager.modifyDiveSite(modifiedDiveSite, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+        }
+        
+        // Clear all input
+        document.getElementById("dive-site-name").value = "";
+        document.getElementById("dive-site-gps-latitude").value = "";
+        document.getElementById("dive-site-gps-longitude").value = "";
+        document.getElementById("dive-site-track-type").value = "";
+        document.getElementById("dive-site-track-number").value = "";
+        document.getElementById("dive-site-track-name").value = "";
+        document.getElementById("dive-site-zip-code").value = "";
+        document.getElementById("dive-site-city").value = "";
+        document.getElementById("dive-site-country").value = "";
+        document.getElementById("dive-site-aditionnal-info").value = "";
+        document.getElementById("dive-site-telephone").value = "";
+        document.getElementById("dive-site-url").value = "";
+        document.getElementById("dive-site-image").value = "";
+        
+        // Closing modal
+        modal.style.display = "none";
+            
+        // Update the list
+        if(modifyMode == false){
+            console.log("Adding divesite in database");
+        }
+        else{
+            console.log("Modifying divesite " + modifiedDiveSite+ " in database");
+            modifyMode = false;
+            modifiedDiveSite = -1;
+        }
+
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";        
+        setTimeout(function() {
+            updateDiveSite();
+            document.getElementById("ring-loading").style.display = "none";
+            document.body.style.cursor = "default";
+        }, 1000);
+    });
+}
+
+setButtonListener();
 
 function create_elements(tab_dive_sites) {
     // Création de l'affichage des sites de plongée
@@ -444,6 +479,19 @@ function create_elements(tab_dive_sites) {
         siteElementButtonContainer.appendChild(siteElementButton);
         siteElement.appendChild(siteElementButtonContainer);
 
+        // Partie avec les boutons de modification et de suppression (FAIRE CSS)
+        let span_modif = document.createElement('span');
+        let span_suppr = document.createElement('span');
+        span_modif.classList.add("fa-solid");
+        span_modif.classList.add("fa-pen-to-square");
+        span_suppr.classList.add("fa-solid");
+        span_suppr.classList.add("fa-trash-can");
+        span_modif.setAttribute("id", "btn_modif" + tab_dive_sites[i].get_id());
+        span_suppr.setAttribute("id", "btn_suppr" + tab_dive_sites[i].get_id());
+
+        siteElementButtonContainer.appendChild(span_modif);
+        siteElementButtonContainer.appendChild(span_suppr);
+
         // Div qui s'affiche lors du hover du nom de la ville
         let siteElementHoverContainer = document.createElement('div');
         siteElementHoverContainer.classList.add("hover-container");
@@ -496,6 +544,74 @@ function create_elements(tab_dive_sites) {
     }
 }
 
+function setListeners(){
+    for (let i = 0; i < tabDiveSites.length; i++){
+
+        // Bouton pour afficher le calendrier
+        document.getElementById("calBtn" + tabDiveSites[i].get_id()).addEventListener("click", (e) => {
+            let tmp = tabDiveSites[i].get_id();
+            createCalendar(tmp); 
+            modal2.style.display = "block";
+        });
+
+        // Bouton modifier et supprimer
+        let btn_modif = document.getElementById("btn_modif" + tabDiveSites[i].get_id());
+        let btn_suppr = document.getElementById("btn_suppr" + tabDiveSites[i].get_id());
+
+        btn_modif.addEventListener("click", function(){
+            console.log("Modification du site de plongée " + tabDiveSites[i].get_id());
+            modifierDiveSite(tabDiveSites[i].get_id());
+        });
+
+        btn_suppr.addEventListener("click", function(){
+            // Demande de confirmation
+            let text = "Êtes-vous sûr de vouloir supprimer " + tabDiveSites[i].get_site_name() + " de la base de données ?\nCette action est irréversible !";
+            if(confirm(text) == true){
+                console.log("Suppression du plongeur " + tabDiveSites[i].get_id());
+                supprimerDiveSite(tabDiveSites[i].get_id());
+            }
+            else{
+                console.log("Suppression annulée");
+            }
+        });
+    }
+}
+
+function modifierDiveSite(id){
+    modifyMode = true;
+    modifiedDiveSite = id;
+
+    let tabElement = getDiveSiteById(id);
+
+    document.getElementById("dive-site-name").value = tabElement.get_site_name();
+    document.getElementById("dive-site-gps-latitude").value = tabElement.get_gps_latitude();
+    document.getElementById("dive-site-gps-longitude").value = tabElement.get_gps_longitude();
+    document.getElementById("dive-site-track-type").value = tabElement.get_track_type();
+    document.getElementById("dive-site-track-number").value = tabElement.get_track_number();
+    document.getElementById("dive-site-track-name").value = tabElement.get_track_name();
+    document.getElementById("dive-site-zip-code").value = tabElement.get_zip_code();
+    document.getElementById("dive-site-city").value = tabElement.get_city();
+    document.getElementById("dive-site-country").value = tabElement.get_country();
+    document.getElementById("dive-site-aditionnal-info").value = tabElement.get_aditionnal_info();
+    document.getElementById("dive-site-telephone").value = tabElement.get_telephone();
+    document.getElementById("dive-site-url").value = tabElement.get_url();
+
+    modal.style.display = "block";
+}
+
+function supprimerDiveSite(id){
+    SocketManager.deleteDiveSite(id);
+    // Update de la page
+    console.log("Updating dive site in database");
+    document.getElementById("ring-loading").style.display = "block";
+    document.body.style.cursor = "wait";        
+    setTimeout(function() {
+        updateDiveSite();
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+    }, 1000);
+}
+
 
 function hoverlistener() {
     let town_hover = document.getElementsByClassName("linkhover");
@@ -510,29 +626,11 @@ function hoverlistener() {
             current_target.style.visibility = 'hidden';
         }, false); 
      }
-
-
 }
 
 
-//async function initMap(tab_dive_sites,i) {
-//    const { Map } = await google.maps.importLibrary("maps");
-//    const map = new google.maps.Map(document.getElementById('map'+i), {
-//        zoom: 4,
-//        center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
-//      });
-//}
 
-function createListener(){
-    for(let i = 0; i < tabDiveSites.length; i++){
-        document.getElementById("calBtn" + tabDiveSites[i].get_id()).addEventListener("click", (e) => {
-            let tmp = tabDiveSites[i].get_id();
-            createCalendar(tmp); 
-            modal2.style.display = "block";
-        });
-    }
-}
-
+// CALENDAR :
 function createCalendar(id) {
     //document.addEventListener('DOMContentLoaded', function() {
         let id_planned = id;
@@ -627,8 +725,23 @@ function updateDiveSite(){
     SocketManager.getAllDiveSites();
 }
 
-// CALENDAR :
+function getDiveSiteById(id){
+    for(let i = 0; i < tabDiveSites.length; i++){
+        if(tabDiveSites[i].get_id() == id){
+            return tabDiveSites[i];
+        }
+    }
+    return null;
+}
 
+
+//async function initMap(tab_dive_sites,i) {
+//    const { Map } = await google.maps.importLibrary("maps");
+//    const map = new google.maps.Map(document.getElementById('map'+i), {
+//        zoom: 4,
+//        center: { lat : tab_dive_sites.get_gps_latitude(), lng : tab_dive_sites.get_gps_longitude() },
+//      });
+//}
 
 //window.initMap = initMap;
 

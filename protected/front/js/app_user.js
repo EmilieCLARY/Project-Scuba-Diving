@@ -11,6 +11,8 @@ let modal = document.getElementById("form-appuser-container");
 let closeModal = document.getElementById("close-site-modal");
 let closeButton = document.getElementById("diver-close-button");
 
+document.getElementById("ring-loading").style.display = "none";
+
 closeModal.onclick = function() {
     modal.style.display = "none";
 }
@@ -227,7 +229,13 @@ function setButtonListener(){
         // Closing modal
         modal.style.display = "none";
 
-        setTimeout(function() {updateAppUser()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";        
+        setTimeout(function() {
+            updateAppUser();
+            document.getElementById("ring-loading").style.display = "none";
+            document.body.style.cursor = "default";
+        }, 1000);
     });
 }
 

@@ -122,8 +122,15 @@ nav .navbar .login-container i {
 .home-list-item p {
     padding: 0 2vw;
     align-self: center;
+    color: var(--text-color);
+    font-size: 3.5vh;
 }
 
+.home-list-item:hover {
+  color: var(--text-color);
+  text-decoration: underline;
+  filter: brightness(0.9);
+}
 
 /* --------_ Scrollbar _-------- */
 
@@ -144,7 +151,7 @@ nav .navbar .login-container i {
 
 .dive-site-list-item {
   width: 75vw;
-  height: 40vh;
+  height: 42vh;
   background-color: var(--main-color);
   margin: 2vh 0 2vh 0;
   align-self: center;
@@ -269,9 +276,10 @@ nav .navbar .login-container i {
 .button-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  height: 5vh;
+  height: 7vh;
+  padding: 0.5vh 13vh 0 10.5vh;
 }
 
 .button-container .button {
@@ -913,18 +921,17 @@ nav .navbar .login-container i {
 
 .card {
   background-color: var(--main-color);
-  border-radius: 0.25rem;
+  border-radius: 2vw;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  min-width: 25vw;
+  min-width: 25%;
   min-height: 20vh;
 }
 
 .card_content {
-  padding: 1rem;
   background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
 }
 
@@ -940,13 +947,13 @@ nav .navbar .login-container i {
 .card_text {
   color: var(--text-color);
   font-size: 0.875rem;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;    
+  line-height: 1.5; 
   font-weight: 400;
 }
 
 .card_date {
   text-align: right;
+  width: 9vw;
 }
 
 .div_haut{
@@ -954,6 +961,9 @@ nav .navbar .login-container i {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5vh 3vh 1.5vh 3vh;
+  border-radius: 2vw;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 0.3vh 0.5vh;
 }
 
 .div_milieuTop{
@@ -961,6 +971,7 @@ nav .navbar .login-container i {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5vh 3vh 1.5vh 3vh;
 }
 
 .div_milieuBot{
@@ -968,6 +979,7 @@ nav .navbar .login-container i {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0 3vh 0 3vh;
 }
 
 .div_bas{
@@ -975,7 +987,50 @@ nav .navbar .login-container i {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0 3vh 0 3vh;
 }
+
+.div_bas button {
+  width: 10vw;
+  height: 3vh;
+  margin-left: 4vw;
+  margin-top: 0.5vh;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+#open-planned-dive-form {
+  position: fixed;
+  top: 20vh;
+  left: 88vw;
+  width: 11vw;
+  height: 5vw;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 2.5vh;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+#open-planned-dive-form:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
 
 /* --------_ Modals _-------- */
 
@@ -1021,4 +1076,90 @@ nav .navbar .login-container i {
 
 .fc-col-header {
   background-color: var(--main-color);
+}
+
+/* --------_ Loading animation _-------- */
+
+.ring
+{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:200px;
+  height:200px;
+  background:transparent;
+  border:3px solid transparent;
+  border-radius:50%;
+  text-align:center;
+  line-height:200px;
+  font-family:sans-serif;
+  font-size:20px;
+  color: black;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  text-shadow:0 0 10px black;
+  box-shadow:0 0 20px rgba(0,0,0,.5);
+  backdrop-filter: blur(50px); /* Adjust the blur radius as desired */
+  z-index: 999;
+}
+.ring:before
+{
+  content:'';
+  position:fixed;
+  top:-3px;
+  left:-3px;
+  width:100%;
+  height:100%;
+  border:3px solid transparent;
+  border-top:3px solid black;
+  border-right:3px solid black;
+  border-radius:50%;
+  animation:animateC 2s linear infinite;
+}
+.span-ring
+{
+  display:block;
+  position:fixed;
+  top:calc(50% - 2px);
+  left:50%;
+  width:50%;
+  height:4px;
+  background:transparent;
+  transform-origin:left;
+  animation:animate 2s linear infinite;
+}
+.span-ring:before
+{
+  content:'';
+  position:fixed;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:black;
+  top:-6px;
+  right:-8px;
+  box-shadow:0 0 20px black;
+}
+@keyframes animateC
+{
+  0%
+  {
+    transform:rotate(0deg);
+  }
+  100%
+  {
+    transform:rotate(360deg);
+  }
+}
+@keyframes animate
+{
+  0%
+  {
+    transform:rotate(45deg);
+  }
+  100%
+  {
+    transform:rotate(405deg);
+  }
 }

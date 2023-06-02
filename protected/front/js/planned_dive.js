@@ -6,6 +6,37 @@ SocketManager.getAllPlannedDives();
 let tabPlannedDives = [];
 let tabDiveSites = [];
 
+document.getElementById("ring-loading").style.display = "none";
+
+/*let modal = document.getElementById("container-modal2");
+let openModal = document.getElementById("");
+let closeModal = document.getElementById("close-pd-modal");
+let closeButton = document.getElementById("pd-close-button");
+
+
+
+openModal.onclick = function() {
+    modal.style.display = "block";
+}
+
+closeModal.onclick = function() {
+    modal.style.display = "none";
+}
+
+closeModal.onmouseover = function() {
+    closeButton.classList.add("fa-shake");
+}
+
+closeModal.onmouseout = function() {
+    closeButton.classList.remove("fa-shake");
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+}
+*/
 // Classe privée planned_dives
 
 class planned_dives {
@@ -234,6 +265,8 @@ function LoadAllPlannedDives(tab) {
         tabPlannedDives.push(tmp);
     });
     createCardsPlannedDive(tabPlannedDives, tabDiveSites);
+    setListeners();
+
     console.log(tabPlannedDives);
 }
 
@@ -245,6 +278,15 @@ function LoadAllDiveSites(tab){
     console.log(tabDiveSites);
     
     createDiveSitesList(tabPlannedDives);
+}
+
+function getPlannedDiveById(id){
+    for(let i = 0; i < tabPlannedDives.length; i++){
+        if(tabPlannedDives[i].get_id() == id){
+            return tabPlannedDives[i];
+        }
+    }
+    return null;
 }
 
 function createDiveSitesList(){
@@ -311,12 +353,40 @@ document.getElementById("validate-planned-dive").addEventListener("click", (e) =
 
     // Update the list
     console.log("Adding planned dive in database");
-    setTimeout(function() {updatePlannedDive()}, 1000);
+    document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";        
+        setTimeout(function() {
+            updatePlannedDive();
+            document.getElementById("ring-loading").style.display = "none";
+            document.body.style.cursor = "default";
+        }, 1000);
 }); 
 
 function updatePlannedDive(){
     tabPlannedDives = [];
     SocketManager.getAllPlannedDives();
+}
+
+function setListeners(){
+    
+    for(let i = 0; i < tabPlannedDives.length; i++){
+        let actualDate = new Date();
+
+        if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()) {
+            document.getElementById("PD_btn" + tabPlannedDives[i].get_id()).addEventListener("click", (e) => {
+                let tmp = tabPlannedDives[i].get_id();
+                createInfoPlannedDive(tmp);
+                
+            });
+        }
+    }
+}
+
+function createInfoPlannedDive(id) { 
+    let PlannedDiveInfo = getPlannedDiveById(id);
+
+    console.log(PlannedDiveInfo);
+
 }
 
 function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
@@ -328,114 +398,117 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
     /* Cartes des Planned_Dive*/
 
     for(let i = 0; i < tabPlannedDives.length; i++){
+        // On vérifie que la plongée n'est pas passée
+        let actualDate = new Date();
 
-        /* Création des cartes */
+       if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()) {
+            /* Création des cartes */
+            let li = document.createElement("li");
+            li.classList.add("cards_item");
 
-        let li = document.createElement("li");
-        li.classList.add("cards_item");
+            /* Remplissage des cartes */   
 
-        /* Remplissage des cartes */   
+            let div = document.createElement("div");
+            div.classList.add("card");
 
-        let div = document.createElement("div");
-        div.classList.add("card");
+            /* Div Haut */
+            let div_haut = document.createElement("div");
+            div_haut.classList.add("div_haut");
 
-        /* Div Haut */
-        let div_haut = document.createElement("div");
-        div_haut.classList.add("div_haut");
+            let div_ville = document.createElement("div");
+            div_ville.classList.add("div_ville");
+            let dive_ville = document.createElement("h1");
+            dive_ville.innerHTML = "Plongée à " + getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city();
+            dive_ville.classList.add("card_title");
+            div_ville.appendChild(dive_ville);
+            div_haut.appendChild(div_ville);
 
-        let div_ville = document.createElement("div");
-        div_ville.classList.add("div_ville");
-        let dive_ville = document.createElement("h1");
-        dive_ville.innerHTML = "Plongée à " + getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city();
-        dive_ville.classList.add("card_title");
-        div_ville.appendChild(dive_ville);
-        div_haut.appendChild(div_ville);
+            let div_date = document.createElement("div");
+            div_date.classList.add("div_date");
+            let dive_date = document.createElement("h2");
+            dive_date.innerHTML = "Prévue le : " + tabPlannedDives[i].get_planned_date();
+            dive_date.classList.add("card_title");
+            dive_date.classList.add("card_date");
+            div_date.appendChild(dive_date);
+            div_haut.appendChild(div_date);     
 
-        let div_date = document.createElement("div");
-        div_date.classList.add("div_date");
-        let dive_date = document.createElement("h2");
-        dive_date.innerHTML = "Prévue le : " + tabPlannedDives[i].get_planned_date();
-        dive_date.classList.add("card_title");
-        dive_date.classList.add("card_date");
-        div_date.appendChild(dive_date);
-        div_haut.appendChild(div_date);     
+            div.appendChild(div_haut);
 
-        div.appendChild(div_haut);
+            /* Div Milieu Top */
+            let div_milieuTop = document.createElement("div");
+            div_milieuTop.classList.add("div_milieuTop");
 
-        /* Div Milieu Top */
-        let div_milieuTop = document.createElement("div");
-        div_milieuTop.classList.add("div_milieuTop");
+            let dive_site_name = document.createElement("h2");
+            dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
+            dive_site_name.classList.add("card_title");
+            div_milieuTop.appendChild(dive_site_name);
 
-        let dive_site_name = document.createElement("h2");
-        dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
-        dive_site_name.classList.add("card_title");
-        div_milieuTop.appendChild(dive_site_name);
+            let dive_time = document.createElement("h2");
+            dive_time.innerHTML = "À : " + tabPlannedDives[i].get_planned_time();
+            dive_time.classList.add("card_title");
+            dive_time.classList.add("card_date");
+            div_milieuTop.appendChild(dive_time);
 
-        let dive_time = document.createElement("h2");
-        dive_time.innerHTML = "À : " + tabPlannedDives[i].get_planned_time();
-        dive_time.classList.add("card_title");
-        dive_time.classList.add("card_date");
-        div_milieuTop.appendChild(dive_time);
+            div.appendChild(div_milieuTop);
 
-        div.appendChild(div_milieuTop);
+            /* Div MilieuBot */
+            let div_milieuBot = document.createElement("div");
+            div_milieuBot.classList.add("div_milieuBot");
 
-        /* Div MilieuBot */
-        let div_milieuBot = document.createElement("div");
-        div_milieuBot.classList.add("div_milieuBot");
+            let dive_price_diver = document.createElement("p");
+            if(tabPlannedDives[i].get_diver_dive_price() == 0){
+                dive_price_diver.innerHTML = "Prix plongeur : Gratuit";
+            }else{
+                dive_price_diver.innerHTML = "Prix plongeur : " + tabPlannedDives[i].get_diver_dive_price() + "€";
+            }
+            dive_price_diver.classList.add("card_text");
+            div_milieuBot.appendChild(dive_price_diver);
 
-        let dive_price_diver = document.createElement("p");
-        if(tabPlannedDives[i].get_diver_dive_price() == 0){
-            dive_price_diver.innerHTML = "Prix plongeur : Gratuit";
-        }else{
-            dive_price_diver.innerHTML = "Prix plongeur : " + tabPlannedDives[i].get_diver_dive_price() + "€";
+            let dive_price_instructor = document.createElement("p");
+            if(tabPlannedDives[i].get_instructor_dive_price() == 0){
+                dive_price_instructor.innerHTML = "Prix moniteur : Gratuit";
+            }else{
+                dive_price_instructor.innerHTML = "Prix moniteur : " + tabPlannedDives[i].get_instructor_dive_price() + "€";
+            }
+            dive_price_instructor.classList.add("card_text");
+            div_milieuBot.appendChild(dive_price_instructor);
+            
+            div.appendChild(div_milieuBot);
+
+            /* Div Bas */
+            let div_bas = document.createElement("div");
+            div_bas.classList.add("div_bas");
+                /* Div Statut */
+            let div_statut = document.createElement("div");
+            let dive_status = document.createElement("p");
+            if(tabPlannedDives[i].get_statut() == 'Close'){
+                dive_status.innerHTML = "Statut : Fermée";
+            }else{
+                dive_status.innerHTML = "Statut : Ouverte";
+            }
+            dive_status.classList.add("card_text");
+            div_statut.appendChild(dive_status);
+
+            div_bas.appendChild(div_statut);
+
+                /* Div bouton plus */
+            let div_boutonPlus = document.createElement("div");
+            div_boutonPlus.classList.add("div_boutonPlus");
+
+            let bouton_plus = document.createElement("button");
+            bouton_plus.innerHTML = "Voir plus";
+            bouton_plus.setAttribute("id", "PD_btn" + tabPlannedDives[i].get_id());
+            div_boutonPlus.appendChild(bouton_plus);
+
+            div_bas.appendChild(div_boutonPlus);
+
+            div.appendChild(div_bas);
+
+
+            li.appendChild(div);
+            ul.appendChild(li);
+
         }
-        dive_price_diver.classList.add("card_text");
-        div_milieuBot.appendChild(dive_price_diver);
-
-        let dive_price_instructor = document.createElement("p");
-        if(tabPlannedDives[i].get_instructor_dive_price() == 0){
-            dive_price_instructor.innerHTML = "Prix moniteur : Gratuit";
-        }else{
-            dive_price_instructor.innerHTML = "Prix moniteur : " + tabPlannedDives[i].get_instructor_dive_price() + "€";
-        }
-        dive_price_instructor.classList.add("card_text");
-        div_milieuBot.appendChild(dive_price_instructor);
-        
-        div.appendChild(div_milieuBot);
-
-        /* Div Bas */
-        let div_bas = document.createElement("div");
-        div_bas.classList.add("div_bas");
-            /* Div Statut */
-        let div_statut = document.createElement("div");
-        let dive_status = document.createElement("p");
-        if(tabPlannedDives[i].get_statut() == 'Close'){
-            dive_status.innerHTML = "Statut : Fermée";
-        }else{
-            dive_status.innerHTML = "Statut : Ouverte";
-        }
-        dive_status.classList.add("card_text");
-        div_statut.appendChild(dive_status);
-
-        div_bas.appendChild(div_statut);
-
-            /* Div bouton plus */
-        let div_boutonPlus = document.createElement("div");
-        div_boutonPlus.classList.add("div_boutonPlus");
-
-        let bouton_plus = document.createElement("button");
-        bouton_plus.innerHTML = "Voir plus";
-        bouton_plus.classList.add("btn");
-        bouton_plus.classList.add("card_btn");
-        div_boutonPlus.appendChild(bouton_plus);
-
-        div_bas.appendChild(div_boutonPlus);
-
-        div.appendChild(div_bas);
-
-        li.appendChild(div);
-        ul.appendChild(li);
-
     }
 
 }

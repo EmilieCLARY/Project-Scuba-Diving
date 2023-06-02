@@ -7,6 +7,8 @@ let tabDivers = [];
 let modifyMode = false;
 let modifiedDiver = -1;
 
+document.getElementById("ring-loading").style.display = "none";
+
 let modal = document.getElementById("form-diver-container");
 let openModal = document.getElementById("open-site-modal");
 let closeModal = document.getElementById("close-site-modal");
@@ -14,6 +16,17 @@ let choseImage = document.getElementById("dive-site-image-button");
 let closeButton = document.getElementById("diver-close-button");
 
 openModal.onclick = function() {
+    // Clear all input
+    document.getElementById("diver-firstname").value = "";
+    document.getElementById("diver-lastname").value = "";
+    document.getElementById("diver-qualification").value = "11";
+    document.getElementById("diver-instructor-qualification").value = "1";
+    document.getElementById("diver-nox-level").value = "1";
+    document.getElementById("diver-additionnal-qualification").value = "";
+    document.getElementById("diver-license-number").value = "";
+    document.getElementById("diver-license-expiration-date").value = "";
+    document.getElementById("diver-medical-certificate-expiration-date").value = "";
+    document.getElementById("diver-birthdate").value = "";
     modal.style.display = "block";
 }
 
@@ -208,7 +221,7 @@ function setButtonListener(){
         document.getElementById("diver-lastname").value = "";
         document.getElementById("diver-qualification").value = "11";
         document.getElementById("diver-instructor-qualification").value = "1";
-        document.getElementById("diver-nox-level").value = "";
+        document.getElementById("diver-nox-level").value = "1";
         document.getElementById("diver-additionnal-qualification").value = "";
         document.getElementById("diver-license-number").value = "";
         document.getElementById("diver-license-expiration-date").value = "";
@@ -228,7 +241,13 @@ function setButtonListener(){
             modifiedDiver = -1;
         }
         
-        setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";        
+        setTimeout(function() {
+            updateDiver();
+            document.getElementById("ring-loading").style.display = "none";
+            document.body.style.cursor = "default";
+        }, 1000);
     });
 }
 
@@ -439,6 +458,21 @@ function createDiverTable(tabDivers){
         let cellule10 = document.createElement("td");
         cellule10.innerHTML = tabDivers[i].get_birth_date();
 
+        
+
+
+        ligne.appendChild(cellule);
+        ligne.appendChild(cellule1);
+        ligne.appendChild(cellule2);
+        ligne.appendChild(cellule3);
+        ligne.appendChild(cellule4);
+        ligne.appendChild(cellule5);
+        ligne.appendChild(cellule6);
+        ligne.appendChild(cellule7);
+        ligne.appendChild(cellule8);
+        ligne.appendChild(cellule9);
+        ligne.appendChild(cellule10);
+
         let cellule11 = document.createElement("td");
         let span_c11 = document.createElement("span");
         let i_c11 = document.createElement("i");
@@ -458,19 +492,6 @@ function createDiverTable(tabDivers){
 
         span_c12.appendChild(i_c12);
         cellule12.appendChild(span_c12);
-
-
-        ligne.appendChild(cellule);
-        ligne.appendChild(cellule1);
-        ligne.appendChild(cellule2);
-        ligne.appendChild(cellule3);
-        ligne.appendChild(cellule4);
-        ligne.appendChild(cellule5);
-        ligne.appendChild(cellule6);
-        ligne.appendChild(cellule7);
-        ligne.appendChild(cellule8);
-        ligne.appendChild(cellule9);
-        ligne.appendChild(cellule10);
         ligne.appendChild(cellule11);
         ligne.appendChild(cellule12);
 
@@ -529,7 +550,13 @@ function modifierDiver(id){
 function supprimerDiver(id){
     SocketManager.deleteDiver(id);
     // Update de la page
-    setTimeout(function() {updateDiver()}, 1000); // Pourquoi ne pas faire une animation de chargement ?*
+    document.getElementById("ring-loading").style.display = "block";
+    document.body.style.cursor = "wait";        
+    setTimeout(function() {
+        updateDiver();
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+    }, 1000);
 }
 
 function getDiverById(id){

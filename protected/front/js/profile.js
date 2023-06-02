@@ -2,6 +2,8 @@ import SocketManager from './SocketManager/SocketProfile.js'
 
 SocketManager.getUserProfile();
 
+document.getElementById("ring-loading").style.display = "none";
+
 function LoadUserProfile(userProfile){
     console.log("Id : " + userProfile.Id_Diver);
     console.log("First name : " + userProfile.Firstname);
@@ -119,6 +121,8 @@ function LoadUserProfile(userProfile){
 
     console.log(userProfile); // Le tableau est bien reçu par le front
 }
+
+
 
 
 export default {

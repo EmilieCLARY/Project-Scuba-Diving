@@ -68,14 +68,14 @@
     </div>
 </nav>
 
-<div class="home-list-container">
+<div id="list-container-div" class="home-list-container">
 
     <div class="home-list-item" onclick="location.href='/profile';" style="cursor: pointer;">
         <div>
             <img src="/protected/front/img/boat.jpg" alt="boat" />
         </div>
         <div>
-            <p>Consultez les informations de votre profil</p>
+            <p class="home-list-text">Consultez les informations de votre profil</p>
         </div>
     </div>
 
@@ -84,40 +84,40 @@
             <img src="/protected/front/img/boat.jpg" alt="boat" />
         </div>
         <div>
-            <p>Dive Sites</p>
+            <p class="home-list-text">Dive Sites</p>
         </div>
     </div>
 
-    <div class="home-list-item reversed" onclick="location.href='/diver';" style="cursor: pointer;">
+    <!--<div id="diver-div" class="home-list-item reversed" onclick="location.href='/diver';" style="cursor: pointer;">
         <div>
             <img src="/protected/front/img/boat.jpg" alt="boat" />
         </div>
         <div>
             <p>Diver (only admin)</p>
         </div>
-    </div>
+    </div>-->
 
     <div class="home-list-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
         <div>
             <img src="/protected/front/img/boat.jpg" alt="boat" />
         </div>
         <div>
-            <p>Planned Dive</p>
+            <p class="home-list-text">Planned Dive</p>
         </div>
     </div>
 
-    <div class="home-list-item reversed" onclick="location.href='/app_user';" style="cursor: pointer;">
+    <!--<div id="app-user-div" class="home-list-item reversed" onclick="location.href='/app_user';" style="cursor: pointer;">
         <div>
             <img src="/protected/front/img/boat.jpg" alt="boat" />
         </div>
         <div>
             <p>Application Users (only admin)</p>
         </div>
-    </div>
+    </div>-->
 
 </div>
 
-<script type="module" src="/protected/front/js/login.js"></script>
+<script type="module" src="/protected/front/js/protected.js"></script>
 <script type="module" src="/protected/front/js/user_info.js"></script>
 <script>
 	//$.getJSON('/protected/api/idPayload', function (id_token) {
