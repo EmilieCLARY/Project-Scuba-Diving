@@ -129,7 +129,7 @@ function createDiverBubble() {
     figure.className = "ball bubble";
 
     // Ajouter les éléments à la structure parente
-    section.appendChild(p);
+    figure.appendChild(p);
     section.appendChild(figure);
     div.appendChild(section);
 
@@ -162,7 +162,7 @@ function createAppUserBubble() {
     figure.className = "ball bubble";
 
     // Ajouter les éléments à la structure parente
-    section.appendChild(p);
+    figure.appendChild(p);
     section.appendChild(figure);
     div.appendChild(section);
 

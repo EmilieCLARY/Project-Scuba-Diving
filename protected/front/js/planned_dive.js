@@ -635,37 +635,106 @@ function createInfoPlannedDive(id) {
 
     document.getElementById("container-modal2").style.display = "block";
 
-    /* Modal d'infos des planned dives */
+    document.getElementById("site-name-pd").innerHTML = "Site de plongée : " + PlannedDiveInfoDiveSite.get_site_name();
+    if(PlannedDiveInfo.get_diver_dive_price() == 0){
+        document.getElementById("diver-price-pd").innerHTML = "Prix plongeur : Gratuit";
+    }
+    else{
+        document.getElementById("diver-price-pd").innerHTML = "Prix plongeur : " + PlannedDiveInfo.get_diver_dive_price() + "€";
+    }
+    if(PlannedDiveInfo.get_instructor_dive_price() == 0){
+        document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur : Gratuit";
+    }
+    else{
+        document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur : " + PlannedDiveInfo.get_instructor_dive_price() + "€";
+    }
+    if(PlannedDiveInfo.get_comments() == ""){
+        document.getElementById("comments-pd").innerHTML = "Commentaires : Aucun";
+    }
+    else{
+        document.getElementById("comments-pd").innerHTML = "Commentaires : " + PlannedDiveInfo.get_comments();
+    }
+    if(PlannedDiveInfo.get_special_needs() == ""){
+        document.getElementById("special-needs-pd").innerHTML = "Besoins spéciaux : Aucun";
+    }
+    else{
+        document.getElementById("special-needs-pd").innerHTML = "Besoins spéciaux : " + PlannedDiveInfo.get_special_needs();
+    }
+    document.getElementById("date-pd").innerHTML = "Date : " + PlannedDiveInfo.get_planned_date();
+    document.getElementById("time-pd").innerHTML = "Heure : " + PlannedDiveInfo.get_planned_time();
 
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
 
-    let modal_content = document.createElement("div");
-    modal_content.classList.add("modal_content");
+    // Clear the table
+    document.getElementById("tbody-pd").innerHTML = "";
+    document.getElementById("tr-desc").innerHTML = "";
 
-    /* Div Haut : Titre, prix et planning */
-    let div_hautModal = document.createElement("div");
-    div_hautModal.classList.add("div_hautModal");
+    // Création des theads
+    let tdh1 = document.createElement("td");
+    let tdh2 = document.createElement("td");
+    let tdh3 = document.createElement("td");
 
-        /* Titre + prix */
-    let div_hautGaucheModal = document.createElement("div");
-    let titleModal = document.createElement("h1");
-    titleModal.innerHTML = "Plongée à " + PlannedDiveInfoDiveSite.get_site_name();
-    div_hautGaucheModal.appendChild(titleModal);
+    tdh1.innerHTML = "Nom";
+    tdh2.innerHTML = "Prénom";
+    tdh3.innerHTML = "Rôle";
 
-    let div_prixModal = document.createElement("div");
+    document.getElementById("tr-desc").appendChild(tdh1);
+    document.getElementById("tr-desc").appendChild(tdh2);
+    document.getElementById("tr-desc").appendChild(tdh3);
 
-    let div_prixPlongeurModal = document.createElement("div");
-    let priceModal = document.createElement("p");
-    priceModal.innerHTML = "Prix plongeur : " + PlannedDiveInfo.get_diver_dive_price() + "€";
-    div_prixPlongeurModal.appendChild(priceModal);
-    let div_prixMoniteurModal = document.createElement("div");
-    let priceModal2 = document.createElement("p");
-    priceModal2.innerHTML = "Prix encadrant : " + PlannedDiveInfo.get_instructor_dive_price() + "€";
-    div_prixMoniteurModal.appendChild(priceModal2);
+    // Parcours du tableau des dives registration
+    tabDiveRegistrations.forEach(element => {
+        if(element.get_planned_dive_id() == PlannedDiveInfo.get_id()){
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
 
-    div_prixModal.appendChild(div_prixPlongeurModal);
-    div_hautGaucheModal.appendChild(div_prixModal);
+            td1.innerHTML = tabDivers[element.get_diver_id()].get_last_name();
+            td2.innerHTML = tabDivers[element.get_diver_id()].get_first_name();
+            td3.innerHTML = element.get_diver_role();
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            if(isAdmin == 1){
+                let tr_desc = document.getElementById("tr-desc");
+                let td_suppr = document.createElement("td");
+                td_suppr.innerHTML = "Supprimer";
+                td_suppr.setAttribute("id", "td-suppr");
+                tr_desc.appendChild(td_suppr);
+
+                let td4 = document.createElement("td");
+                let span_trash = document.createElement("span");
+                let i_trash = document.createElement("i");
+                i_trash.setAttribute("id", "btn_suppr", + element.get_diver_id());
+                i_trash.classList.add("cursor-pointer");
+                i_trash.classList.add("fa-solid");
+                i_trash.classList.add("fa-trash-can");
+
+                span_trash.appendChild(i_trash);
+                td4.appendChild(span_trash);
+                tr.appendChild(td4);
+
+                i_trash.addEventListener("click", (e) => {
+                    let text = "Êtes-vous sûr de vouloir supprimer cette inscription ?";
+                    if(confirm(text) == true){
+                        supprimerRegistration(element.get_diver_id());
+                    }
+                    else{
+                        console.log("Annulation de la suppression");
+                    }
+                });
+            }
+
+            document.getElementById("tbody-pd").appendChild(tr);
+        }
+    });
+
+}
+
+function supprimerRegistration(id){
+    console.log(id);
 }
 
 document.getElementById("inscription-planned-dive").addEventListener("click", (e) => {

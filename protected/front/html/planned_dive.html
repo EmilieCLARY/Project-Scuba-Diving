@@ -40,11 +40,42 @@
                 <h1> Informations complémentaires </h1>
                 <span id="close-pd-modal2"><i id="pd-close-button2" class="fa-regular fa-circle-xmark"></i></span>
             </div>
-            <p>Site de plongée</p>
-            <p>Prix plongeur</p>
-            <p>Prix moniteur</p>
-            <p>Commentaire</p>
-            <p>Besoins spéciaux</p>
+            <div class="modal-body">
+                <div class="modal-body-left">
+                    <div class="modal-site-name">
+                        <p id="site-name-pd">Site de plongée</p>
+                    </div>
+                    <div class="modal-price">
+                        <p id="diver-price-pd">Prix plongeur</p>
+                        <p id="instructor-price-pd">Prix moniteur</p>y
+                    </div>                        
+                </div>
+                <div class="modal-body-right">
+                    <div class="modal-dive-time">
+
+                    </div>
+                    <div class="modal-diver-list">
+
+                    </div>
+                </div>
+            </div>
+            <p id="site-name-pd">Site de plongée</p>
+            <p id="diver-price-pd">Prix plongeur</p>
+            <p id="instructor-price-pd">Prix moniteur</p>
+            <p id="comments-pd">Commentaires</p>
+            <p id="special-needs-pd">Besoins spéciaux</p>
+            <p id="date-pd">Date</p>
+            <p id="time-pd">Heure</p>
+            <table class="blueTable">
+                <thead>
+                    <tr id="tr-desc"class="tr">
+                        <td>Nom</td>
+                        <td>Prénom</td>
+                        <td>Rôle</td>
+                    </tr>
+                </thead>
+                <tbody id="tbody-pd"></tbody>
+            </table>
             
             <button id="inscription-planned-dive">S'inscrire</button>
         </div>

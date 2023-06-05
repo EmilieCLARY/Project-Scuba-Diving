@@ -33,8 +33,8 @@ body {
   line-height: 1.5;
   margin: 0;
   padding: 0;
+  /*background-image: url("../img/test.png");*/
 }
-
 
 /* --------_ Navbar _-------- */
 
@@ -320,7 +320,7 @@ nav .navbar-diver .login-container-diver i {
   color: #FFF;
   text-shadow: var(--text-color) 0 0.3vh 0.6vh;
   width: 60vw;
-  /*height: 50vh;*/
+  height: 60vh;
   border-radius: 2vw;
   font-size: 2vh;
 }
@@ -351,7 +351,7 @@ nav .navbar-diver .login-container-diver i {
 }
 
 .hover-div .bottom-part .map {
-  height: 30vh;
+  height: 38vh;
   border-radius: 2vw;
 }
 
@@ -886,6 +886,7 @@ nav .navbar-diver .login-container-diver i {
 }
 
 .blueTable thead {
+  position: sticky;
   text-align: center;
   background: #1C6EA4;
   background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
@@ -893,6 +894,7 @@ nav .navbar-diver .login-container-diver i {
   background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
   border-bottom: 0.2vh solid #444444;
   top: 13vh;
+  z-index: 1;
 }
 
 .blueTable thead th {
@@ -1336,7 +1338,7 @@ nav .navbar-diver .login-container-diver i {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 20; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -1385,20 +1387,20 @@ nav .navbar-diver .login-container-diver i {
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  width:200px;
-  height:200px;
+  width:15vw;
+  height:15vw;
   background:transparent;
   border:3px solid transparent;
   border-radius:50%;
   text-align:center;
-  line-height:200px;
+  line-height:15vw;
   font-family:sans-serif;
-  font-size:20px;
+  font-size:1.5vw;
   color: black;
-  letter-spacing:4px;
+  letter-spacing:0.3vw;
   text-transform:uppercase;
-  text-shadow:0 0 10px black;
-  box-shadow:0 0 20px rgba(0,0,0,.5);
+  text-shadow:0 0 0.75vw black;
+  box-shadow:0 0 1.5vw rgba(0,0,0,.5);
   backdrop-filter: blur(50px); /* Adjust the blur radius as desired */
   z-index: 999;
 }
@@ -1490,7 +1492,7 @@ nav .navbar-diver .login-container-diver i {
   content: "";
   position: absolute;
   display: none;
-  top: 5%;
+  top: 1%;
   left: 10%;
   width: 80%;
   height: 80%;
@@ -1517,7 +1519,11 @@ nav .navbar-diver .login-container-diver i {
   display: none; 
 }
 .ball.bubble {
-  background: radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.8), rgb(184, 212, 250) 40%, rgba(91, 121, 255, 0.918) 60%, rgb(4, 0, 255));
+  background: radial-gradient(circle at 50% 55%, rgba(255, 255, 255, 0.8), rgb(184, 212, 250) 40%, rgba(48,126,238,0.918) 60%, rgba(48,126,238,1));
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 3vw;
 }
 .ball.bubble:before {
   -webkit-filter: blur(0);
@@ -1536,7 +1542,13 @@ nav .navbar-diver .login-container-diver i {
 .ball:hover {
   -webkit-animation: bubble-anim 1s infinite;
   animation: bubble-anim 1s infinite;
+  color: var(--secondary-color);
 }
+.stage:hover {
+  -webkit-animation: bubble-anim 1s infinite;
+  animation: bubble-anim 1s infinite;
+}
+
 .stage {
   width: 37.5vh;
   height: 37.5vh;
@@ -1605,8 +1617,6 @@ nav .navbar-diver .login-container-diver i {
     transform: scale(1); } }
 
 .bubble-text {
-  margin-left: 50%;
-  margin-top: 50%;
   position: absolute;
   z-index: 2;
 }
@@ -1616,13 +1626,14 @@ nav .navbar-diver .login-container-diver i {
   flex-wrap: wrap;
   list-style: none;
   margin: 0;
+  margin-left: -4vh;
   padding: 0;
 }
 
 .bubble-item {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /*Waves*/
@@ -1680,7 +1691,7 @@ nav .navbar-diver .login-container-diver i {
 /*Other*/
 
 .unique-color-dark {
-  background-color: #12448E !important;
+  background-color: #140D4F !important;
 }
 
 .bg-light {
@@ -1692,5 +1703,5 @@ nav .navbar-diver .login-container-diver i {
 }
 
 .custom-color {
-  background-color: #7289DA !important
+  background-color: #307EEE !important
 }

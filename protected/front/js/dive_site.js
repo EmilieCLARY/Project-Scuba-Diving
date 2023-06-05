@@ -540,15 +540,17 @@ function create_elements(tab_dive_sites) {
         let siteElementHoverBottomMap = document.createElement('div');
         siteElementHoverBottomMap.classList.add("map");
         let mapWidth = window.innerWidth * 0.5;
-        let mapHeight = window.innerHeight * 0.3; 
+        let mapHeight = window.innerHeight * 0.35; 
         siteElementHoverBottomMap.innerHTML = `<iframe src="`+tab_dive_sites[i].get_url()+`" width="`+mapWidth+`" height="`+mapHeight+`" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
         siteElementHoverBottomMap.setAttribute('id', 'map' + i);          
         siteElementHoverBottom.appendChild(siteElementHoverBottomMap);
         let siteElementHoverBottomLocation = document.createElement('div');
         siteElementHoverBottomLocation.classList.add("location");
+        if (tab_dive_sites[i].get_aditionnal_info()!= null && tab_dive_sites[i].get_aditionnal_info() != ""){
         let siteElementHoverBottomLocationAddress = document.createElement('p');
         siteElementHoverBottomLocationAddress.innerHTML = "Informations Complémentaires : " + tab_dive_sites[i].get_aditionnal_info();
         siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationAddress);
+        }
         let siteElementHoverBottomLocationPosition = document.createElement('p');
         siteElementHoverBottomLocationPosition.innerHTML = "Coordonnées GPS : " +tab_dive_sites[i].get_gps_latitude() + " " + tab_dive_sites[i].get_gps_longitude();
         siteElementHoverBottomLocation.appendChild(siteElementHoverBottomLocationPosition);
@@ -736,8 +738,6 @@ function createCalendar(id) {
 
         tabPlannedDives.forEach(element => {
             if(element.get_id_dive_site() == id_planned) {
-                console.log(element);
-                console.log("Test : " + element.get_status());
                 switch(element.get_status()) {
                     case "Ouverte":
                         statut_color = "lime";
