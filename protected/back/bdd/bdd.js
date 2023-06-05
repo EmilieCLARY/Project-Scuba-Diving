@@ -299,7 +299,35 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
     });
 }
 
+function createDiverRegistrationInDB(id_diver, id_planned_dive, diver_role, resgistration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
 
+    let sql = `INSERT INTO Dive_Registration(Diver_Id_Diver, Planned_Dive_Id_Planned_Dive, Diver_Role, Resgistration_Timestamp, Personal_Comment, Car_Pooling_Seat_Offered, Car_Pooling_Seat_Request)
+    VALUES(?,?,?,?,?,?,?)`;
+
+    db.run(sql, [id_diver, id_planned_dive, diver_role, resgistration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('Diver registration was added to the table');
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
+/*********************************************************************/
+/*                           LOGIN FUNCTION                          */
+/*********************************************************************/
 
 function login(id, first_name, last_name, callback){
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
@@ -503,6 +531,7 @@ module.exports = {
     createDiveInDB,
     createDiveTeamInDB,
     createEmergencyInDB,
+    createDiverRegistrationInDB,
 
     // Login function
     login

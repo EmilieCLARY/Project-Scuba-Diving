@@ -70,24 +70,6 @@
 
 <div id="list-container-div" class="home-list-container">
 
-    <div class="home-list-item" onclick="location.href='/profile';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p class="home-list-text">Consultez les informations de votre profil</p>
-        </div>
-    </div>
-
-    <div class="home-list-item reversed" onclick="location.href='/dive_site';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p class="home-list-text">Dive Sites</p>
-        </div>
-    </div>
-
     <!--<div id="diver-div" class="home-list-item reversed" onclick="location.href='/diver';" style="cursor: pointer;">
         <div>
             <img src="/protected/front/img/boat.jpg" alt="boat" />
@@ -96,15 +78,28 @@
             <p>Diver (only admin)</p>
         </div>
     </div>-->
+    <ul id="bubble-list">
+        <div id="bubble-1" class="bubble-item" onclick="location.href='/profile';" style="cursor: pointer;">
+            <section class="stage">
+                <p class="bubble-text">Profil</p>  
+                <figure class="ball bubble"></figure>
+            </section>
+        </div>
 
-    <div class="home-list-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        <div id="bubble-2" class="bubble-item" onclick="location.href='/dive_site';" style="cursor: pointer;">
+            <section class="stage">
+                <p class="bubble-text">Sites de plongée</p>  
+                <figure class="ball bubble"></figure>
+            </section>
         </div>
-        <div>
-            <p class="home-list-text">Planned Dive</p>
+
+        <div id="bubble-3" class="bubble-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
+            <section class="stage">
+                <p class="bubble-text">Plongées prévues</p>  
+                <figure class="ball bubble"></figure>
+            </section>
         </div>
-    </div>
+    </ul>
 
     <!--<div id="app-user-div" class="home-list-item reversed" onclick="location.href='/app_user';" style="cursor: pointer;">
         <div>
@@ -117,6 +112,26 @@
 
 </div>
 
+
+<!---Footer--->
+<div>
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(114,137,218,0.7)" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(114,137,218,0.5)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(114,137,218,0.3)" />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#7289da" />
+        </g>
+    </svg>
+</div>
+</body>
+
+<footer class="page-footer font-small unique-color-dark pt-4"></footer>
+
+
 <script type="module" src="/protected/front/js/protected.js"></script>
 <script type="module" src="/protected/front/js/user_info.js"></script>
 <script>
@@ -127,5 +142,4 @@
 	//});
 </script>
 
-</body>
-</html>
+    </html>

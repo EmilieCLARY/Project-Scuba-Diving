@@ -430,17 +430,21 @@ function create_elements(tab_dive_sites) {
         // Partie haute avec le nom du site et la ville
         let siteElementTop = document.createElement('div');
         siteElementTop.classList.add("top-part");
+        let siteElementTopWrap = document.createElement('div');
+        siteElementTopWrap.classList.add("top-part-wrap");
+        siteElementTop.appendChild(siteElementTopWrap);
         let siteElementTopName = document.createElement('h1');
         siteElementTopName.innerHTML = tab_dive_sites[i].get_site_name();
-        siteElementTop.appendChild(siteElementTopName);
+        siteElementTopWrap.appendChild(siteElementTopName);
         let siteElementTopTown = document.createElement('h2');
         siteElementTopTown.classList.add("linkhover");
         siteElementTopTown.innerHTML = tab_dive_sites[i].get_city();
         let siteElementTopTownIcon = document.createElement('i');
         siteElementTopTownIcon.classList.add("fa-solid");
         siteElementTopTownIcon.classList.add("fa-circle-info");
+        siteElementTopTownIcon.classList.add("info-icon");
         siteElementTopTown.appendChild(siteElementTopTownIcon);
-        siteElementTop.appendChild(siteElementTopTown);
+        siteElementTopWrap.appendChild(siteElementTopTown);
         siteElement.appendChild(siteElementTop);
 
         // Partie basse avec l'image et les infos
@@ -494,8 +498,10 @@ function create_elements(tab_dive_sites) {
             let span_suppr = document.createElement('span');
             span_modif.classList.add("fa-solid");
             span_modif.classList.add("fa-pen-to-square");
+            span_modif.classList.add("cursor-pointer");
             span_suppr.classList.add("fa-solid");
             span_suppr.classList.add("fa-trash-can");
+            span_suppr.classList.add("cursor-pointer");
             span_modif.setAttribute("id", "btn_modif" + tab_dive_sites[i].get_id());
             span_suppr.setAttribute("id", "btn_suppr" + tab_dive_sites[i].get_id());
 
@@ -519,6 +525,13 @@ function create_elements(tab_dive_sites) {
         let siteElementHoverTopCountry = document.createElement('h2');
         siteElementHoverTopCountry.innerHTML = tab_dive_sites[i].get_country();
         siteElementHoverTop.appendChild(siteElementHoverTopCountry);
+        let siteElementHoverTopClose = document.createElement('div');
+        siteElementHoverTopClose.classList.add("close-hover");
+        let siteElementHoverTopCloseIcon = document.createElement('i');
+        siteElementHoverTopCloseIcon.classList.add("fa-solid");
+        siteElementHoverTopCloseIcon.classList.add("fa-xmark");
+        siteElementHoverTopClose.appendChild(siteElementHoverTopCloseIcon);
+        siteElementHoverTop.appendChild(siteElementHoverTopClose);
         siteElementHover.appendChild(siteElementHoverTop);
 
         // Partie basse avec la map et les coordonnées
@@ -542,7 +555,8 @@ function create_elements(tab_dive_sites) {
         siteElementHoverBottom.appendChild(siteElementHoverBottomLocation);
         
         siteElementHover.appendChild(siteElementHoverBottom);
-        siteElementTopTown.appendChild(siteElementHoverContainer);                
+        siteElementTop.appendChild(siteElementHoverContainer);
+                        
 
         //siteElement.innerHTML = tab_dive_sites[i].get_site_name() + "<br>" + tab_dive_sites[i].get_track_type() + " " + tab_dive_sites[i].get_track_number() + " " + tab_dive_sites[i].get_track_name() + "<br>" + tab_dive_sites[i].get_zip_code() + " " + tab_dive_sites[i].get_city() + "<br>" + tab_dive_sites[i].get_country() + "<br>" + tab_dive_sites[i].get_aditionnal_info() + "<br>" + tab_dive_sites[i].get_telephone() + "<br>" + tab_dive_sites[i].get_url() + "<br>" + tab_dive_sites[i].get_gps_latitude() + " " + tab_dive_sites[i].get_gps_longitude() + "<br>" + "<br>";
         // Ajouter du contenu ou des styles si nécessaire
@@ -632,6 +646,7 @@ function supprimerDiveSite(id){
 function hoverlistener() {
     let town_hover = document.getElementsByClassName("linkhover");
     let all_map_div = document.getElementsByClassName("hover-container");
+    let all_map_div_close = document.getElementsByClassName("close-hover");
     for (let i = 0 ; i < town_hover.length; i++) {
         /*
         town_hover[i].addEventListener("mouseover", function( event ){
@@ -646,7 +661,24 @@ function hoverlistener() {
         */
         town_hover[i].addEventListener("click", function( event ){
             all_map_div[i].style.visibility = 'visible';
-     }, false);
+            town_hover[i].classList.add("highlight");
+            for (let j = 0 ; j < town_hover.length; j++) {
+                if (j != i) {
+                    all_map_div[j].style.visibility = 'hidden';
+                    town_hover[j].classList.remove("highlight");
+                }
+            }
+        }, false);
+         all_map_div_close[i].addEventListener("click", function( event ){
+            all_map_div[i].style.visibility = 'hidden';
+            town_hover[i].classList.remove("highlight");
+        }, false);
+        all_map_div_close[i].addEventListener("mouseover", function( event ){
+            all_map_div_close[i].getElementsByTagName("i")[0].classList.add("fa-shake");
+        }, false);
+        all_map_div_close[i].addEventListener("mouseleave", function( event ){
+            all_map_div_close[i].getElementsByTagName("i")[0].classList.remove("fa-shake");
+        }, false);
     }
 }
 

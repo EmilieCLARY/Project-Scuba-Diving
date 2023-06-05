@@ -10,7 +10,7 @@ let modifiedDiver = -1;
 document.getElementById("ring-loading").style.display = "none";
 
 let modal = document.getElementById("form-diver-container");
-let openModal = document.getElementById("open-site-modal");
+let openModal = document.getElementById("open-site-modal-diver");
 let closeModal = document.getElementById("close-site-modal");
 let choseImage = document.getElementById("dive-site-image-button");
 let closeButton = document.getElementById("diver-close-button");
@@ -53,7 +53,6 @@ window.onclick = function(event) {
 }
 
 // Classe privée pour un plongeur
-
 class diver {
     constructor(id_,last_name_,first_name_,diver_qualification_,instructor_qualification_,nox_level_,additionnal_qualification_,licence_number_,licence_expiration_date_,medical_certificate_expiration_date_,birth_date_) {
         this.id = id_;
@@ -481,6 +480,7 @@ function createDiverTable(tabDivers){
         let span_c11 = document.createElement("span");
         let i_c11 = document.createElement("i");
         i_c11.setAttribute("id", "btn_modif" + tabDivers[i].get_id());
+        i_c11.classList.add("cursor-pointer");
         i_c11.classList.add("fa-solid");
         i_c11.classList.add("fa-pen-to-square"); 
 
@@ -491,6 +491,7 @@ function createDiverTable(tabDivers){
         let span_c12 = document.createElement("span");
         let i_c12 = document.createElement("i");
         i_c12.setAttribute("id", "btn_suppr" + tabDivers[i].get_id());
+        i_c12.classList.add("cursor-pointer");
         i_c12.classList.add("fa-solid");
         i_c12.classList.add("fa-trash-can");
 

@@ -38,9 +38,51 @@
         <div class="div-modal"> 
             <div class="title"> 
                 <h1> Informations complémentaires </h1>
-                <span id="close-pd-modal"><i id="pd-close-button" class="fa-regular fa-circle-xmark"></i></span>
+                <span id="close-pd-modal2"><i id="pd-close-button2" class="fa-regular fa-circle-xmark"></i></span>
             </div>
+            <p>Site de plongée</p>
+            <p>Prix plongeur</p>
+            <p>Prix moniteur</p>
+            <p>Commentaire</p>
+            <p>Besoins spéciaux</p>
+            
+            <button id="inscription-planned-dive">S'inscrire</button>
+        </div>
+    </div>
 
+    <div id="container-modal3" class="modal">
+        <div class="div-modal"> 
+            <div class="title"> 
+                <h1 id="title-planned-dive-reg"> Inscription à la plongée </h1>
+                <span id="close-pd-modal3"><i id="pd-close-button3" class="fa-regular fa-circle-xmark"></i></span>
+            </div>
+            <div class="form-body">
+                <div class="labels">
+                    <label for="diver-role">Rôle du plongeur</label>
+                    <label for="personal-comment">Commentaire personnel</label>
+                    <label for="car-pooling">Covoiturage</label>
+                </div>
+                <div class="inputs">
+                    <select type="text" id="diver-role" name="diver-role" placeholder="Rôle" required>
+                        <option value="Guide de palanquée">Guide de palanquée</option>
+                        <option value="Directeur de plongée">Directeur de plongée</option>
+                        <option value="Plongeur">Plongeur</option>
+                    </select>
+                    <input type="text" id="personal-comment" name="personal-comment" placeholder="Commentaire personnel" required>
+                    <select type="text" id="car-pooling" name="car-pooling" placeholder="Covoiturage" required>
+                        <option value="Aucun">Aucun</option>
+                        <option value="-1">Besoin d'une place</option>
+                        <option value="1">1 place disponible</option>
+                        <option value="2">2 places disponible</option>
+                        <option value="3">3 places disponible</option>
+                        <option value="4">4 places disponible</option>
+                        <option value="99">5+ places disponible</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-diver-registration-validation">
+                <button id="inscription-planned-dive-modal">S'inscrire</button>
+            </div>
         </div>
     </div>
 
@@ -49,19 +91,19 @@
     <div id="planned-dive-creation-form" class="modal"> 
         <div class="form-planned-dive">
             <div class="title">
-                <h1>Create a new Planned dive</h1>
+                <h1>Planifier une nouvelle plongée</h1>
                 <span id="close-planned-dive-form"><i id="planned-dive-form-close-button" class="fa-regular fa-circle-xmark"></i></span>
             </div>
             <div class="form-body">
                 <div class="labels">
-                    <label for="planned-dive-date">Planned Date</label>
-                    <label for="planned-dive-time">Planned Time</label>
-                    <label for="planned-dive-comments">Comments</label>
-                    <label for="planned-dive-special-needs">Special Needs</label>
+                    <label for="planned-dive-date">Date</label>
+                    <label for="planned-dive-time">Heure</label>
+                    <label for="planned-dive-comments">Commentaire(s)</label>
+                    <label for="planned-dive-special-needs">Besoins spéciaux</label>
                     <label for="planned-dive-statut">Statut</label>
-                    <label for="planned-dive-diver-dive-price">Diver Dive Price</label>
-                    <label for="planned-dive-instructor-dive-price">Instructor Dive Price</label>
-                    <label for="planned-dive-site">Dive Site</label>
+                    <label for="planned-dive-diver-dive-price">Prix plongeur</label>
+                    <label for="planned-dive-instructor-dive-price">Prix enseignant</label>
+                    <label for="planned-dive-site">Site de plongée</label>
                 </div>
                 <div class="inputs">
                     <input type="date" id="planned-dive-date" name="planned-dive-date" placeholder="Planned Date" required>

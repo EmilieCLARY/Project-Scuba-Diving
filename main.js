@@ -212,6 +212,13 @@ io.on('connection', (socket) =>{
         }, "Planned_Dive");
     });
 
+    socket.on("getAllDiveRegistrations", () => {
+        BDD.getFromDB((tabDiveRegistrations) => {
+            socket.emit('receiveAllDiveRegistrations', tabDiveRegistrations);
+            console.log("BDD : All dive registrations sent to client.");
+        }, "Dive_Registration");
+    });
+
     socket.on('getUserProfile', () => {
         BDD.getUserProfile(socket.handshake.session.idUser, (userProfile) => {
             socket.emit('receiveUserProfile', userProfile);
@@ -242,6 +249,14 @@ io.on('connection', (socket) =>{
 
     socket.on('addPlannedDive', (id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site) => {
         BDD.createPlannedDiveInDB(id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site);
+    });
+
+    socket.on('addDiverRegistration', (id_planned_dive, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request) => {
+        BDD.getUserProfile(socket.handshake.session.idUser, (userProfile) => {
+            let id_diver = userProfile.Id_Diver;
+            console.log("id_diver : " + id_diver);
+            BDD.createDiverRegistrationInDB(id_diver, id_planned_dive, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request);
+        });       
     });
 
     socket.on('disconnect', () => {

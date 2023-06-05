@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Scuba-Diving Manager</title>
+    <link rel='stylesheet' href='stylesheets/protected.css'/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="jquery.json-viewer.js"></script>
+    <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link href="stylesheets/jquery.json-viewer.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<!--<div id="maindiv" role="main" class="maindiv">
+    <div class="top-container">
+        <div class="top">
+            <div class="logout">
+                <a aria-label="logout" href='/logout'>
+                    <img class="logout-icon" href='/logout' id="logoutIcon"
+                                       src="images/logout.svg" alt="logout">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle-container">
+        <div class="hello-text">
+            Hi <span id="userNameSpan"></span>, Congratulations!<br>
+            You’ve made your first authentication.<br>
+        </div>
+        <div class="above-button-text">
+            What you can do next:
+        </div>
+        <a href="https://cloud.ibm.com/docs/services/appid?topic=appid-web-apps" target="_blank">
+            <button class="button">
+                <div class="button-text">
+                    Add App ID to your own app
+                </div>
+            </button>
+        </a>
+    </div>
+
+    <div class="bottom-container">
+        <div class="bottom-container-data">
+            <div class="token-title">
+                ID Token
+            </div>
+            <div id="idTokenPayload" class="token-info"></div>
+        </div>
+    </div>
+</div>
+-->
+<nav>
+    <div class="navbar">
+        <span class="logo-main">
+            <a href="/protected/protected.html">
+                <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
+            </a>
+        </span>
+        <span class="nav-center">
+            <span class ="nav-name"> <p id="username"></p> </span>
+        </span>
+        <span class="login-container">
+            <a href="/login" class="text-reset">
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </a>
+        </span>
+    </div>
+</nav>
+
+<div id="list-container-div" class="home-list-container">
+
+    <div class="home-list-item" onclick="location.href='/profile';" style="cursor: pointer;">
+        <div>
+            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        </div>
+        <div>
+            <p class="home-list-text">Consultez les informations de votre profil</p>
+        </div>
+    </div>
+
+    <div class="home-list-item reversed" onclick="location.href='/dive_site';" style="cursor: pointer;">
+        <div>
+            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        </div>
+        <div>
+            <p class="home-list-text">Dive Sites</p>
+        </div>
+    </div>
+
+    <!--<div id="diver-div" class="home-list-item reversed" onclick="location.href='/diver';" style="cursor: pointer;">
+        <div>
+            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        </div>
+        <div>
+            <p>Diver (only admin)</p>
+        </div>
+    </div>-->
+
+    <div class="home-list-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
+        <div>
+            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        </div>
+        <div>
+            <p class="home-list-text">Planned Dive</p>
+        </div>
+    </div>
+
+    <!--<div id="app-user-div" class="home-list-item reversed" onclick="location.href='/app_user';" style="cursor: pointer;">
+        <div>
+            <img src="/protected/front/img/boat.jpg" alt="boat" />
+        </div>
+        <div>
+            <p>Application Users (only admin)</p>
+        </div>
+    </div>-->
+
+</div>
+
+<script type="module" src="/protected/front/js/protected.js"></script>
+<script type="module" src="/protected/front/js/user_info.js"></script>
+<script>
+	//$.getJSON('/protected/api/idPayload', function (id_token) {
+	//	$('#username').html(id_token.name);
+    //    console.log(id_token);
+	//	//$('#idTokenPayload').jsonViewer(id_token, {collapsed: false});
+	//});
+</script>
+
+</body>
+</html>

@@ -23,12 +23,14 @@ loadInfo();
 function getIsAdmin(isAdmin){
     if(isAdmin == 1){
         //diver_div.style.display = 'block';
-        createDivDiver();
-        createAppUserDiv();
+        //createDivDiver();
+        //createAppUserDiv();
+        createDiverBubble();
+        createAppUserBubble();
     }
 }
 
-function createDivDiver(){
+/*function createDivDiver(){
     // Create the main div element
     var diverDiv = document.createElement('div');
     diverDiv.setAttribute('class', 'home-list-item reversed');
@@ -100,7 +102,74 @@ function createAppUserDiv(){
 
     // Append the main div to the document body or any other parent element
     document.getElementById('list-container-div').appendChild(appUserDiv);
+}*/
+
+function createDiverBubble() {
+        // Créer l'élément div
+    const div = document.createElement("div");
+    const ul = document.getElementById("bubble-list");
+    div.id = "bubble-4";
+    div.classList.add("bubble-item");
+    div.style.cursor = "pointer";
+    div.onclick = function() {
+    location.href = "/diver";
+    };
+
+    // Créer l'élément section
+    const section = document.createElement("section");
+    section.className = "stage";
+
+    // Créer l'élément p
+    const p = document.createElement("p");
+    p.className = "bubble-text";
+    p.textContent = "Liste Plongeur";
+
+    // Créer l'élément figure
+    const figure = document.createElement("figure");
+    figure.className = "ball bubble";
+
+    // Ajouter les éléments à la structure parente
+    section.appendChild(p);
+    section.appendChild(figure);
+    div.appendChild(section);
+
+    // Ajouter l'élément div au document
+    ul.appendChild(div);
 }
+
+function createAppUserBubble() {
+    // Créer l'élément div
+    const div = document.createElement("div");
+    const ul = document.getElementById("bubble-list");
+    div.id = "bubble-5";
+    div.classList.add("bubble-item");
+    div.style.cursor = "pointer";
+    div.onclick = function() {
+    location.href = "/app_user";
+    };
+
+    // Créer l'élément section
+    const section = document.createElement("section");
+    section.className = "stage";
+
+    // Créer l'élément p
+    const p = document.createElement("p");
+    p.className = "bubble-text";
+    p.textContent = "Utilisateurs de l'application";
+
+    // Créer l'élément figure
+    const figure = document.createElement("figure");
+    figure.className = "ball bubble";
+
+    // Ajouter les éléments à la structure parente
+    section.appendChild(p);
+    section.appendChild(figure);
+    div.appendChild(section);
+
+    // Ajouter l'élément div au document
+    ul.appendChild(div);
+}
+
 
 export default {
     getIsAdmin,
