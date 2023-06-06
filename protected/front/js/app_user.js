@@ -1,11 +1,20 @@
+// Imports
 import SocketManager from './SocketManager/SocketAppUser.js'
+import AppUser from './Classes/app_user.js'
+import Diver from './Classes/diver.js'
 
+// Calling socket functions
 SocketManager.getAllAppUsers();
 SocketManager.getAllDivers();
 
+// Global variables
 let tabAppUsers = [];
 let tabDivers = [];
 let modifiedAppUser;
+
+/********************************************************************/
+/*                              MODALS                              */
+/********************************************************************/
 
 let modal = document.getElementById("form-appuser-container");
 let closeModal = document.getElementById("close-site-modal");
@@ -31,165 +40,13 @@ window.onclick = function(event) {
     }
 }
 
-class app_user{
-    constructor(id_, Lastname_, Firstname_, Id_Diver, isAdmin){
-        this.id = id_;
-        this.Lastname = Lastname_;
-        this.Firstname = Firstname_;
-        this.Id_Diver = Id_Diver;
-        this.isAdmin = isAdmin;
-    }
-
-    get_id(){
-        return this.id;
-    }
-
-    get_Lastname(){
-        return this.Lastname;
-    }
-
-    get_Firstname(){
-        return this.Firstname;
-    }
-
-    get_Id_Diver(){
-        return this.Id_Diver;
-    }
-
-    get_isAdmin(){
-        return this.isAdmin;
-    }
-
-    set_id(id_){
-        this.id = id_;
-    }
-
-    set_Lastname(Lastname_){
-        this.Lastname = Lastname_;
-    }
-
-    set_Firstname(Firstname_){
-        this.Firstname = Firstname_;
-    }
-
-    set_Id_Diver(Id_Diver_){
-        this.Id_Diver = Id_Diver_;
-    }
-
-    set_isAdmin(isAdmin_){
-        this.isAdmin = isAdmin_;
-    }
-}
-
-class diver {
-    constructor(id_,last_name_,first_name_,diver_qualification_,instructor_qualification_,nox_level_,additionnal_qualification_,licence_number_,licence_expiration_date_,medical_certificate_expiration_date_,birth_date_) {
-        this.id = id_;
-        this.last_name = last_name_;
-        this.first_name = first_name_;
-        this.diver_qualification = diver_qualification_;
-        this.instructor_qualification = instructor_qualification_;
-        this.nox_level = nox_level_;
-        this.additionnal_qualification = additionnal_qualification_;
-        this.licence_number = licence_number_;
-        this.licence_expiration_date = licence_expiration_date_;
-        this.medical_certificate_expiration_date = medical_certificate_expiration_date_;
-        this.birth_date = birth_date_;
-    }
-
-    get_id() {
-        return this.id;
-    }
-
-    set_id(id) {
-        this.id = id;
-    }
-
-    get_last_name() {
-        return this.last_name;
-    }
-
-    set_last_name(last_name) {
-        this.last_name = last_name;
-    }
-
-    get_first_name() {
-        return this.first_name;
-    }
-
-    set_first_name(first_name) {
-        this.first_name = first_name;
-    }
-
-    get_diver_qualification() {
-        return this.diver_qualification;
-    }
-
-    set_diver_qualification(diver_qualification) {
-        this.diver_qualification = diver_qualification;
-    }
-
-    get_instructor_qualification() {
-        return this.instructor_qualification;
-    }
-
-
-    set_instructor_qualification(instructor_qualification) {
-        this.instructor_qualification = instructor_qualification;
-    }
-
-    get_nox_level() {
-        return this.nox_level;
-    }
-
-    set_nox_level(nox_level) {
-        this.nox_level = nox_level;
-    }
-
-    get_additionnal_qualification() {
-        return this.additionnal_qualification;
-    }
-
-    set_additionnal_qualification(additionnal_qualification) {
-        this.additionnal_qualification = additionnal_qualification;
-    }
-
-    get_licence_number() {
-        return this.licence_number;
-    }
-
-    set_licence_number(licence_number) {
-        this.licence_number = licence_number;
-    }
-
-    get_licence_expiration_date() {
-        return this.licence_expiration_date;
-    }
-
-    set_licence_expiration_date(licence_expiration_date) {
-        this.licence_expiration_date = licence_expiration_date;
-    }
-
-    get_medical_certificate_expiration_date() {
-
-        return this.medical_certificate_expiration_date;
-    }
-
-    set_medical_certificate_expiration_date(medical_certificate_expiration_date) {
-        this.medical_certificate_expiration_date = medical_certificate_expiration_date;
-    }
-
-    get_birth_date() {
-        return this.birth_date;
-    }
-
-    set_birth_date(birth_date) {
-        this.birth_date = birth_date;
-    }
-}
+/********************************************************************/
+/*                         LOAD INFORMATIONS                        */
+/********************************************************************/
 
 function LoadAllAppUsers(tab){
     tab.forEach(element => {
-        let tmp = new app_user(element.Id_Application_User, element.Lastname, element.Firstname, element.Id_Diver, element.isAdmin);
+        let tmp = new AppUser(element.Id_Application_User, element.Lastname, element.Firstname, element.Id_Diver, element.isAdmin);
         tabAppUsers.push(tmp);
     });
     console.log(tabAppUsers);
@@ -199,16 +56,28 @@ function LoadAllAppUsers(tab){
 
 function LoadAllDivers(tab){
     tab.forEach(element => {
-        let tmp = new diver(element.Id_Diver,element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additional_Qualifications,element.License_Number,element.License_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
+        let tmp = new Diver(element.Id_Diver,element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additional_Qualifications,element.License_Number,element.License_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
         tabDivers.push(tmp);
     });
     console.log(tabDivers);
 }
 
+/********************************************************************/
+/*                    SETTING LISTENERS FUNCTIONS                   */
+/********************************************************************/
 
+function setListeners(){
+    for(let i = 0; i < tabAppUsers.length; i++){
+        let btn = document.getElementById("btn_modif" + tabAppUsers[i].get_id());
+        btn.addEventListener("click", function(){
+            console.log("Modification de l'utilisateur " + tabAppUsers[i].get_id());
+            modifierAppUser(tabAppUsers[i].get_id());
+        });
+    }
+}
 
-function setButtonListener(){
-    document.getElementById("validate-diver").addEventListener("click", function(){
+function setButtonValidateListener(){
+    document.getElementById("validate-appuser").addEventListener("click", function(){
         // Get all input
         let Id_Diver = document.getElementById("app-user-diver").value;
         let isAdmin = document.getElementById("app-user-admin").value;
@@ -239,12 +108,11 @@ function setButtonListener(){
     });
 }
 
-setButtonListener();
+setButtonValidateListener();
 
-function updateAppUser(){
-    tabAppUsers = [];
-    SocketManager.getAllAppUsers();
-}
+/********************************************************************/
+/*                        CREATING FUNCTIONS                        */
+/********************************************************************/
 
 function createAppUserTable(tabAppUsers){
     let table = document.getElementById("liste_user");
@@ -326,6 +194,7 @@ function createAppUserTable(tabAppUsers){
 
         let td6 = document.createElement("td");
         let span_6 = document.createElement("span");
+        span_6.classList.add("cursor-pointer");
         let i_td6 = document.createElement("i");
         i_td6.setAttribute("id", "btn_modif" + tabAppUsers[i].get_id());
         i_td6.classList.add("fa-solid");
@@ -347,14 +216,13 @@ function createAppUserTable(tabAppUsers){
     }
 }
 
-function setListeners(){
-    for(let i = 0; i < tabAppUsers.length; i++){
-        let btn = document.getElementById("btn_modif" + tabAppUsers[i].get_id());
-        btn.addEventListener("click", function(){
-            console.log("Modification de l'utilisateur " + tabAppUsers[i].get_id());
-            modifierAppUser(tabAppUsers[i].get_id());
-        });
-    }
+/********************************************************************/
+/*                         UPDATING FUNCTIONS                       */
+/********************************************************************/
+
+function updateAppUser(){
+    tabAppUsers = [];
+    SocketManager.getAllAppUsers();
 }
 
 function modifierAppUser(id){
@@ -368,6 +236,10 @@ function modifierAppUser(id){
     modal.style.display = "block";
 }
 
+/********************************************************************/
+/*                          OTHER FUNCTIONS                         */
+/********************************************************************/
+
 function getUserById(id){
     for(let i = 0; i < tabAppUsers.length; i++){
         if(tabAppUsers[i].get_id() == id){
@@ -377,6 +249,7 @@ function getUserById(id){
     return null;
 }
 
+// Exports
 export default {
     LoadAllAppUsers,
     LoadAllDivers,

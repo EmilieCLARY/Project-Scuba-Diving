@@ -122,7 +122,7 @@ function createDiverBubble() {
     // Créer l'élément p
     const p = document.createElement("p");
     p.className = "bubble-text";
-    p.textContent = "Liste Plongeur";
+    p.textContent = "Liste des plongeurs";
 
     // Créer l'élément figure
     const figure = document.createElement("figure");
@@ -155,7 +155,7 @@ function createAppUserBubble() {
     // Créer l'élément p
     const p = document.createElement("p");
     p.className = "bubble-text";
-    p.textContent = "Utilisateurs de l'application";
+    p.textContent = "Utilisateurs";
 
     // Créer l'élément figure
     const figure = document.createElement("figure");

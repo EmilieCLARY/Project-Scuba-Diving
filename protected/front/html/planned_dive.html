@@ -5,9 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/table.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <title>Scuba-Diving Manager</title>
 </head>
 <body>
@@ -28,17 +33,29 @@
             </span>
         </div>
     </nav>
+    
+    <button class="creation-button" id="open-planned-dive-form"> Planifier une plongée </button>
 
-    <button class="creation-button" id="open-planned-dive-form"> Planifier une plongée</button>
+    <button class="creation-button" id="open-planned-dive-planning"> Planning complet </button>
+
+    <div id="container-modal" class="modal">
+        <div class="div-modal"> 
+            <div class="title"> 
+                <h1> Planning complet</h1>
+                <span id="close-planning-modal"><i id="planning-close-button" class="fa-regular fa-circle-xmark"></i></span>
+            </div>
+            <div id='calendar'></div>
+        </div>
+    </div>
 
     <div class="planned-dive-list-container" id = "liste_planned_dive"></div>
 
 
-    <div id="container-modal2" class="modal">
+    <div id="see-more" class="modal">
         <div class="div-modal"> 
             <div class="title"> 
                 <h1> Informations complémentaires </h1>
-                <span id="close-pd-modal2"><i id="pd-close-button2" class="fa-regular fa-circle-xmark"></i></span>
+                <span id="close-see-more"><i id="see-more-close-button" class="fa-regular fa-circle-xmark"></i></span>
             </div>
             <div class="modal-body">
                 <div class="modal-body-left">
@@ -47,19 +64,41 @@
                     </div>
                     <div class="modal-price">
                         <p id="diver-price-pd">Prix plongeur</p>
-                        <p id="instructor-price-pd">Prix moniteur</p>y
-                    </div>                        
+                        <p id="instructor-price-pd">Prix moniteur</p>
+                    </div>
+                    <div class="modal-commentary">
+                        <p id="comments-pd">Commentaires</p>
+                    </div>
+                    <div class="modal-special-needs">
+                        <p id="special-needs-pd">Besoins spéciaux</p>                         
+                    </div>
                 </div>
                 <div class="modal-body-right">
                     <div class="modal-dive-time">
-
+                        <div class="modal-dive-month">
+                            <p id="date-pd-month">Month</p>
+                        </div>
+                        <div class="modal-dive-day-and-time">
+                            <div id="date-pd-day">Day</div>
+                            <div id="time-pd">Heure</div>
+                        </div>
+                        <!--<p id="date-pd">Date</p>-->
                     </div>
                     <div class="modal-diver-list">
-
+                        <table class="blueTable">
+                            <thead>
+                                <tr id="tr-desc"class="tr">
+                                    <td>Prénom</td>
+                                    <td>Nom</td>
+                                    <td>Rôle</td>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-pd"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <p id="site-name-pd">Site de plongée</p>
+            <!-- <p id="site-name-pd">Site de plongée</p>
             <p id="diver-price-pd">Prix plongeur</p>
             <p id="instructor-price-pd">Prix moniteur</p>
             <p id="comments-pd">Commentaires</p>
@@ -75,8 +114,9 @@
                     </tr>
                 </thead>
                 <tbody id="tbody-pd"></tbody>
-            </table>
-            
+            </table>-->
+        </div>
+        <div class="modal-inscription">
             <button id="inscription-planned-dive">S'inscrire</button>
         </div>
     </div>
@@ -160,7 +200,7 @@
             
         </div>
     </div>
-    
+
     <div id="ring-loading" class="ring">Chargement
         <span class="span-ring"></span>
     </div>

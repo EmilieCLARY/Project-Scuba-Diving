@@ -32,6 +32,14 @@ function getIsAdmin(){
     socket.emit('getIsAdmin');
 }
 
+function deleteDiveRegistration(id_diver, id_planned_dive){
+    socket.emit('deleteDiveRegistrationInDb', id_diver, id_planned_dive);
+}
+
+function getUserProfile() {
+    socket.emit('getUserProfile');
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -58,6 +66,10 @@ socket.on('receiveIsAdmin', (isAdmin) => {
     PlannedDive.LoadIsAdmin(isAdmin);
 });
 
+socket.on('receiveUserProfile', (tabUserProfile) => {
+    console.log("receiveUserProfile");
+    PlannedDive.LoadUserProfile(tabUserProfile);
+});
 
 // EXPORT
 export default {
@@ -66,6 +78,8 @@ export default {
     getAllDivers,
     getAllDiveRegistrations,
     getIsAdmin,
+    getUserProfile,
     addPlannedDive,
+    deleteDiveRegistration,
     diverRegistration
 }

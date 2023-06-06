@@ -1,0 +1,128 @@
+.app-user-list-container{
+    width  : 100vw;
+    background : var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    padding-top: 14vh;
+    align-items: center;
+}
+  
+.form-appuser{
+  width: 70vw;
+  height: 45vh;
+  background : var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  margin-top: 25vh;
+  margin-left: 15vw;
+  border-radius: 3vw;
+}
+
+.form-appuser .title-appuser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  padding-left: 2vw;
+  margin-bottom: 1vh;
+}
+
+.form-appuser .title-appuser h1 {
+  font-size: 3.5vh;
+  margin-left: 2vw;
+}
+
+.form-appuser .title-appuser span {
+  font-size: 3.5vh;
+  margin-right: 2.5vw;
+}
+
+.form-appuser .title-user span:hover {
+  cursor: pointer;
+}
+
+
+.form-appuser .form-body-appuser {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 15vh;
+  width: 70vw;
+}
+
+.form-appuser .form-body-appuser .labels-appuser {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 15vh;
+  width: 30vw;
+  margin-right: 2.5vw;
+}
+
+.form-appuser .form-body-appuser .labels-appuser label {
+  font-size: 2.5vh;
+  height: 5vh;
+  padding-top: 0.5vh;
+}
+
+.form-appuser .form-body-appuser .inputs-appuser {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 15vh;
+  width: 30vw;
+  margin: 0 2.5vw;
+}
+
+.form-appuser .form-body-appuser .inputs-appuser input[type=text] {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-appuser .form-body-appuser .inputs-appuser select{
+  background-color: white;
+  width: 25.3vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-appuser .form-appuser-validation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+  margin-top: 7vh;
+}
+
+.form-appuser .form-appuser-validation #validate-appuser {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-appuser .form-appuser-validation #validate-appuser:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}

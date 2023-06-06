@@ -137,6 +137,15 @@ app.get('/app_user', (req, res) => {
     }
 })
 
+app.get('/dive', (req, res) => {
+    if(req.session.isAdmin === 1){
+        res.sendFile(__dirname + '/protected/front/html/dive.html');
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
 app.get('/admin', (req, res) => {
     if(req.session.loggedIn === true){
         res.sendFile(__dirname + '/front/html/admin.html')
@@ -267,6 +276,10 @@ io.on('connection', (socket) =>{
 
     socket.on('deleteInDb', (table, id) => {
         BDD.deleteRowInDb(table, id);
+    });
+
+    socket.on('deleteDiveRegistrationInDb', (id_diver, id_planned_dive) => {
+        BDD.deleteDiveRegistrationInDB(id_diver, id_planned_dive);
     });
 
     socket.on('modifyDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {

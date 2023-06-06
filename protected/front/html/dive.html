@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/protected/front/css/pages/dive.css" />
+    <link rel="stylesheet" href="/protected/front/css/table.css" />
+    <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+
+    <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <title>Scuba-Diving Manager</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <span class="logo-main">
+                <a href="/protected/protected.html">
+                    <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
+                </a>
+            </span>
+            <span class="nav-center">
+                <span class ="nav-name"><p id="username"></p> </span>
+            </span>
+            <span class="login-container">
+                <a href="/login" class="text-reset">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </span>
+        </div>
+    </nav>
+    
+    <div class="container-dive">
+    
+        <h1> Création des palanquées </h1>
+
+
+        <div class="btn-tableau-dive">
+            <button id="ajouter-tableau">Ajout d'un tableau</button>
+        </div>
+
+        <div id="tableContainer"></div>
+
+
+        <!-- <div id="ring-loading" class="ring">Chargement
+            <span class="span-ring"></span>
+        </div> -->
+    
+    </div>
+
+
+    <div class="btn-clear-tableaux"> 
+        <button id="clear-tableaux">Supprimer tous les tableaux</button>
+    </div>
+
+    <div class="container-inscrits"> 
+        <h1> Liste des inscrits </h1>
+        <div id="tableContainerInscrits"></div>
+    </div>
+
+
+    <div class = "btn-attribution-automatique">
+        <button id="attribution-automatique">Attribution automatique</button>
+    </div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"
+    integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="/protected/front/js/dive.js"></script>
+<script type="module" src="/protected/front/js/user_info.js"></script>
+</html>

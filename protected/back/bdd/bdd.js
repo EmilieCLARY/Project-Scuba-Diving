@@ -154,7 +154,7 @@ function createDiverInDB(id_diver, lastname, firstname, diver_qualifications, in
 
     let sql = `INSERT INTO Diver(Id_Diver, Lastname, Firstname, Diver_Qualifications, Instructor_Qualification, Nox_Level, Additional_Qualifications, License_Number, License_Expiration_Date, Medical_Certificate_Expiration_Date, Birthdate) 
     VALUES(?,?,?,?,?,?,?,?,?,?,?)`;
-    db.run(sql, [id_diver, lastname, firstname, diver_qualifications, instructor_qualification, nox_level, additional_qualifications, license_number, license_expiration_date, medical_certificate_expiration_date, birthdate], (err) => {
+    db.run(sql, [id_diver, firstname, lastname, diver_qualifications, instructor_qualification, nox_level, additional_qualifications, license_number, license_expiration_date, medical_certificate_expiration_date, birthdate], (err) => {
         if(err) {
             return console.log(err.message); 
         }
@@ -509,6 +509,30 @@ function deleteRowInDb(table, id){
     });
 }
 
+function deleteDiveRegistrationInDB(id_diver, id_planned_dive){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `DELETE FROM Dive_Registration WHERE Diver_Id_Diver = ? AND Planned_Dive_Id_Planned_Dive = ?`;
+    db.run(sql, [id_diver, id_planned_dive], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('BDD : Dive registration of diver '+ id_diver +' was deleted');
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('BDD : Close the database connection.');
+    });
+}
+
 // export the functions
 module.exports = {
     // Connection functions
@@ -523,6 +547,7 @@ module.exports = {
     // Edit functions
     updateDb,
     deleteRowInDb,
+    deleteDiveRegistrationInDB,
 
     // Creation functions
     createDiverInDB,

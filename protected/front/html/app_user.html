@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/protected/front/css/pages/app_user.css" />
     <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+    <link rel="stylesheet" href="/protected/front/css/table.css" />
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -32,18 +35,18 @@
     <div class="app-user-list-container" id = "liste_user"></div>
     
     <div id="form-appuser-container" class="modal">
-        <div class="form-dive-site">
-            <div class="title">
+        <div class="form-appuser">
+            <div class="title-appuser">
                 <h1>Modification d'un utilisateur</h1>
                 <span id="close-site-modal"><i id="diver-close-button" class="fa-regular fa-circle-xmark"></i></span>
             </div>
 
-            <div class="form-body">
-                <div class="labels">
+            <div class="form-body-appuser">
+                <div class="labels-appuser">
                     <label for="app-user-diver">Id de Diver correspondant</label>
                     <label for="app-user-admin">Administrateur</label>
                 </div>
-                <div class="inputs">
+                <div class="inputs-appuser">
                     <input type="text" id="app-user-diver" name="app-user-diver" placeholder="Entrez ici">
                     <select type="text" id="app-user-admin" name="app-user-admin" placeholder="Administrateur">
                         <option value="0">Non</option>
@@ -52,8 +55,8 @@
                 </div>
             </div>
 
-            <div class="form-dive-site-validation">
-                <button id="validate-diver">Modifier l'utilisateur</button>
+            <div class="form-appuser-validation">
+                <button id="validate-appuser">Modifier l'utilisateur</button>
             </div>
         </div>
     </div>

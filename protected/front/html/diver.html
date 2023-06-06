@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/protected/front/css/pages/diver.css" />
     <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+    <link rel="stylesheet" href="/protected/front/css/table.css" />
+
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -33,7 +37,7 @@
     </nav>
 
     <div id="form-diver-container" class="modal">
-        <div class="form-dive-site">
+        <div class="form-diver">
             <div class="title">
                 <h1 id="title-diver-modal">Ajout d'un plongeur</h1>
                 <span id="close-site-modal"><i id="diver-close-button" class="fa-regular fa-circle-xmark"></i></span>
@@ -67,6 +71,7 @@
                         <option value="6">N2</option>
                         <option value="7">N3</option>
                         <option value="8">N4</option>
+                        <option value="9">N5</option>
                     </select>
                     <select type="text" id="diver-instructor-qualification" name="diver-instructor-qualification" placeholder="Instructor Qualification" required>
                         <option value="1">Aucun</option>
@@ -90,7 +95,7 @@
                 
             </div>
 
-            <div class="form-dive-site-validation">
+            <div class="form-diver-validation">
                 <button id="validate-diver">Créer Plongeur</button>
             </div>
         </div>
