@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/protected/front/css/pages/profile.css" />
     <link rel="stylesheet" href="/protected/front/css/style.css" />
-    <link rel="stylesheet" href="/protected/front/css/table.css" />
     <link rel="stylesheet" href="/protected/front/css/navbar.css" />
 
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="icon" type="image/x-icon" href="/protected/front/img/snorkel.png">
     <title>Scuba-Diving Manager</title>
 </head>
 <body>
     <nav>
         <div class="navbar">
             <span class="logo-main">
-                <a href="/protected/protected.html">
+                <a href="/protected/">
                     <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
                 </a>
             </span>
@@ -36,18 +36,20 @@
     <div class="profile-container">
         <div class="profile-container-left">
 
-            <a href="/protected/protected.html">
+            <a href="/protected">
                 <p>Page d'accueil</p>
             </a>
-            <p>Plongées prévues</p>
+            <a href="/planned_dive">
+                <p>Plongées prévues</p>
+            </a>
             <p>Mes plongées</p>
         </div>
 
         <div class="profile-container-right">
             <h1>Mon profil</h1>
-            <span class="button-edit-profile">
-                <button id="open-site-modal-profile">Modifier mon profil</button>
-            </span>
+
+            <button id="open-site-modal-profile">Modifier mon profil</button>
+
 
             <div class="profile-container-right-item">
                 <div class="profile-item" id="profile_name"></div>
@@ -68,6 +70,11 @@
                 <div class="profile-item"  id="profile_add_quali"></div>
             </div>
         </div>
+
+        <div class="div-return-home">
+            <i class="fa-solid fa-house fa-beat"></i>
+        </div>
+
     </div>
 
     <div id="form-profile-container" class="modal">

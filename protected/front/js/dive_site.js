@@ -17,8 +17,11 @@ let modifiedDiveSite= -1;
 
 let isAdmin = false;
 
+let loaded = 0;
+let nbOfLoaded = 3;
+
 // Hide the loading ring
-document.getElementById("ring-loading").style.display = "none";
+//document.getElementById("ring-loading").style.display = "none";
 
 /********************************************************************/
 /*                             MODALS                               */
@@ -101,6 +104,8 @@ function LoadAllDiveSites(tab){
     create_elements(tabDiveSites);
     hoverlistener();
     setListeners();
+    loaded++;
+    checkLoaded();
 }
 
 function LoadAllPlannedDives(tab){
@@ -109,10 +114,14 @@ function LoadAllPlannedDives(tab){
         tabPlannedDives.push(tmp);
     });
     console.log(tabPlannedDives);
+    loaded++;
+    checkLoaded();
 }
 
 function LoadIsAdmin(isAdmin_){
     isAdmin = isAdmin_;
+    loaded++;
+    checkLoaded();
 }
 
 /********************************************************************/
@@ -360,6 +369,7 @@ setButtonValidateListener();
 
 function setListeners(){
     for (let i = 0; i < tabDiveSites.length; i++){
+        let isDeletable = true;
 
         // Bouton pour afficher le calendrier
         document.getElementById("calBtn" + tabDiveSites[i].get_id()).addEventListener("click", (e) => {
@@ -379,16 +389,32 @@ function setListeners(){
 
             btn_suppr.addEventListener("click", function(){
                 // Demande de confirmation
-                let text = "Êtes-vous sûr de vouloir supprimer " + tabDiveSites[i].get_site_name() + " de la base de données ?\nCette action est irréversible !";
-                if(confirm(text) == true){
-                    console.log("Suppression du plongeur " + tabDiveSites[i].get_id());
-                    supprimerDiveSite(tabDiveSites[i].get_id());
+
+                tabPlannedDives.forEach(element => {
+                    if(getDiveSiteById(element.get_id_dive_site()).get_city() == tabDiveSites[i].get_city()){
+                        isDeletable = false;
+                    }
+                });
+
+                if(!isDeletable) {
+                    alert("Il y a des plongées prévues à cet endroit. Suppression impossible.");
+                    return;
                 }
-                else{
-                    console.log("Suppression annulée");
+                else {    
+                    let text = "Êtes-vous sûr de vouloir supprimer " + tabDiveSites[i].get_site_name() + " de la base de données ?\nCette action est irréversible !";
+                    if(confirm(text) == true){
+                        console.log("Suppression du plongeur " + tabDiveSites[i].get_id());
+                        supprimerDiveSite(tabDiveSites[i].get_id());
+                    }
+                    else{
+                        console.log("Suppression annulée");
+                    }
                 }
+
             });
         }
+
+        isDeletable = true;
     }
 }
 
@@ -584,6 +610,14 @@ function getDiveSiteById(id){
         }
     }
     return null;
+}
+
+function checkLoaded(){
+    if(loaded == nbOfLoaded){
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+        loaded = 0;
+    }
 }
 
 // Exports

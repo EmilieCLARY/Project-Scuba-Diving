@@ -115,7 +115,7 @@ function LoadUserProfile(userProfile){
             break;
     }
 
-    document.getElementById("profile_add_quali").innerHTML = "Additionnal Qualifications : " + userProfile.Additional_Qualifications;
+    document.getElementById("profile_add_quali").innerHTML = "Qualification(s) additionnelle(s) : " + userProfile.Additional_Qualifications;
 
     document.getElementById("profile_name").innerHTML = "Nom : " +userProfile.Lastname;
     document.getElementById("profile_firstname").innerHTML = "Prénom : " + userProfile.Firstname;

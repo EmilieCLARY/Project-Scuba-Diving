@@ -11,8 +11,11 @@ let tabDivers = [];
 let modifyMode = false;
 let modifiedDiver = -1;
 
+let loaded = 0;
+let nbOfLoaded = 1;
+
 // Hide loading ring
-document.getElementById("ring-loading").style.display = "none";
+//document.getElementById("ring-loading").style.display = "none";
 
 /********************************************************************/
 /*                             MODALS                               */
@@ -73,6 +76,8 @@ function LoadAllDivers(tab){
     createDiverTable(tabDivers);
     setListeners();
     //console.log(tabDivers);
+    loaded = 1;
+    checkLoaded();
 }
 
 /********************************************************************/
@@ -488,6 +493,14 @@ function getDiverById(id){
         }
     }
     return null;
+}
+
+function checkLoaded(){
+    if(loaded == nbOfLoaded){
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+        loaded = 0;
+    }
 }
 
 export default {

@@ -103,6 +103,10 @@ app.get('/login', (req, res) => {
     res.redirect('/');
 })
 
+app.get('/protected', (req, res) => {
+    res.sendFile(__dirname + '/protected/protected.html');
+})
+
 app.get('/app', (req, res) => {
     res.sendFile(__dirname + '/protected/front/html/app.html');
 })
@@ -207,6 +211,13 @@ io.on('connection', (socket) =>{
         }, "Dive_Team");
     });
 
+    socket.on('getAllDiveTeamMembers', () => {
+        BDD.getFromDB((tabDiveTeamMembers) => {
+            socket.emit('receiveAllDiveTeamMembers', tabDiveTeamMembers);
+            console.log("BDD : All dive team members sent to client.");
+        }, "Dive_Team_Member");
+    });
+
     socket.on('getAllEmergencies', () => {
         BDD.getFromDB((tabEmergencies) => {
             socket.emit('receiveAllEmergencies', tabEmergencies);
@@ -228,6 +239,13 @@ io.on('connection', (socket) =>{
         }, "Dive_Registration");
     });
 
+    socket.on('getMaxDepthForQualification', () => {
+        BDD.getFromDB((maxDepth) => {
+            socket.emit('receiveMaxDepthForQualification', maxDepth);
+            console.log("BDD : Max depth for qualification sent to client.");
+        }, "Max_Depth_For_Qualification");
+    });
+
     socket.on('getUserProfile', () => {
         BDD.getUserProfile(socket.handshake.session.idUser, (userProfile) => {
             socket.emit('receiveUserProfile', userProfile);
@@ -244,6 +262,10 @@ io.on('connection', (socket) =>{
 
     socket.on('getIsAdmin', () => {
         socket.emit('receiveIsAdmin', socket.handshake.session.isAdmin);
+    });
+
+    socket.on('getIdPlannedDive', () => {
+        socket.emit('receiveIdPlannedDive', socket.handshake.session.idPlannedDive);
     });
 
     /* ------------------------------ ADD FUNCTIONS ----------------------------- */
@@ -312,11 +334,17 @@ io.on('connection', (socket) =>{
             BDD.updateDb("Dive_Site", "Image", image, id);
         }
     });
-        
-
+    
     socket.on('modifyAppUser', (id, id_diver, isAdmin) => {
         BDD.updateDb("Application_User", "Id_Diver", id_diver, id);
         BDD.updateDb("Application_User", "isAdmin", isAdmin, id);
+    });
+
+    /* ------------------------------ OTHER FUNCTIONS ----------------------------- */
+    
+    socket.on('setPlannedDive', (id_planned_dive) => {
+        socket.handshake.session.idPlannedDive = id_planned_dive;
+        socket.handshake.session.save();
     });
 });
 

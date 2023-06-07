@@ -107,10 +107,20 @@
   font-size: 2vh;
 }
 
-.form-diver .form-body .inputs input[type=file] {
+.form-diver .form-body .inputs input[type="date"]{
   width: 25vw;
   height: 5vh;
-  display: none;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-diver .form-body .inputs input[type="time"]{
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
 }
 
 .form-diver .form-body .inputs select{

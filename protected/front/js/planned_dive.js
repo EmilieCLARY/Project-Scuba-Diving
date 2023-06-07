@@ -24,8 +24,11 @@ let userProfile;
 let currentDiveSite = 0;
 let currentPlannedDive = 0;
 
+let loaded = 0;
+let nbOfLoaded = 6;
+
 // Hide the loading ring
-document.getElementById("ring-loading").style.display = "none";
+//document.getElementById("ring-loading").style.display = "none";
 
 /********************************************************************/
 /*                             MODALS                               */
@@ -153,6 +156,8 @@ function LoadAllPlannedDives(tab) {
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
     }, 1000);
+    loaded++;
+    checkLoaded();
 }
 
 function LoadAllDiveSites(tab){
@@ -162,6 +167,8 @@ function LoadAllDiveSites(tab){
     });
     //console.log(tabDiveSites);
     createDiveSitesList(tabPlannedDives);
+    loaded++;
+    checkLoaded();
 }
 
 function LoadAllDivers(tab){
@@ -170,6 +177,8 @@ function LoadAllDivers(tab){
         tabDivers.push(tmp);
     });
     //console.log(tabDivers);
+    loaded++;
+    checkLoaded();
 }
 
 function LoadAllDiveRegistrations(tab){
@@ -180,14 +189,20 @@ function LoadAllDiveRegistrations(tab){
     //console.log(tabDiveRegistrations);
     //setListeners();
     updateTableDivers();
+    loaded++;
+    checkLoaded();
 }
 
 function LoadIsAdmin(isAdmin_){
     isAdmin = isAdmin_;
+    loaded++;
+    checkLoaded();
 }
 
 function LoadUserProfile(userProfile_){
     userProfile = userProfile_;
+    loaded++;
+    checkLoaded();
 }
 
 /********************************************************************/
@@ -217,18 +232,18 @@ function createInfoPlannedDive(id) {
 
         document.getElementById("see-more").style.display = "block";
 
-        document.getElementById("site-name-pd").innerHTML = "Site de plongée : " + PlannedDiveInfoDiveSite.get_site_name();
+        document.getElementById("site-name-pd").innerHTML = PlannedDiveInfoDiveSite.get_site_name();
         if(PlannedDiveInfo.get_diver_dive_price() == 0){
-            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur : Gratuit";
+            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>Gratuit";
         }
         else{
-            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur : " + PlannedDiveInfo.get_diver_dive_price() + "€";
+            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>" + PlannedDiveInfo.get_diver_dive_price() + "€";
         }
         if(PlannedDiveInfo.get_instructor_dive_price() == 0){
-            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur : Gratuit";
+            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>Gratuit";
         }
         else{
-            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur : " + PlannedDiveInfo.get_instructor_dive_price() + "€";
+            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>" + PlannedDiveInfo.get_instructor_dive_price() + "€";
         }
         if(PlannedDiveInfo.get_comments() == ""){
             document.getElementById("comments-pd").innerHTML = "Commentaires : Aucun";
@@ -286,6 +301,33 @@ function createInfoPlannedDive(id) {
         document.getElementById("date-pd-month").innerHTML = month + " " + year;
         document.getElementById("date-pd-day").innerHTML = day;
         document.getElementById("time-pd").innerHTML = PlannedDiveInfo.get_planned_time();
+
+
+        let see_more_btn_modal = document.getElementById("buttons-modal-see-more");
+        see_more_btn_modal.innerHTML = "";
+
+        // Create 'S'inscrire' button
+        let inscriptionBtn = document.createElement("button");
+        inscriptionBtn.setAttribute('id', "inscription-planned-dive");
+        inscriptionBtn.textContent = "S'inscrire";
+        see_more_btn_modal.appendChild(inscriptionBtn);
+
+        // Create 'Modifier' button
+        let modificationBtn = document.createElement("button");
+        modificationBtn.setAttribute('id', "modification-planned-dive");
+        modificationBtn.textContent = "Modifier";
+        see_more_btn_modal.appendChild(modificationBtn);
+
+        // Create 'Organisation' button
+        let organisationBtn = document.createElement("button");
+        organisationBtn.setAttribute('id', "planned-dive-organisation");
+        organisationBtn.textContent = "Organisation";
+        
+        see_more_btn_modal.appendChild(organisationBtn);
+
+        setInscriptionListener();
+        setModificationListener(id);
+        setOrganisationListener(id);
 
         // Table divers
         updateTableDivers();
@@ -516,9 +558,31 @@ function setListeners(){
     }
 }
 
-document.getElementById("inscription-planned-dive").addEventListener("click", (e) => {
-    document.getElementById("container-modal3").style.display = "block";
-});
+function setInscriptionListener(){
+    document.getElementById("inscription-planned-dive").addEventListener("click", (e) => {
+        document.getElementById("container-modal3").style.display = "block";
+    });
+}
+
+function setModificationListener(id){
+    document.getElementById("modification-planned-dive").addEventListener("click", (e) => {
+        console.log("Modification planned dive " + id);
+    });
+}
+
+function setOrganisationListener(id){
+    document.getElementById("planned-dive-organisation").addEventListener("click", (e) => {
+        console.log("Organisation planned dive " + id);
+        SocketManager.setPlannedDive(id);
+
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";
+        setTimeout(function() {
+            location.href = '/dive';
+        }, 1000);
+        
+    });
+}
 
 document.getElementById("inscription-planned-dive-modal").addEventListener("click", (e) => {
     let id_planned_dive = currentPlannedDive;
@@ -830,6 +894,14 @@ function isUserInDive(id_planned_dive){
         }
     });
     return isInDive;
+}
+
+function checkLoaded(){
+    if(loaded == nbOfLoaded){
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+        loaded = 0;
+    }
 }
 
 // Exports

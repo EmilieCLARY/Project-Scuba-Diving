@@ -40,6 +40,10 @@ function getUserProfile() {
     socket.emit('getUserProfile');
 }
 
+function setPlannedDive(id){
+    socket.emit('setPlannedDive', id);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -63,6 +67,7 @@ socket.on('receiveAllDiveRegistrations', (tabDiveRegistrations) => {
 });
 
 socket.on('receiveIsAdmin', (isAdmin) => {
+    console.log("receiveIsAdmin");
     PlannedDive.LoadIsAdmin(isAdmin);
 });
 
@@ -81,5 +86,6 @@ export default {
     getUserProfile,
     addPlannedDive,
     deleteDiveRegistration,
-    diverRegistration
+    diverRegistration,
+    setPlannedDive,
 }

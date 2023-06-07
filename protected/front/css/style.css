@@ -36,6 +36,21 @@ body {
   /*background-image: url("../img/test.png");*/
 }
 
+/* --------_ Bouton retour page d'accueil _-------- */
+
+.div-return-home {
+  width:3vw;
+  background-image: url("../img/Bubble.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  position: fixed;
+  top:20vh;
+  left: 80vw;
+}
+
+
 
 
 /* --------_ Containers Homepage _-------- */
@@ -319,16 +334,55 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 60vh;
 }
 
 .div-modal .modal-body .modal-body-left {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   height: 60vh;
-  width: 30vw;
-  margin-left: 2.5vw;
+  width: 35vw;
+}
+
+.div-modal .modal-body .modal-body-left .modal-site-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.5vh solid var(--secondary-color);
+  text-align: center;
+  max-width: 33vw;
+}
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-left .modal-site-name {
+    font-size: calc(15px + 20 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-body .modal-body-left .modal-site-name {
+    font-size: 35px;
+  }
+}
+
+.div-modal .modal-body .modal-body-left .modal-price {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border: 0.5vh solid var(--secondary-color);
+  width: 32vw;
+  margin-top: 2vh;
+  border-radius: 1.5vh;
+}
+
+.div-modal .modal-body .modal-body-left .modal-price p {
+  font-size: 2vh;
+  font-weight: bold;
+  text-align: center;
+  width: 16vw;
 }
 
 .div-modal .modal-body .modal-body-right {
@@ -345,47 +399,96 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 25vh;
-  height: 25vh;
+  width: 25vw;
+  height: 25vw;
+  max-width: 25vh;
+  max-height: 25vh;
   border-radius: 3vh;
-  border: 1.5vh solid var(--secondary-color);
+  border: solid var(--secondary-color);
   background: white;
-
 }
 
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time{
+    border-width: calc(5px + 10 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time{
+    border-width: 15px;
+  }
+} 
+
 .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
-  height: 5vh;
+  height: 5vw;
+  max-height: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 0.4vh solid var(--secondary-color);
-  font-size: 5vh;
-
 }
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
+    font-size: calc(13px + 30 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
+    font-size: 43px;
+  }
+} 
 
 .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time {
   display: flex;
   flex-direction: column;
-  height: 20vh;
+  height: 20vw;
+  max-height: 20vh;
 }
 
 .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #date-pd-day{
   display: flex;
-  height: 15vh;
+  height: 15vw;
+  max-height: 15vh;
   align-items: center;
   justify-content: center;
-  font-size: 13vh;
   color: red;
+}
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #date-pd-day{
+    font-size: calc(50px + 80 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #date-pd-day{
+    font-size: 130px;
+  }
 }
 
 .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #time-pd{
   display: flex;
-  height: 5vh;
+  height: 5vw;
+  max-height: 5vh;
   align-items: center;
   justify-content: center;
-  font-size: 5vh;
   border-top: 0.35vh solid var(--secondary-color);
 }
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #time-pd{
+    font-size: calc(13px + 30 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-day-and-time #time-pd{
+    font-size: 43px;
+  }
+} 
 
 .div-modal .modal-body .modal-body-right .modal-diver-list {
   display: flex;
@@ -403,6 +506,28 @@ body {
   position: initial;
 }
 
+.div-modal .modal-inscription-planned-dive {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 70vw;
+  height: 10vh;
+}
+
+.div-modal .modal-inscription-planned-dive button {
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.8vh;
+}
 
 /* --------_ Profile page _-------- */
 
