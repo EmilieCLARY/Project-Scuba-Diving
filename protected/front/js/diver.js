@@ -14,6 +14,19 @@ let modifiedDiver = -1;
 let loaded = 0;
 let nbOfLoaded = 1;
 
+let mézon = document.getElementById("mézon");
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
+
 // Hide loading ring
 //document.getElementById("ring-loading").style.display = "none";
 

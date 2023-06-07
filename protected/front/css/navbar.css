@@ -41,7 +41,7 @@ nav .navbar .login-container {
   width: 10vw;
 }
 
-nav .navbar .login-container i {
+nav .navbar .login-container /*i*/ {
     padding: 0 3vw;
     color: #231F20;
     font-size: 2.5vh;
@@ -60,6 +60,7 @@ nav .navbar .login-container i {
 nav {
   background-color: var(--main-color);
   position: fixed;
+  z-index: 10000;
 }
 
 nav .navbar-diver {
@@ -97,8 +98,20 @@ nav .navbar-diver .login-container-diver {
   width: 10vw;
 }
 
-nav .navbar-diver .login-container-diver i {
+nav .navbar-diver .login-container-diver /*i*/ {
   padding: 0 3vw;
   color: #231F20;
   font-size: 2.5vh;
+}
+
+nav .arrow-icon {
+  padding: 0 3vw;
+  color: #231F20;
+  font-size: 2.5vh;
+  transition: transform .5s ease-in-out;
+}
+
+nav .arrow-icon:hover {
+  color: rgb(200, 0, 0);
+  transform: rotate(360deg);
 }

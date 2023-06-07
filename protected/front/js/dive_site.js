@@ -20,6 +20,19 @@ let isAdmin = false;
 let loaded = 0;
 let nbOfLoaded = 3;
 
+let mézon = document.getElementById("mézon");
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
+
 // Hide the loading ring
 //document.getElementById("ring-loading").style.display = "none";
 
@@ -142,6 +155,7 @@ function create_elements(tab_dive_sites) {
         // Partie haute avec le nom du site et la ville
         let siteElementTop = document.createElement('div');
         siteElementTop.classList.add("top-part");
+        siteElementTop.classList.add("top-degrade");
         let siteElementTopWrap = document.createElement('div');
         siteElementTopWrap.classList.add("top-part-wrap");
         siteElementTop.appendChild(siteElementTopWrap);

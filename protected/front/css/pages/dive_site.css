@@ -33,7 +33,7 @@
   box-shadow: rgba(0, 0, 0, 0.08) 0 0.3vh 0.5vh;
 }
 
-.top-part {
+.top-degrade {
   background: linear-gradient(180deg, rgb(48, 32, 185) 0%, rgba(48,126,238,1) 100%);
 }
 

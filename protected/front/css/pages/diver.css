@@ -1,3 +1,11 @@
+#username {
+  color: var(--text-color);
+  font-size: 3vh;
+  text-shadow: 0 0 1vh lightblue,
+               0 0 2vh lightblue,
+               0 0 3vh lightblue;
+}
+
 .diver-list-container {
     width  : 100vw;
     background : var(--bg-color);

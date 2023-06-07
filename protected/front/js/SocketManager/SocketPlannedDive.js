@@ -24,6 +24,10 @@ function addPlannedDive(id, planned_date, planned_time, comments, special_needs,
     socket.emit('addPlannedDive', id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site);
 }
 
+function modifyPlannedDive(id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site) {
+    socket.emit('modifyPlannedDive', id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site);
+}
+
 function diverRegistration(planned_dive_id, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request) {
     socket.emit('addDiverRegistration', planned_dive_id, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request);
 }
@@ -42,6 +46,10 @@ function getUserProfile() {
 
 function setPlannedDive(id){
     socket.emit('setPlannedDive', id);
+}
+
+function deletePlannedDive(id){
+    socket.emit('deleteInDb', "Planned_Dive", id);
 }
 
 // SOCKET ON
@@ -85,7 +93,9 @@ export default {
     getIsAdmin,
     getUserProfile,
     addPlannedDive,
+    modifyPlannedDive,
     deleteDiveRegistration,
     diverRegistration,
     setPlannedDive,
+    deletePlannedDive,
 }

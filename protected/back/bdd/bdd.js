@@ -149,7 +149,7 @@ function createDiverInDB(id_diver, lastname, firstname, diver_qualifications, in
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `INSERT INTO Diver(Id_Diver, Lastname, Firstname, Diver_Qualifications, Instructor_Qualification, Nox_Level, Additional_Qualifications, License_Number, License_Expiration_Date, Medical_Certificate_Expiration_Date, Birthdate) 
@@ -165,7 +165,7 @@ function createDiverInDB(id_diver, lastname, firstname, diver_qualifications, in
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -175,7 +175,7 @@ function createDiveSiteInDB(id_dive_site, site_name, gps_latitude, gps_longitude
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `INSERT INTO Dive_Site(Id_Dive_Site,Site_Name, Gps_Latitude, Gps_Longitude, Track_Type, Track_Number, Track_Name, Zip_Code, City_Name, Country_Name, Additional_Address, Tel_Number, Information_URL, Image )
@@ -191,7 +191,7 @@ function createDiveSiteInDB(id_dive_site, site_name, gps_latitude, gps_longitude
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -201,7 +201,7 @@ function createDiveInDB(id_dive, begin_time, begin_date, end_date, end_time, com
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `INSERT INTO Dive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Safety, Dive_Price, Instructor_Price, Max_PPO2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive)
@@ -217,7 +217,7 @@ function createDiveInDB(id_dive, begin_time, begin_date, end_date, end_time, com
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -228,7 +228,7 @@ function createDiveTeamInDB(id_dive_team, max_depth, max_duration, actual_depth,
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });   
     let sql = `INSERT INTO Dive_team(Id_Dive_Team, Max_Depth, Max_Duration, Actual Depth, Actual_Duration, Dive_Type, Sequence_number, Start_Time, Stop_Time, Comment, Diver_Id_Diver, Dive_Id_Dive)
     VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
@@ -243,7 +243,7 @@ function createDiveTeamInDB(id_dive_team, max_depth, max_duration, actual_depth,
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -252,7 +252,7 @@ function createEmergencyInDB(sos_number, emergency_plan, post_accident_procedure
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
     let sql = `INSERT INTO Emergency(SOS_Number, Emergency_Plan, Post_Accident_Procedure, Version)
     VALUES(?,?,?,?)`;
@@ -268,7 +268,7 @@ function createEmergencyInDB(sos_number, emergency_plan, post_accident_procedure
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 
 }
@@ -278,7 +278,7 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `INSERT INTO Planned_Dive(Id_Planned_Dive, Planned_Date, Planned_Time, Comments, Special_Needs, Status, Diver_Price, Instructor_Price, Dive_Site_Id_Dive_Site)
@@ -295,7 +295,7 @@ function createPlannedDiveInDB(id_planned_dive, planned_date, planned_time, comm
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -304,7 +304,7 @@ function createDiverRegistrationInDB(id_diver, id_planned_dive, diver_role, resg
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `INSERT INTO Dive_Registration(Diver_Id_Diver, Planned_Dive_Id_Planned_Dive, Diver_Role, Resgistration_Timestamp, Personal_Comment, Car_Pooling_Seat_Offered, Car_Pooling_Seat_Request)
@@ -321,7 +321,7 @@ function createDiverRegistrationInDB(id_diver, id_planned_dive, diver_role, resg
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -334,7 +334,7 @@ function login(id, first_name, last_name, callback){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     //Check if the user is in the database by id
@@ -387,7 +387,7 @@ function login(id, first_name, last_name, callback){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 
 }
@@ -402,7 +402,7 @@ function getFromDB(callback, info) {
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
     
     let sql = `SELECT * FROM ` + info;     
@@ -423,7 +423,7 @@ function getFromDB(callback, info) {
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 
 }
@@ -434,7 +434,7 @@ function getUserProfile(id, callback) {
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
     let sql = `SELECT Diver.Id_Diver, Diver.Lastname, Diver.Firstname, Diver.Diver_Qualifications, Diver.Instructor_Qualification, Diver.Instructor_Qualification, Diver.Nox_Level, Diver.Additional_Qualifications, Diver.License_Number, Diver.License_Expiration_Date, Diver.Medical_Certificate_Expiration_Date, Diver.Birthdate FROM Diver, Application_User 
     WHERE Application_User.Id_Application_User = ?
@@ -453,7 +453,7 @@ function getUserProfile(id, callback) {
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -466,7 +466,7 @@ function updateDb(table, column, value, id){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `UPDATE ` + table + ` SET ` + column + ` = ? WHERE Id_` + table + ` = ?`;
@@ -481,7 +481,7 @@ function updateDb(table, column, value, id){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -490,7 +490,7 @@ function deleteRowInDb(table, id){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `DELETE FROM ` + table + ` WHERE Id_` + table + ` = ?`;
@@ -505,7 +505,7 @@ function deleteRowInDb(table, id){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 
@@ -514,7 +514,7 @@ function deleteDiveRegistrationInDB(id_diver, id_planned_dive){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Connected to the database.');
+        //console.log('BDD : Connected to the database.');
     });
 
     let sql = `DELETE FROM Dive_Registration WHERE Diver_Id_Diver = ? AND Planned_Dive_Id_Planned_Dive = ?`;
@@ -529,7 +529,7 @@ function deleteDiveRegistrationInDB(id_diver, id_planned_dive){
         if (err) {
             console.error(err.message);
         }
-        console.log('BDD : Close the database connection.');
+        //console.log('BDD : Close the database connection.');
     });
 }
 

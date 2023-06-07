@@ -10,6 +10,7 @@ let modal = document.getElementById("form-profile-container");
 let openModal = document.getElementById("open-site-modal-profile");
 let closeModal = document.getElementById("close-site-modal");
 let closeButton = document.getElementById("profile-close-button");
+let mézon = document.getElementById("mézon");
 
 openModal.onclick = function() {
     modal.style.display = "block";
@@ -26,6 +27,18 @@ closeModal.onmouseover = function() {
 closeModal.onmouseout = function() {
     closeButton.classList.remove("fa-shake");
 }
+
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
 
 window.onclick = function(event) {
     if (event.target == modal) {

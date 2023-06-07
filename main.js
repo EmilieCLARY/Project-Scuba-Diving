@@ -340,6 +340,17 @@ io.on('connection', (socket) =>{
         BDD.updateDb("Application_User", "isAdmin", isAdmin, id);
     });
 
+    socket.on('modifyPlannedDive', (id, planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, id_dive_site) => {
+        BDD.updateDb("Planned_Dive", "Planned_Date", planned_date, id);
+        BDD.updateDb("Planned_Dive", "Planned_Time", planned_time, id);
+        BDD.updateDb("Planned_Dive", "Comments", comments, id);
+        BDD.updateDb("Planned_Dive", "Special_Needs", special_needs, id);
+        BDD.updateDb("Planned_Dive", "Status", statut, id);
+        BDD.updateDb("Planned_Dive", "Diver_Price", diver_dive_price, id);
+        BDD.updateDb("Planned_Dive", "Instructor_Price", instructor_dive_price, id);
+        BDD.updateDb("Planned_Dive", "Dive_Site_Id_Dive_Site", id_dive_site, id);
+    });
+
     /* ------------------------------ OTHER FUNCTIONS ----------------------------- */
     
     socket.on('setPlannedDive', (id_planned_dive) => {

@@ -40,18 +40,22 @@ body {
 
 .div-return-home {
   width:3vw;
+  height:3vw;
   background-image: url("../img/Bubble.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
-
   position: fixed;
-  top:20vh;
-  left: 80vw;
+  top: 90vh;
+  left: 96vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-
+.div-return-home:hover {
+  cursor: pointer;
+}
 
 /* --------_ Containers Homepage _-------- */
 
@@ -340,6 +344,7 @@ body {
 .div-modal .modal-body .modal-body-left {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   height: 60vh;
   width: 35vw;
@@ -352,7 +357,10 @@ body {
   align-items: center;
   border-bottom: 0.5vh solid var(--secondary-color);
   text-align: center;
+  height: min-content;
   max-width: 33vw;
+  max-height: 20vh;
+  margin-bottom: 3vh;
 }
 
 @media screen and (min-width: 320px) {
@@ -374,7 +382,6 @@ body {
   align-items: center;
   border: 0.5vh solid var(--secondary-color);
   width: 32vw;
-  margin-top: 2vh;
   border-radius: 1.5vh;
 }
 
@@ -384,6 +391,60 @@ body {
   text-align: center;
   width: 16vw;
 }
+
+.div-modal .modal-body .modal-body-left .modal-text-zones {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: baseline;
+  border: 0.5vh solid var(--secondary-color);
+  width: 32vw;
+  max-height: 32vh;
+  background: #FFF88D;
+  margin-top: 2vh;
+  border-radius: 1.5vh;
+}
+
+.div-modal .modal-body .modal-body-left .modal-text-zones .title {
+  font-size: 2vh;
+  font-weight: bold;
+  text-align: center;
+  width: 16vw;
+  margin-top: 1vh;
+  height: 3vh;
+  border-bottom: 0.5vh solid var(--secondary-color);
+}
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-left .modal-text-zones .title {
+    font-size: calc(10px + 15 * ((100vw - 320px) / 1380));
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .div-modal .modal-body .modal-body-left .modal-text-zones .title {
+    font-size: 25px;
+  }
+}
+
+.div-modal .modal-body .modal-body-left .modal-text-zones .text {
+  font-size: 2vh;
+  margin-top: 1vh;
+  padding-left: 0.5vw;
+} 
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-body .modal-body-left .modal-text-zones .text {
+    font-size: calc(5px + 15 * ((100vw - 320px) / 1380));
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .div-modal .modal-body .modal-body-left .modal-text-zones .text {
+    font-size: 20px;
+  }
+}
+
 
 .div-modal .modal-body .modal-body-right {
   display: flex;
@@ -565,7 +626,8 @@ body {
 .cards_item {
   display: flex;
   padding: 1rem;
-  margin: 5%;
+  margin-left: 5%;
+  margin-top: 2%;
 }
 
 @media (min-width: 40rem) {
@@ -1049,6 +1111,7 @@ body {
   height: 100%;
   border-radius: 100%;
   position: relative;
+  z-index: 20;
   background: radial-gradient(circle at bottom, #81e8f6, #76deef 10%, #055194 80%, #062745 100%); 
 }
 .ball:before {
@@ -1062,7 +1125,7 @@ body {
   background: radial-gradient(circle at top, white, rgba(255, 255, 255, 0) 58%);
   -webkit-filter: blur(5px);
   filter: blur(5px);
-  z-index: 2; 
+  /*z-index: 2; */
 }
 .ball:after {
   content: "";
@@ -1075,7 +1138,7 @@ body {
   border-radius: 100%;
   -webkit-filter: blur(1px);
   filter: blur(1px);
-  z-index: 2;
+  /*z-index: 2;*/
   -webkit-transform: rotateZ(-30deg);
   transform: rotateZ(-30deg); 
 }
@@ -1086,7 +1149,7 @@ body {
   background: radial-gradient(circle, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0) 50%);
   -webkit-transform: rotateX(90deg) translateZ(-160px);
   transform: rotateX(90deg) translateZ(-160px);
-  z-index: 1; 
+  /*z-index: 1; */
 }
 .ball.plain {
   background: black; 
@@ -1130,6 +1193,7 @@ body {
   height: 37.5vh;
   display: inline-block;
   margin: 1.5vh;
+  position: relative;
   -webkit-perspective: 150vh;
   -moz-perspective: 150vh;
   -ms-perspective: 150vh;
@@ -1195,7 +1259,7 @@ body {
   
 .bubble-text {
   position: absolute;
-  z-index: 2;
+  /*z-index: 2;*/
   letter-spacing: 0.5vh;
   word-spacing: 1vh;
   color: #140D4F;
@@ -1211,6 +1275,7 @@ body {
   margin: 0;
   margin-left: -4vh;
   padding: 0;
+  padding-bottom: 20vh;
 }
 
 .bubble-item {
@@ -1230,8 +1295,9 @@ body {
   /*Fix for safari gap*/
   min-height: 100px;
   max-height: 400px;
-  background-color: var(--bg-color);
+  /*background-color: var(--bg-color);*/
 }
+
 /* Animation */
 .parallax>use {
   animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;

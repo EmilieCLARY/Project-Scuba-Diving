@@ -29,7 +29,7 @@
             </span>
             <span class="login-container">
                 <a href="/login" class="text-reset">
-                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <i class="fa-solid fa-right-to-bracket arrow-icon"></i>
                 </a>
             </span>
         </div>
@@ -51,6 +51,10 @@
 
     <div class="planned-dive-list-container" id = "liste_planned_dive"></div>
 
+    <div class="div-return-home" id="mézon">
+        <a><i class="fa-solid fa-house"></i></a>
+    </div>
+
 
     <div id="see-more" class="modal">
         <div class="div-modal"> 
@@ -60,18 +64,21 @@
             </div>
             <div class="modal-body">
                 <div class="modal-body-left">
-                    <div class="modal-site-name">
-                        <p id="site-name-pd">Site de plongée</p>
+                    <div id="site-name-pd" class="modal-site-name">
                     </div>
                     <div class="modal-price">
                         <p id="diver-price-pd">Prix plongeur</p>
                         <p id="instructor-price-pd">Prix moniteur</p>
                     </div>
-                    <div class="modal-commentary">
-                        <p id="comments-pd">Commentaires</p>
-                    </div>
-                    <div class="modal-special-needs">
-                        <p id="special-needs-pd">Besoins spéciaux</p>                         
+                    <div class="modal-text-zones">
+                        <div class="title">
+                            Commentaires :
+                        </div>
+                        <div id="comments-pd" class="text"> </div>
+                        <div class="title">
+                            Besoin spéciaux :
+                        </div>
+                        <div id="special-needs-pd" class="text"> </div>
                     </div>
                 </div>
                 <div class="modal-body-right">
@@ -165,7 +172,7 @@
     <div id="planned-dive-creation-form" class="modal"> 
         <div class="form-planned-dive">
             <div class="title">
-                <h1>Planifier une nouvelle plongée</h1>
+                <h1 id="title-modal-plan">Planifier une nouvelle plongée</h1>
                 <span id="close-planned-dive-form"><i id="planned-dive-form-close-button" class="fa-regular fa-circle-xmark"></i></span>
             </div>
             <div class="form-body">

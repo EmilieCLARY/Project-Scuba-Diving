@@ -204,7 +204,6 @@
   box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
 }
 
-
 .form-profile .form-profile-validation {
   display: flex;
   flex-direction: row;

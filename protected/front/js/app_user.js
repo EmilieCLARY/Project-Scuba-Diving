@@ -19,6 +19,7 @@ let modifiedAppUser;
 let modal = document.getElementById("form-appuser-container");
 let closeModal = document.getElementById("close-site-modal");
 let closeButton = document.getElementById("diver-close-button");
+let mézon = document.getElementById("mézon");
 
 document.getElementById("ring-loading").style.display = "none";
 
@@ -33,6 +34,18 @@ closeModal.onmouseover = function() {
 closeModal.onmouseout = function() {
     closeButton.classList.remove("fa-shake");
 }
+
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
 
 window.onclick = function(event) {
     if (event.target == modal) {

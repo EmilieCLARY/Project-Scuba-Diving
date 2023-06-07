@@ -27,6 +27,24 @@ let currentPlannedDive = 0;
 let loaded = 0;
 let nbOfLoaded = 6;
 
+let modifyMode = false;
+let modifiedPlannedDive = -1;
+
+let mézon = document.getElementById("mézon");
+
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
+
+
 // Hide the loading ring
 //document.getElementById("ring-loading").style.display = "none";
 
@@ -94,6 +112,8 @@ let closeformModal = document.getElementById("close-planned-dive-form");
 let closeformButton = document.getElementById("planned-dive-form-close-button");
 
 openformModal.onclick = function() {
+    document.getElementById("title-modal-plan").innerHTML = "Planifier une nouvelle plongée";
+    document.getElementById("validate-planned-dive").innerHTML = "Planifier la plongée";
     formModal.style.display = "block";
 }
 
@@ -153,11 +173,11 @@ function LoadAllPlannedDives(tab) {
     setTimeout(function(){
         createCardsPlannedDive(tabPlannedDives, tabDiveSites);
         setListeners();
+        loaded++;
+        checkLoaded();
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
     }, 1000);
-    loaded++;
-    checkLoaded();
 }
 
 function LoadAllDiveSites(tab){
@@ -246,16 +266,16 @@ function createInfoPlannedDive(id) {
             document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>" + PlannedDiveInfo.get_instructor_dive_price() + "€";
         }
         if(PlannedDiveInfo.get_comments() == ""){
-            document.getElementById("comments-pd").innerHTML = "Commentaires : Aucun";
+            document.getElementById("comments-pd").innerHTML = "Aucun commentaire";
         }
         else{
-            document.getElementById("comments-pd").innerHTML = "Commentaires : " + PlannedDiveInfo.get_comments();
+            document.getElementById("comments-pd").innerHTML = PlannedDiveInfo.get_comments();
         }
         if(PlannedDiveInfo.get_special_needs() == ""){
-            document.getElementById("special-needs-pd").innerHTML = "Besoins spéciaux : Aucun";
+            document.getElementById("special-needs-pd").innerHTML = "Aucun besoin spécial sdiuzeh dçids gdus gd gdu ygdsd qsd gqsuidgqsu qzd ft zfxuxufqx  sqx qtsfx x tfqs x tsx tfiqsxtfqsx sqxf qsusqitqfsctf qst fcqi c sqc  cfiqs ic qs cqc iqcqsi zehiuzh z dgzeuy dgzed  utidfz td tidfQD Q FDIFD F Fd IDI FIF SD FTQFdtyQFDFQSTDF DF q fd d efsd f sdc tsdcc cusd csc dscsdcf usdfcsdtfcsdytcfsydcfytsdc  fsdtcsdcdscs  ";
         }
         else{
-            document.getElementById("special-needs-pd").innerHTML = "Besoins spéciaux : " + PlannedDiveInfo.get_special_needs();
+            document.getElementById("special-needs-pd").innerHTML = PlannedDiveInfo.get_special_needs();
         }
         let month = PlannedDiveInfo.get_planned_date().substring(5,7);
         let day = PlannedDiveInfo.get_planned_date().substring(8,10);
@@ -318,6 +338,12 @@ function createInfoPlannedDive(id) {
         modificationBtn.textContent = "Modifier";
         see_more_btn_modal.appendChild(modificationBtn);
 
+        // Create 'Modifier' button
+        let suppressionBtn = document.createElement("button");
+        suppressionBtn.setAttribute('id', "suppression-planned-dive");
+        suppressionBtn.textContent = "Supprimer";
+        see_more_btn_modal.appendChild(suppressionBtn);
+
         // Create 'Organisation' button
         let organisationBtn = document.createElement("button");
         organisationBtn.setAttribute('id', "planned-dive-organisation");
@@ -327,6 +353,7 @@ function createInfoPlannedDive(id) {
 
         setInscriptionListener();
         setModificationListener(id);
+        setSuppressionListener(id);
         setOrganisationListener(id);
 
         // Table divers
@@ -482,68 +509,86 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
 /*                    SETTING LISTENERS FUNCTIONS                   */
 /********************************************************************/
 
-document.getElementById("validate-planned-dive").addEventListener("click", (e) => {
-    let planned_date = document.getElementById("planned-dive-date").value;
-    let planned_time = document.getElementById("planned-dive-time").value;
-    let comments = document.getElementById("planned-dive-comments").value;
-    let special_needs = document.getElementById("planned-dive-special-needs").value;
-    let statut = document.getElementById("planned-dive-statut").value;
-    let diver_dive_price = document.getElementById("planned-dive-diver-dive-price").value;
-    let instructor_dive_price = document.getElementById("planned-dive-instructor-dive-price").value;
-    let dive_site_value = document.getElementById("planned-dive-site").value;
-    
+function setButtonValidateListener(){
+    document.getElementById("validate-planned-dive").addEventListener("click", (e) => {
+        let planned_date = document.getElementById("planned-dive-date").value;
+        let planned_time = document.getElementById("planned-dive-time").value;
+        let comments = document.getElementById("planned-dive-comments").value;
+        let special_needs = document.getElementById("planned-dive-special-needs").value;
+        let statut = document.getElementById("planned-dive-statut").value;
+        let diver_dive_price = document.getElementById("planned-dive-diver-dive-price").value;
+        let instructor_dive_price = document.getElementById("planned-dive-instructor-dive-price").value;
+        let dive_site_value = document.getElementById("planned-dive-site").value;
+        
 
-    // Check if all fields are filled
-    if (planned_date == "" || planned_time == "" || statut == "") {
-        alert("Veuillez remplir tous les champs obligatoires");
-        return;
-    }
-
-    if(instructor_dive_price == ""){ instructor_dive_price = 0;}
-    if(diver_dive_price == ""){ diver_dive_price = 0;}
-
-    // Vérification de la date
-    let dateSaisie = new Date(document.getElementById("planned-dive-date").value);
-    let dateActuelle = new Date(); 
-    if (dateSaisie < dateActuelle) {
-        alert("La date saisie est dépassée");
-        return;
-    }
-    
-    // Search the id max
-    let id = 0;
-    tabPlannedDives.forEach(element => {
-        if(element.get_id() > id){
-            id = parseInt(element.get_id());
-            //console.log(id);
+        // Check if all fields are filled
+        if (planned_date == "" || planned_time == "" || statut == "") {
+            alert("Veuillez remplir tous les champs obligatoires");
+            return;
         }
+
+        if(instructor_dive_price == ""){ instructor_dive_price = 0;}
+        if(diver_dive_price == ""){ diver_dive_price = 0;}
+
+        // Vérification de la date
+        let dateSaisie = new Date(document.getElementById("planned-dive-date").value);
+        let dateActuelle = new Date(); 
+        if (dateSaisie < dateActuelle) {
+            alert("La date saisie est dépassée");
+            return;
+        }
+        
+        // Search the id max
+        let id = 0;
+        tabPlannedDives.forEach(element => {
+            if(element.get_id() > id){
+                id = parseInt(element.get_id());
+                //console.log(id);
+            }
+        });
+        id++;
+
+        if(modifyMode == false){
+            SocketManager.addPlannedDive(id,planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, parseInt(dive_site_value));
+        }
+        else{
+            SocketManager.modifyPlannedDive(modifiedPlannedDive,planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, parseInt(dive_site_value));
+            modal_info.style.display = "none";
+        }
+
+        // Clear all fields
+        document.getElementById("planned-dive-date").value = "";
+        document.getElementById("planned-dive-time").value = "";
+        document.getElementById("planned-dive-comments").value = "";
+        document.getElementById("planned-dive-special-needs").value = "";
+        document.getElementById("planned-dive-statut").value = "1";
+        document.getElementById("planned-dive-diver-dive-price").value = "";
+        document.getElementById("planned-dive-instructor-dive-price").value = "";
+        document.getElementById("planned-dive-site").value = "1";
+
+        // Closing modal
+        formModal.style.display = "none";
+
+        // Update the list
+        if(modifyMode == false){
+            console.log("Adding planned dive in database");
+        }
+        else{
+            console.log("Modifying planned dive " + modifiedPlannedDive + " in database");
+            modifyMode = false;
+        }
+
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";        
+        setTimeout(function() {
+            updatePlannedDive();
+            //document.getElementById("ring-loading").style.display = "none";
+            //document.body.style.cursor = "default";
+        }, 1000);
     });
-    id++;
+}
 
-    SocketManager.addPlannedDive(id,planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, parseInt(dive_site_value));
-    //alert("Planned dive added");
-    //console.log(planned_date, planned_time, comments, special_needs, statut, diver_dive_price, instructor_dive_price, dive_site_value);
-
-    // Clear all fields
-    document.getElementById("planned-dive-date").value = "";
-    document.getElementById("planned-dive-time").value = "";
-    document.getElementById("planned-dive-comments").value = "";
-    document.getElementById("planned-dive-special-needs").value = "";
-    document.getElementById("planned-dive-statut").value = "1";
-    document.getElementById("planned-dive-diver-dive-price").value = "";
-    document.getElementById("planned-dive-instructor-dive-price").value = "";
-    document.getElementById("planned-dive-site").value = "1";
-
-    // Update the list
-    console.log("Adding planned dive in database");
-    document.getElementById("ring-loading").style.display = "block";
-    document.body.style.cursor = "wait";        
-    setTimeout(function() {
-        updatePlannedDive();
-        document.getElementById("ring-loading").style.display = "none";
-        document.body.style.cursor = "default";
-    }, 1000);
-});
+setButtonValidateListener();
 
 function setListeners(){
     for(let i = 0; i < tabPlannedDives.length; i++){
@@ -567,6 +612,14 @@ function setInscriptionListener(){
 function setModificationListener(id){
     document.getElementById("modification-planned-dive").addEventListener("click", (e) => {
         console.log("Modification planned dive " + id);
+        modifierPlannedDive(id);
+    });
+}
+
+function setSuppressionListener(id){
+    document.getElementById("suppression-planned-dive").addEventListener("click", (e) => {
+        console.log("Suppression planned dive " + id);
+        supprimerPlannedDive(id);
     });
 }
 
@@ -584,41 +637,45 @@ function setOrganisationListener(id){
     });
 }
 
-document.getElementById("inscription-planned-dive-modal").addEventListener("click", (e) => {
-    let id_planned_dive = currentPlannedDive;
-    let diver_role = document.getElementById("diver-role").value;
-    let registration_timestamp = new Date();
-    let personal_comment = document.getElementById("personal-comment").value;
-    let car_pooling_seat_offered;
-    let car_pooling_seat_request;
-    let tmp_blablacar = document.getElementById("car-pooling").value;
+function setButtonRegisterListener(){
+    document.getElementById("inscription-planned-dive-modal").addEventListener("click", (e) => {
+        let id_planned_dive = currentPlannedDive;
+        let diver_role = document.getElementById("diver-role").value;
+        let registration_timestamp = new Date();
+        let personal_comment = document.getElementById("personal-comment").value;
+        let car_pooling_seat_offered;
+        let car_pooling_seat_request;
+        let tmp_blablacar = document.getElementById("car-pooling").value;
 
-    if(tmp_blablacar == "-1"){
-        car_pooling_seat_offered = 0;
-        car_pooling_seat_request = "1";
-    }
-    else if(tmp_blablacar == "Aucun"){
-        car_pooling_seat_offered = 0;
-        car_pooling_seat_request = "0";
-    }
-    else{
-        car_pooling_seat_offered = parseInt(tmp_blablacar);
-        car_pooling_seat_request = "0";
-    }
+        if(tmp_blablacar == "-1"){
+            car_pooling_seat_offered = 0;
+            car_pooling_seat_request = "1";
+        }
+        else if(tmp_blablacar == "Aucun"){
+            car_pooling_seat_offered = 0;
+            car_pooling_seat_request = "0";
+        }
+        else{
+            car_pooling_seat_offered = parseInt(tmp_blablacar);
+            car_pooling_seat_request = "0";
+        }
 
-    SocketManager.diverRegistration(id_planned_dive, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request);
+        SocketManager.diverRegistration(id_planned_dive, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request);
 
-    document.getElementById("container-modal3").style.display = "none";
+        document.getElementById("container-modal3").style.display = "none";
 
-    document.getElementById("ring-loading").style.display = "block";
-    document.body.style.cursor = "wait";
-    setTimeout(function(){
-        updateDiveRegistration();
-        updatePlannedDive();
-        //document.getElementById("ring-loading").style.display = "none";
-        //document.body.style.cursor = "default";
-    }, 1000);
-});
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";
+        setTimeout(function(){
+            updateDiveRegistration();
+            updatePlannedDive();
+            //document.getElementById("ring-loading").style.display = "none";
+            //document.body.style.cursor = "default";
+        }, 1000);
+    });
+}
+
+setButtonRegisterListener();
 
 /********************************************************************/
 /*                         UPDATING FUNCTIONS                       */
@@ -758,6 +815,53 @@ function updateDiveRegistration(){
     tabDiveRegistrations = [];
     SocketManager.getAllDiveRegistrations();
 }
+
+function modifierPlannedDive(id){
+    modifyMode = true;
+    modifiedPlannedDive = id;
+
+    let tabElement = getPlannedDiveById(id);
+
+    document.getElementById("planned-dive-date").value = tabElement.get_planned_date();
+    document.getElementById("planned-dive-time").value = tabElement.get_planned_time();
+    document.getElementById("planned-dive-comments").value = tabElement.get_comments();
+    document.getElementById("planned-dive-special-needs").value = tabElement.get_special_needs();
+    document.getElementById("planned-dive-statut").value = tabElement.get_statut();
+    document.getElementById("planned-dive-diver-dive-price").value = tabElement.get_diver_dive_price();
+    document.getElementById("planned-dive-instructor-dive-price").value = tabElement.get_instructor_dive_price();
+    document.getElementById("planned-dive-site").value = tabElement.get_id_dive_site();
+
+    document.getElementById("title-modal-plan").innerHTML = "Modifier une plongée";
+    document.getElementById("validate-planned-dive").innerHTML = "Modifier";
+
+    formModal.style.display = "block";
+}
+
+function supprimerPlannedDive(id){
+    let text = "Êtes-vous sûr de vouloir supprimer cette plongée ?";
+    if(confirm(text) == true){
+        SocketManager.deletePlannedDive(id);
+        tabDiveRegistrations.forEach(element => {
+            if(element.get_planned_dive_id() == id){
+                console.log("Suppression de l'inscription");
+                SocketManager.deleteDiveRegistration(element.get_diver_id(), element.get_planned_dive_id());
+            }
+        });
+        document.getElementById("ring-loading").style.display = "block";
+        document.body.style.cursor = "wait";
+        setTimeout(function(){
+            updatePlannedDive();
+            updateDiveRegistration();
+            document.getElementById("ring-loading").style.display = "none";
+            document.body.style.cursor = "default";
+            modal_info.style.display = "none";
+        }, 1000);
+    }
+    else{
+        console.log("Annulation de la suppression");
+    }
+}
+    
 
 /********************************************************************/
 /*                              CALENDAR                            */

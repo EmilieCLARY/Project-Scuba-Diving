@@ -41,6 +41,20 @@ let nbOfLoaded = 11;
 
 var tablecounter = 0;
 
+let mézon = document.getElementById("mézon");
+mézon.onmouseover = function() {
+    mézon.classList.add("fa-beat");
+}
+
+mézon.onmouseout = function() {
+    mézon.classList.remove("fa-beat");
+}
+
+document.getElementById("mézon").addEventListener("click", (e) => {
+        location.href = '/protected/';
+});
+
+
 /********************************************************************/
 /*                         LOAD INFORMATIONS                        */
 /********************************************************************/
@@ -163,8 +177,34 @@ function setButtonListener(){
 }
 
 function suppressionTableauPalanquée(tableId){
+
+    //Check if the table is empty
     const table = document.getElementById(tableId);
-    table.parentNode.remove();
+    const tableBody = document.getElementById('tableBody');
+    console.log(tableBody.childElementCount)
+
+    if (tableBody.childElementCount > 5) {
+        
+        console.log("Tableau rempli");
+        confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
+    }
+    else{
+
+        //Check if the table is the last one
+        if (tableId == tablecounter) {
+            tablecounter--;
+        }
+
+        // Move all table ids after the deleted one down by one
+        for (let i = tableId + 1; i <= tablecounter; i++) {
+            const table = document.getElementById(i);
+            table.id = i - 1;
+            const td = table.getElementsByTagName('td')[0];
+            td.innerHTML = "Palanquée " + table.id;
+        }
+        // Remove the table
+        table.parentNode.remove();
+    }
 }
 
 function supprimerTousLesTableaux(){
@@ -225,10 +265,12 @@ function creationTableauPalanquee(rows, columns) {
     thead.appendChild(tr);
     table.appendChild(thead);
 
-    let isPassed = false;
-
     // Create the table body with rows and cells
     const tbody = document.createElement('tbody');
+    tbody.id = "tableBody";
+
+    let isPassed = false;
+    let isPassed2 = false;
 
     for (let i = 0; i < rows; i++) {
 
@@ -236,15 +278,21 @@ function creationTableauPalanquee(rows, columns) {
         row.classList.add('tr');
         row.classList.add('my-handle');
 
-        for (let j = 0; j < columns - 1; j++) {
-            
-            if(!isPassed){
-                const cell = document.createElement('td');
-                //cell.textContent = `Data ${i + 1}-${j + 1}`;
-                cell.setAttribute("hidden", "hidden");
-                cell.setAttribute("height", "10px")
-                row.appendChild(cell);
+        if(isPassed == false){
+
+            for (let j = 0; j < columns - 1; j++) {
+
+                if(isPassed2 == false){
+                    const cell = document.createElement('td');
+                    // Make a colspan of the number of columns for the last cell
+                    cell.setAttribute('colspan', columns - 1);
+                    cell.innerHTML = "Palanquée " + tableId;
+                    isPassed2 = true;
+                              
+                    row.appendChild(cell);
+                }
                 isPassed = true;
+
             }
         }
 
