@@ -35,46 +35,50 @@
     </nav>
     
     <div class="container-dive">
+
+        <div class="dive-left">
     
-        <h1> Création des palanquées </h1>
+            <h1> Création des palanquées </h1>
 
 
-        <div class="btn-tableau-dive">
-            <button id="ajouter-tableau">Ajout d'un tableau</button>
+            <div class="btn-tableau-dive">
+                <button class="btn-gestion" id="ajouter-tableau">Ajout d'un tableau</button>
+            </div>
+
+            <div id="tableContainer"></div>
+
+
+            <div class="btn-clear-tableaux"> 
+                <button class="btn-gestion" id="clear-tableaux">Supprimer tous les tableaux</button>
+            </div>
+
         </div>
 
-        <div id="tableContainer"></div>
+        <div class="dive-right">      
+
+            <div class="container-inscrits"> 
+                <h1> Liste des inscrits à placer </h1>
+                <div id="tableContainerInscrits"></div>
+            </div>
 
 
-        <!-- <div id="ring-loading" class="ring">Chargement
-            <span class="span-ring"></span>
-        </div> -->
-    
-    </div>
+            <div class = "btn-attribution-automatique">
+                <button class="btn-gestion" id="attribution-automatique">Attribution automatique</button>
+            </div>
+
+        </div>
 
     <div class="div-return-home" id="mézon">
         <a><i class="fa-solid fa-house"></i></a>
-    </div>
-
-
-    <div class="btn-clear-tableaux"> 
-        <button id="clear-tableaux">Supprimer tous les tableaux</button>
-    </div>
-
-    <div class="container-inscrits"> 
-        <h1> Liste des inscrits à placer </h1>
-        <div id="tableContainerInscrits"></div>
-    </div>
-
-
-    <div class = "btn-attribution-automatique">
-        <button id="attribution-automatique">Attribution automatique</button>
     </div>
 
     <!--Chargement-->
     <div id="ring-loading" class="ring">Chargement
         <span class="span-ring"></span>
     </div>
+
+    </div>
+
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"

@@ -14,6 +14,8 @@ let modifiedDiver = -1;
 let loaded = 0;
 let nbOfLoaded = 1;
 
+let currentSortWay = "croissant";
+
 let mézon = document.getElementById("mézon");
 mézon.onmouseover = function() {
     mézon.classList.add("fa-beat");
@@ -86,7 +88,8 @@ function LoadAllDivers(tab){
         let tmp = new Diver(element.Id_Diver,element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additional_Qualifications,element.License_Number,element.License_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
         tabDivers.push(tmp);
     });
-    createDiverTable(tabDivers);
+    createDiverTableHeaders(tabDivers);
+    createDiverTableBody(tabDivers);
     setListeners();
     //console.log(tabDivers);
     loaded = 1;
@@ -97,15 +100,9 @@ function LoadAllDivers(tab){
 /*                        CREATING FUNCTIONS                        */
 /********************************************************************/
 
-function createDiverTable(tabDivers){
-    let table = document.getElementById("liste_diver");
-    table.innerHTML = "";
-    //console.log(tabDivers);
-
-    let tableau = document.createElement("table");
-    tableau.classList.add("blueTable");
-    
-    let head = document.createElement("thead");
+function createDiverTableHeaders(){    
+    let head = document.getElementById("thead-diver-liste");
+    head.innerHTML = "";
 
     /* Première Row*/
 
@@ -114,73 +111,97 @@ function createDiverTable(tabDivers){
 
     let th1 = document.createElement("th");
     th1.classList.add("th1");
-    th1.innerHTML = "Id plongeur";
+    th1.setAttribute("id", "th1-diver");
+    th1.innerHTML = "Id plongeur  ";
     tr.appendChild(th1);
 
     let th2 = document.createElement("th");
     th2.classList.add("th2");
-    th2.innerHTML = "Nom";
+    th2.setAttribute("id", "th2-diver");
+    th2.innerHTML = "Nom  ";
     tr.appendChild(th2);
 
     let th3 = document.createElement("th");
     th3.classList.add("th3");
-    th3.innerHTML = "Prénom";
+    th3.setAttribute("id", "th3-diver");
+    th3.innerHTML = "Prénom  ";
     tr.appendChild(th3);
     
     let th4 = document.createElement("th");
     th4.classList.add("th4");
-    th4.innerHTML = "Qualification plongeur";
+    th4.setAttribute("id", "th4-diver");
+    th4.innerHTML = "Qualification plongeur  ";
     tr.appendChild(th4);
     
     let th5 = document.createElement("th");
     th5.classList.add("th5");
-    th5.innerHTML = "Qualification moniteur";
+    th5.setAttribute("id", "th5-diver");
+    th5.innerHTML = "Qualification moniteur  ";
     tr.appendChild(th5);
 
     let th6 = document.createElement("th");
     th6.classList.add("th6");
-    th6.innerHTML = "Qualification NITROX";
+    th6.setAttribute("id", "th6-diver");
+    th6.innerHTML = "Qualification NITROX  ";
     tr.appendChild(th6);
     
     let th7 = document.createElement("th");
     th7.classList.add("th7");
-    th7.innerHTML = "Qualification(s) additionnelle(s)";
+    th7.setAttribute("id", "th7-diver");
+    th7.innerHTML = "Qualification(s) additionnelle(s)  ";
     tr.appendChild(th7);
 
     let th8 = document.createElement("th");
     th8.classList.add("th8");
-    th8.innerHTML = "Numéro de licence";
+    th8.setAttribute("id", "th8-diver");
+    th8.innerHTML = "Numéro de licence  ";
     tr.appendChild(th8);
 
     let th9 = document.createElement("th");
     th9.classList.add("th9");
-    th9.innerHTML = "Date d'expiration de la licence";
+    th9.setAttribute("id", "th9-diver");
+    th9.innerHTML = "Date d'expiration de la licence  ";
     tr.appendChild(th9);
 
     let th10 = document.createElement("th");
     th10.classList.add("th10");
-    th10.innerHTML = "Date d'expiration du certificat médical";
+    th10.setAttribute("id", "th10-diver");
+    th10.innerHTML = "Date d'expiration du certificat médical  ";
     tr.appendChild(th10);
 
     let th11 = document.createElement("th");
     th11.classList.add("th11");
-    th11.innerHTML = "Date de naissance";
+    th11.setAttribute("id", "th11-diver");
+    th11.innerHTML = "Date de naissance  ";
     tr.appendChild(th11);
 
     let th12 = document.createElement("th");
     th12.classList.add("th12");
-    th12.innerHTML = "Modifier";
+    th12.innerHTML = "Modifier  ";
     tr.appendChild(th12);
 
     let th13 = document.createElement("th");
     th13.classList.add("th13");
-    th13.innerHTML = "Supprimer";
+    th13.innerHTML = "Supprimer  ";
     tr.appendChild(th13);
     
     head.appendChild(tr);
-    tableau.appendChild(head);
+    //tableau.appendChild(head);
+    //table.appendChild(tableau);
 
-    let tbody = document.createElement("tbody");
+    for(let i = 1; i <= 11; i++){
+        document.getElementById("th"+i+"-diver").style.cursor = "pointer";
+        let span = document.createElement("span");
+        span.setAttribute("class", "fas fa-sort-down");
+        span.setAttribute("id", "span"+i+"-diver");
+        document.getElementById("th"+i+"-diver").appendChild(span);
+        document.getElementById("span"+i+"-diver").style.display = "none";
+    }
+}
+
+function createDiverTableBody(tabDivers){
+    let tbody = document.getElementById("tbody-diver-liste");
+    tbody.innerHTML = "";
 
     // Parcours du tableau de plongeurs
     for (let i = 0; i < tabDivers.length; i++){
@@ -335,10 +356,12 @@ function createDiverTable(tabDivers){
 
         tbody.appendChild(ligne);
 
-        tableau.appendChild(tbody);
+        //tableau.appendChild(tbody);
 
-        table.appendChild(tableau);
+        //table.appendChild(tableau);
     }
+
+    setSortListeners();
 }
 
 /********************************************************************/
@@ -455,6 +478,23 @@ function setButtonValidateListener(){
 
 setButtonValidateListener();
 
+function setSortListeners(){
+    for(let i = 1; i <= 11; i++){
+        //document.getElementById("th"+1+"-diver").style.userSelect = "none";
+        document.getElementById("th"+i+"-diver").onclick = function(){
+            document.getElementById("span"+i+"-diver").style.display = "inline-block";
+            // Hide all other span
+            for(let j = 1; j <= 11; j++){
+                if(j != i){
+                    document.getElementById("span"+j+"-diver").style.display = "none";
+                }
+            }
+            sortTable(i);
+            sortTableView(i);
+        }
+    }
+}
+
 /********************************************************************/
 /*                         UPDATING FUNCTIONS                       */
 /********************************************************************/
@@ -515,6 +555,149 @@ function checkLoaded(){
         loaded = 0;
     }
 }
+
+function sortTable(n) {
+    console.log("Sorting table by column " + n);
+    // Tri de tabDivers
+    console.log(tabDivers);
+    const distantFuture = new Date(8640000000000000)
+    let dateA, dateB;
+    tabDivers.sort(function(a, b){
+        switch(n){
+            case 1:
+                return a.get_id() - b.get_id();
+            case 2:
+                if(a.get_last_name().toLowerCase() < b.get_last_name().toLowerCase()){
+                    return -1;
+                }
+                else if(a.get_last_name().toLowerCase() > b.get_last_name().toLowerCase()){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            case 3:
+                if(a.get_first_name().toLowerCase() < b.get_first_name().toLowerCase()){
+                    return -1;
+                }
+                else if(a.get_first_name().toLowerCase() > b.get_first_name().toLowerCase()){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            case 4:
+                return a.get_diver_qualification() - b.get_diver_qualification();
+            case 5:
+                return a.get_instructor_qualification() - b.get_instructor_qualification();
+            case 6:
+                return a.get_nox_level() - b.get_nox_level();
+            case 7:
+                if(a.get_additionnal_qualification() < b.get_additionnal_qualification()){
+                    return -1;
+                }
+                else if(a.get_additionnal_qualification() > b.get_additionnal_qualification()){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            case 8:
+                if(a.get_licence_number() < b.get_licence_number()){
+                    return -1;
+                }
+                else if(a.get_licence_number() > b.get_licence_number()){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            case 9:
+                dateA = (a.get_licence_expiration_date() != null && a.get_licence_expiration_date() != "0000-00-00") ? new Date(a.get_licence_expiration_date()) : distantFuture;
+                dateB = (b.get_licence_expiration_date() != null && b.get_licence_expiration_date() != "0000-00-00") ? new Date(b.get_licence_expiration_date()) : distantFuture;
+                return dateA - dateB;
+            case 10:
+                dateA = (a.get_medical_certificate_expiration_date() != null && a.get_medical_certificate_expiration_date() != "0000-00-00") ? new Date(a.get_medical_certificate_expiration_date()) : distantFuture;
+                dateB = (b.get_medical_certificate_expiration_date() != null && b.get_medical_certificate_expiration_date() != "0000-00-00") ? new Date(b.get_medical_certificate_expiration_date()) : distantFuture;
+                return dateA - dateB;
+            case 11:
+                dateA = (a.get_birth_date() != null && a.get_birth_date() != "0000-00-00") ? new Date(a.get_birth_date()) : distantFuture;
+                dateB = (b.get_birth_date() != null && a.get_birth_date() != "0000-00-00") ? new Date(b.get_birth_date()) : distantFuture;
+                return dateA - dateB;
+        }
+    });
+
+    console.log(tabDivers);
+}
+
+function sortTableView(n){
+    // Update de la page
+    document.getElementById("ring-loading").style.display = "block";
+    document.body.style.cursor = "wait";
+    setTimeout(function() {
+        createDiverTableBody(tabDivers);
+        setListeners();
+        document.getElementById("ring-loading").style.display = "none";
+        document.body.style.cursor = "default";
+    }, 100);
+}
+
+//function sortTable(n) {
+//    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+//    table = document.getElementById("liste_diver");
+//    switching = true;
+//    //Set the sorting direction to ascending:
+//    dir = "asc"; 
+//    /*Make a loop that will continue until
+//    no switching has been done:*/
+//    while (switching) {
+//        //start by saying: no switching is done:
+//        switching = false;
+//        rows = table.getElementsByTagName("tr");
+//        //console.log(rows.length);
+//        //rows = table.rows;
+//        /*Loop through all table rows (except the
+//        first, which contains table headers):*/
+//        for (i = 1; i < (rows.length - 1); i++) {
+//            //start by saying there should be no switching:
+//            shouldSwitch = false;
+//            /*Get the two elements you want to compare,
+//            one from current row and one from the next:*/
+//            x = rows[i].getElementsByTagName("td")[n];
+//            y = rows[i + 1].getElementsByTagName("td")[n];
+//            /*check if the two rows should switch place,
+//            based on the direction, asc or desc:*/
+//            if (dir == "asc") {
+//                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+//                    //if so, mark as a switch and break the loop:
+//                    shouldSwitch= true;
+//                    break;
+//                }
+//            } else if (dir == "desc") {
+//                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+//                    //if so, mark as a switch and break the loop:
+//                    shouldSwitch = true;
+//                    break;
+//                }
+//            }
+//        }
+//        if (shouldSwitch) {
+//            /*If a switch has been marked, make the switch
+//            and mark that a switch has been done:*/
+//            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+//            switching = true;
+//            //Each time a switch is done, increase this count by 1:
+//            switchcount ++;      
+//        } else {
+//            /*If no switching has been done AND the direction is "asc",
+//            set the direction to "desc" and run the while loop again.*/
+//            if (switchcount == 0 && dir == "asc") {
+//                dir = "desc";
+//                switching = true;
+//            }
+//        }
+//    }
+//  }
 
 export default {
     LoadAllDivers,

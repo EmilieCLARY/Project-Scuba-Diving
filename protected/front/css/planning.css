@@ -1,0 +1,186 @@
+.div-modal-planning{
+    width  : 70vw;
+    height: 80vh;
+    background : var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    margin-top: 15vh;
+    margin-left: 15vw;
+    border-radius: 3vw;
+  }
+  
+  .div-modal-planning .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
+    padding-left: 2vw;
+  }
+  
+  .div-modal-planning .title h1 {
+    font-size: 3.5vh;
+    margin-left: 2vw;
+  }
+  
+  .div-modal-planning .title span {
+    font-size: 3.5vh;
+    margin-right: 2.5vw;
+  }
+  
+  .div-modal-planning .title span:hover {
+    cursor: pointer;
+  }
+  
+  
+  .div-modal-planning .form-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 60vh;
+    width: 70vw;
+  }
+  
+  .div-modal-planning .form-body .labels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    height: 60vh;
+    width: 30vw;
+    margin-right: 2.5vw;
+  }
+  
+  .div-modal-planning .form-body .labels label {
+    font-size: 2.5vh;
+    height: 5vh;
+    padding-top: 0.5vh;
+  }
+  
+  .div-modal-planning .form-body .inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60vh;
+    width: 30vw;
+    margin: 0 2.5vw;
+  }
+  
+  .div-modal-planning .form-body .inputs input[type=text] {
+    width: 25vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    padding-left: 1vw;
+    font-size: 2vh;
+  }
+  
+  .form-dive-site .form-body .inputs input[type="date"]{
+    width: 25vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 2vh;
+  }
+  
+  .form-dive-site .form-body .inputs input[type="time"]{
+    width: 25vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 2vh;
+  }
+  
+  .form-dive-site .form-body .inputs select{
+    background-color: white;
+    width: 25.3vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 2vh;
+  }
+  
+  .div-modal-planning .form-body .inputs #dive-site-image-button {
+    width: 15vw;
+    height: 4vh;
+    margin-left: 4vw;
+    margin-top: 0.5vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 1vh;
+    padding: 1.3vh 2.5vw;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.5vh;
+  }
+  
+  .div-modal-planning .form-body .inputs #dive-site-image-button:hover {
+    transition: all .1s ease;
+    color: var(--accent-color);
+    box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
+  }
+  
+  
+  .div-modal-planning .form-dive-site-validation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 10vh;
+  }
+  
+  .div-modal-planning .form-dive-site-validation #validate-dive-site {
+    width: 25vw;
+    height: 7vh;
+    margin-left: 22.5vw;
+    margin-top: 0.5vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 1vh;
+    padding: 1.3vh 2.5vw;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.5vh;
+  }
+  
+  .div-modal-planning .form-dive-site-validation #validate-dive-site:hover{
+    transition: all .1s ease;
+    color: var(--text-color);
+    background: var(--accent-color);
+    box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+  }
+  
+  
+  #open-planning-modal {
+    position: fixed;
+    top: 50vh;
+    left: 90vw;
+    width: 8vw;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 2.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.5vh;
+  }
+  
+  #open-planning-modal:hover {
+    transition: all .1s ease;
+    color: var(--text-color);
+    background: var(--accent-color);
+    box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+  }
+  

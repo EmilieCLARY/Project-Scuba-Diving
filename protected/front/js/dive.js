@@ -177,34 +177,35 @@ function setButtonListener(){
 }
 
 function suppressionTableauPalanquée(tableId){
-
-    //Check if the table is empty
+    console.log("Suppression du tableau " + tableId);
     const table = document.getElementById(tableId);
     const tableBody = document.getElementById('tableBody');
-    console.log(tableBody.childElementCount)
-
+    
+    //Check if the table is empty
     if (tableBody.childElementCount > 5) {
-        
         console.log("Tableau rempli");
         confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
     }
     else{
-
-        //Check if the table is the last one
-        if (tableId == tablecounter) {
-            tablecounter--;
-        }
-
-        // Move all table ids after the deleted one down by one
-        for (let i = tableId + 1; i <= tablecounter; i++) {
-            const table = document.getElementById(i);
-            table.id = i - 1;
-            const td = table.getElementsByTagName('td')[0];
-            td.innerHTML = "Palanquée " + table.id;
+        for (let i = tableId; i < tablecounter; i++) {
+            console.log("Tableau " + i);
+            let tmp = parseInt(i)+1;
+            console.log(tmp);
+            let table2 = document.getElementById(tmp);
+            console.log(table2);
+            table2.setAttribute('id', i);
+            // Append
+            let td = table2.getElementsByTagName('td')[0];
+            td.innerHTML = "Palanquée " + table2.id;
         }
         // Remove the table
+        console.log(tableId);
         table.parentNode.remove();
+        tablecounter--; 
     }
+    
+
+    console.log("Nombre tableaux : " + tablecounter)
 }
 
 function supprimerTousLesTableaux(){
@@ -286,6 +287,7 @@ function creationTableauPalanquee(rows, columns) {
                     const cell = document.createElement('td');
                     // Make a colspan of the number of columns for the last cell
                     cell.setAttribute('colspan', columns - 1);
+                    cell.classList.add('static');
                     cell.innerHTML = "Palanquée " + tableId;
                     isPassed2 = true;
                               
@@ -308,8 +310,8 @@ function creationTableauPalanquee(rows, columns) {
     const supprButton = document.createElement('button');
     supprButton.setAttribute("id", "supprButton" + tableId);
     supprButton.addEventListener('click', event => {
-        suppressionTableauPalanquée(tableId);
-        tablecounter--;
+        console.log(event.target.parentNode.firstChild.id);
+        suppressionTableauPalanquée(event.target.parentNode.firstChild.id);
     });
     supprButton.innerHTML = "Supprimer le tableau";
     tableDiv.appendChild(supprButton);
@@ -317,9 +319,11 @@ function creationTableauPalanquee(rows, columns) {
 
     // Initialize SortableJS for the new table
     new Sortable(tbody, {
+        filter : ".static",
         group: 'shared',
         handle: ".my-handle",
         animation: 150,
+        draggable: ".tr",
     });
 }
 
@@ -453,6 +457,7 @@ function createTableInscrits() {
         group: 'shared',
         handle: ".my-handle",
         animation: 150,
+        draggable: ".tr",
     });
 
 }

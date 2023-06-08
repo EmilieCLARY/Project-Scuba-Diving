@@ -35,12 +35,14 @@ document.getElementById("mézon").addEventListener("click", (e) => {
 
 // Hide the loading ring
 //document.getElementById("ring-loading").style.display = "none";
+document.getElementById("open-site-modal").style.display = "none";
 
 /********************************************************************/
 /*                             MODALS                               */
 /********************************************************************/
 
 let modal = document.getElementById("site-creation-form");
+let modal_planning = document.getElementById("container-modal");
 let openModal = document.getElementById("open-site-modal");
 let closeModal = document.getElementById("close-site-modal");
 let choseImage = document.getElementById("dive-site-image-button");
@@ -82,6 +84,12 @@ closeModal.onmouseout = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
+    }
+}
+
+window.onclick = function(event) {
+    if (event.target == modal_planning) {
+      modal_planning.style.display = "none";
     }
 }
 
@@ -221,6 +229,7 @@ function create_elements(tab_dive_sites) {
 
         // Partie avec les boutons de modification et de suppression (FAIRE CSS)
         if(isAdmin == 1){
+            document.getElementById("open-site-modal").style.display = "block";
             let span_modif = document.createElement('span');
             let span_suppr = document.createElement('span');
             span_modif.classList.add("fa-solid");

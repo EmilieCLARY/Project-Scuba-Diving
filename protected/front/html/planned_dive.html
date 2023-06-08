@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/protected/front/css/style.css" />
     <link rel="stylesheet" href="/protected/front/css/table.css" />
     <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+    <link rel="stylesheet" href="/protected/front/css/pages/planned_dive.css" />
+    <link rel="stylesheet" href="/protected/front/css/planning.css" />
 
     <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -40,7 +42,7 @@
     <button class="creation-button" id="open-planned-dive-planning"> Planning complet </button>
 
     <div id="container-modal" class="modal">
-        <div class="div-modal"> 
+        <div class="div-modal-planning"> 
             <div class="title"> 
                 <h1> Planning complet</h1>
                 <span id="close-planning-modal"><i id="planning-close-button" class="fa-regular fa-circle-xmark"></i></span>
@@ -84,10 +86,10 @@
                 <div class="modal-body-right">
                     <div class="modal-dive-time">
                         <div class="modal-dive-month">
-                            <p id="date-pd-month">Month</p>
+                            <p id="date-pd-month">Mois</p>
                         </div>
                         <div class="modal-dive-day-and-time">
-                            <div id="date-pd-day">Day</div>
+                            <div id="date-pd-day">Jour</div>
                             <div id="time-pd">Heure</div>
                         </div>
                         <!--<p id="date-pd">Date</p>-->
@@ -132,7 +134,7 @@
     </div>
 
     <div id="container-modal3" class="modal">
-        <div class="div-modal"> 
+        <div class="div-modal-inscrire"> 
             <div class="title"> 
                 <h1 id="title-planned-dive-reg"> Inscription à la plongée </h1>
                 <span id="close-pd-modal3"><i id="pd-close-button3" class="fa-regular fa-circle-xmark"></i></span>

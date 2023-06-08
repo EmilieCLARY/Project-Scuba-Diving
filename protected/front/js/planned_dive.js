@@ -47,6 +47,7 @@ document.getElementById("mézon").addEventListener("click", (e) => {
 
 // Hide the loading ring
 //document.getElementById("ring-loading").style.display = "none";
+document.getElementById("open-planned-dive-form").style.display = "none";
 
 /********************************************************************/
 /*                             MODALS                               */
@@ -82,9 +83,9 @@ let closePlanningModal = document.getElementById("close-planning-modal");
 let closePlanningButton = document.getElementById("planning-close-button");
 
 open_planning.onclick = function() {
-    setTimeout(function(){
-        createCalendar();
-    }, 1);
+    
+    createCalendar();
+    
     //console.log(tabPlannedDives);
     modal_planning.style.display = "block";
 }
@@ -153,12 +154,6 @@ closeModalReg.onmouseout = function() {
     closeRegButton.classList.remove("fa-shake");
 }
 
-window.onclick = function(event) {
-    if (event.target == modal_reg) {
-        modal_reg.style.display = "none";
-    }
-}
-
 /********************************************************************/
 /*                         LOAD INFORMATIONS                        */
 /********************************************************************/
@@ -217,6 +212,9 @@ function LoadIsAdmin(isAdmin_){
     isAdmin = isAdmin_;
     loaded++;
     checkLoaded();
+    if(isAdmin){
+        document.getElementById("open-planned-dive-form").style.display = "block";
+    }
 }
 
 function LoadUserProfile(userProfile_){
@@ -272,7 +270,7 @@ function createInfoPlannedDive(id) {
             document.getElementById("comments-pd").innerHTML = PlannedDiveInfo.get_comments();
         }
         if(PlannedDiveInfo.get_special_needs() == ""){
-            document.getElementById("special-needs-pd").innerHTML = "Aucun besoin spécial sdiuzeh dçids gdus gd gdu ygdsd qsd gqsuidgqsu qzd ft zfxuxufqx  sqx qtsfx x tfqs x tsx tfiqsxtfqsx sqxf qsusqitqfsctf qst fcqi c sqc  cfiqs ic qs cqc iqcqsi zehiuzh z dgzeuy dgzed  utidfz td tidfQD Q FDIFD F Fd IDI FIF SD FTQFdtyQFDFQSTDF DF q fd d efsd f sdc tsdcc cusd csc dscsdcf usdfcsdtfcsdytcfsydcfytsdc  fsdtcsdcdscs  ";
+            document.getElementById("special-needs-pd").innerHTML = "Aucun besoin spécial";
         }
         else{
             document.getElementById("special-needs-pd").innerHTML = PlannedDiveInfo.get_special_needs();
@@ -332,29 +330,31 @@ function createInfoPlannedDive(id) {
         inscriptionBtn.textContent = "S'inscrire";
         see_more_btn_modal.appendChild(inscriptionBtn);
 
-        // Create 'Modifier' button
-        let modificationBtn = document.createElement("button");
-        modificationBtn.setAttribute('id', "modification-planned-dive");
-        modificationBtn.textContent = "Modifier";
-        see_more_btn_modal.appendChild(modificationBtn);
-
-        // Create 'Modifier' button
-        let suppressionBtn = document.createElement("button");
-        suppressionBtn.setAttribute('id', "suppression-planned-dive");
-        suppressionBtn.textContent = "Supprimer";
-        see_more_btn_modal.appendChild(suppressionBtn);
-
-        // Create 'Organisation' button
-        let organisationBtn = document.createElement("button");
-        organisationBtn.setAttribute('id', "planned-dive-organisation");
-        organisationBtn.textContent = "Organisation";
-        
-        see_more_btn_modal.appendChild(organisationBtn);
-
         setInscriptionListener();
-        setModificationListener(id);
-        setSuppressionListener(id);
-        setOrganisationListener(id);
+
+        if(isAdmin){
+            // Create 'Modifier' button
+            let modificationBtn = document.createElement("button");
+            modificationBtn.setAttribute('id', "modification-planned-dive");
+            modificationBtn.textContent = "Modifier";
+            see_more_btn_modal.appendChild(modificationBtn);
+
+            // Create 'Modifier' button
+            let suppressionBtn = document.createElement("button");
+            suppressionBtn.setAttribute('id', "suppression-planned-dive");
+            suppressionBtn.textContent = "Supprimer";
+            see_more_btn_modal.appendChild(suppressionBtn);
+
+            // Create 'Organisation' button
+            let organisationBtn = document.createElement("button");
+            organisationBtn.setAttribute('id', "planned-dive-organisation");
+            organisationBtn.textContent = "Organisation";
+            see_more_btn_modal.appendChild(organisationBtn);
+            
+            setModificationListener(id);
+            setSuppressionListener(id);
+            setOrganisationListener(id);
+        }        
 
         // Table divers
         updateTableDivers();

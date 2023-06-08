@@ -2,8 +2,63 @@
     width  : 100vw;
     background : var(--bg-color);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding-top: 13vh;
+    justify-content: space-between;
+}
+
+.container-dive h1 {
+    font-size: 3.5vh;
+    margin: 0;
+    padding-left: 1vw;
+    padding-top: 1vh;
+}
+
+.container-dive .btn-gestion {
+  width: 15vw;
+  height: 3vh;
+  margin-left: 4vw;
+  margin-top: 0.5vh;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.dive-left {
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    padding: 1vw;
+}
+
+
+
+.dive-right {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1vw;
+}
+
+.dive-right .container-inscrits {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.dive-right #tableContainerInscrits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .tableDiv {
