@@ -159,6 +159,7 @@ function create_elements(tab_dive_sites) {
         // Création dynamique des éléments HTML pour chaque site de plongée
         let siteElement = document.createElement('div');
         siteElement.classList.add("dive-site-list-item");
+        siteElement.setAttribute("id", "dive-site-" + tab_dive_sites[i].get_id());
 
         // Partie haute avec le nom du site et la ville
         let siteElementTop = document.createElement('div');
@@ -169,6 +170,7 @@ function create_elements(tab_dive_sites) {
         siteElementTop.appendChild(siteElementTopWrap);
         let siteElementTopName = document.createElement('h1');
         siteElementTopName.innerHTML = tab_dive_sites[i].get_site_name();
+        siteElementTopName.setAttribute("id", "dive-site-name-" + tab_dive_sites[i].get_id());
         siteElementTopWrap.appendChild(siteElementTopName);
         let siteElementTopTown = document.createElement('h2');
         siteElementTopTown.classList.add("linkhover");
@@ -480,6 +482,10 @@ function hoverlistener() {
     }
 }
 
+document.getElementById("input-search-text").addEventListener("keyup", function(event) {
+    searchDiveSite();
+});
+
 /********************************************************************/
 /*                         UPDATING FUNCTIONS                       */
 /********************************************************************/
@@ -641,6 +647,19 @@ function checkLoaded(){
         document.body.style.cursor = "default";
         loaded = 0;
     }
+}
+
+function searchDiveSite(){
+    let input = document.getElementById("input-search-text");
+    let filter = input.value.toUpperCase();
+    tabDiveSites.forEach(element => {
+        if(element.get_site_name().toUpperCase().indexOf(filter) > -1){
+            document.getElementById("dive-site-" + element.get_id()).style.display = "block";
+        } else {
+            document.getElementById("dive-site-" + element.get_id()).style.display = "none";
+        }
+    });
+
 }
 
 // Exports

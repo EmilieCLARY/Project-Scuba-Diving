@@ -339,7 +339,7 @@ function createInfoPlannedDive(id) {
             modificationBtn.textContent = "Modifier";
             see_more_btn_modal.appendChild(modificationBtn);
 
-            // Create 'Modifier' button
+            // Create 'Supprimer' button
             let suppressionBtn = document.createElement("button");
             suppressionBtn.setAttribute('id', "suppression-planned-dive");
             suppressionBtn.textContent = "Supprimer";
@@ -375,6 +375,7 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
             /* Création des cartes */
             let li = document.createElement("li");
             li.classList.add("cards_item");
+            li.setAttribute('id', "card-item"+tabPlannedDives[i].get_id());
 
             /* Remplissage des cartes */   
 
@@ -411,6 +412,7 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
             let dive_site_name = document.createElement("h2");
             dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
             dive_site_name.classList.add("card_title");
+            dive_site_name.setAttribute('id', "dive-site-name"+tabPlannedDives[i].get_id());
             div_milieuTop.appendChild(dive_site_name);
 
             let dive_time = document.createElement("h2");
@@ -676,6 +678,14 @@ function setButtonRegisterListener(){
 }
 
 setButtonRegisterListener();
+
+document.getElementById("input-search-text").addEventListener("keyup", function(event) {
+    searchDiveSite();
+});
+
+document.getElementById("checkbox-registered").addEventListener("click", function(event) {
+    searchDiveSite();
+});
 
 /********************************************************************/
 /*                         UPDATING FUNCTIONS                       */
@@ -1005,6 +1015,35 @@ function checkLoaded(){
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
         loaded = 0;
+    }
+}
+
+function searchDiveSite(){
+    let input = document.getElementById("input-search-text");
+    let filter = input.value.toUpperCase();
+    let checkbox = document.getElementById("checkbox-registered");
+    // Search in all planned dives displayed
+    for(let i = 0; i < tabPlannedDives.length; i++){
+        if(checkbox.checked){
+            if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
+                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                }
+                else{
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                }
+            }
+        }
+        else{
+            if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
+                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                }
+                else{
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                }
+            }
+        }
     }
 }
 

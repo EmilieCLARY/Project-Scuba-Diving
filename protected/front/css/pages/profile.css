@@ -1,5 +1,5 @@
 .profile-container{
-    width  : 100vw;
+    width : 100vw;
     height: 100vh;
     background : var(--bg-color);
     display: flex;
@@ -7,42 +7,12 @@
     padding-top: 13vh;
 }
 
-.profile-container .profile-container-left{
-  width: 15vw;
-  height: 100vh;
-  /*background-color: var(--main-color);*/
-  background: linear-gradient(90deg, rgb(48, 32, 185) 0%, rgba(48,126,238,1) 100vw);
-  margin: 0 2vh 0 0;
-  align-self: left;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-}
-
-.profile-container .profile-container-left p {
-  padding-top: 3vh;
-  align-self: center;
-  display: flex;
-  flex-direction: row;
-  text-decoration: underline;
-}
-
-.profile-container .profile-container-right {
-  width: 85vw;
-  height: 100vh;
-  position: fixed;
-  margin-left: 15vw;
-  align-self: right;
-  display: flex;
-  flex-direction: column;
-}
-
-.profile-container .profile-container-right h1 {
+.profile-container h1 {
   text-decoration: underline;
   padding: 2vh 0 0 2vw;
 }
 
-.profile-container .profile-container-right .profile-container-right-item {
+.profile-container .profile-container-item {
   display: block;
   padding: 3vh 0 0 2vw;
 }

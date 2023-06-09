@@ -8,48 +8,14 @@
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="jquery.json-viewer.js"></script>
     <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+    <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
     <link href="stylesheets/jquery.json-viewer.css" type="text/css" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="/protected/front/img/snorkel.png">
 </head>
+
 <body>
-<!--<div id="maindiv" role="main" class="maindiv">
-    <div class="top-container">
-        <div class="top">
-            <div class="logout">
-                <a aria-label="logout" href='/logout'>
-                    <img class="logout-icon" href='/logout' id="logoutIcon"
-                                       src="images/logout.svg" alt="logout">
-                </a>
-            </div>
-        </div>
-    </div>
 
-    <div class="middle-container">
-        <div class="hello-text">
-            Hi <span id="userNameSpan"></span>, Congratulations!<br>
-            You’ve made your first authentication.<br>
-        </div>
-        <div class="above-button-text">
-            What you can do next:
-        </div>
-        <a href="https://cloud.ibm.com/docs/services/appid?topic=appid-web-apps" target="_blank">
-            <button class="button">
-                <div class="button-text">
-                    Add App ID to your own app
-                </div>
-            </button>
-        </a>
-    </div>
-
-    <div class="bottom-container">
-        <div class="bottom-container-data">
-            <div class="token-title">
-                ID Token
-            </div>
-            <div id="idTokenPayload" class="token-info"></div>
-        </div>
-    </div>
-</div>
--->
 <nav>
     <div class="navbar">
         <span class="logo-main">
@@ -62,7 +28,7 @@
         </span>
         <span class="login-container">
             <a href="/login" class="text-reset">
-                <i class="fa-solid fa-right-to-bracket"></i>
+                <i class="fa-solid fa-right-to-bracket arrow-icon"></i>
             </a>
         </span>
     </div>
@@ -70,52 +36,38 @@
 
 <div id="list-container-div" class="home-list-container">
 
-    <div class="home-list-item" onclick="location.href='/profile';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p class="home-list-text">Consultez les informations de votre profil</p>
-        </div>
+    <div class="home-list-container-item" onclick="location.href='/profile';" style="cursor: pointer;">
+        <p class="bubble-text">Profil</p>
     </div>
 
-    <div class="home-list-item reversed" onclick="location.href='/dive_site';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p class="home-list-text">Dive Sites</p>
-        </div>
+    <div class="home-list-container-item" onclick="location.href='/dive_site';" style="cursor: pointer;">
+        <p class="bubble-text">Sites de plongée</p>
     </div>
 
-    <!--<div id="diver-div" class="home-list-item reversed" onclick="location.href='/diver';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p>Diver (only admin)</p>
-        </div>
-    </div>-->
-
-    <div class="home-list-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p class="home-list-text">Planned Dive</p>
-        </div>
+    <div class="home-list-container-item" onclick="location.href='/planned_dive';" style="cursor: pointer;">
+        <p class="bubble-text">Plongées prévues</p>
     </div>
-
-    <!--<div id="app-user-div" class="home-list-item reversed" onclick="location.href='/app_user';" style="cursor: pointer;">
-        <div>
-            <img src="/protected/front/img/boat.jpg" alt="boat" />
-        </div>
-        <div>
-            <p>Application Users (only admin)</p>
-        </div>
-    </div>-->
 
 </div>
+
+<!---Footer--->
+<div>
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(48,126,238,0.7)" />
+            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(48,126,238,0.5)" />
+            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(48,126,238,0.3)" />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(48,126,238,1)" />
+        </g>
+    </svg>
+</div>
+</body>
+
+<footer class="page-footer font-small unique-color-dark pt-4"></footer>
+
 
 <script type="module" src="/protected/front/js/protected.js"></script>
 <script type="module" src="/protected/front/js/user_info.js"></script>
@@ -127,5 +79,4 @@
 	//});
 </script>
 
-</body>
-</html>
+    </html>

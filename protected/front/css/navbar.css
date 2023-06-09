@@ -42,7 +42,8 @@ nav .navbar .login-container {
 }
 
 nav .navbar .login-container /*i*/ {
-    padding: 0 3vw;
+    padding: 0;
+    margin-right: 3vw;
     color: #231F20;
     font-size: 2.5vh;
 }
@@ -99,13 +100,13 @@ nav .navbar-diver .login-container-diver {
 }
 
 nav .navbar-diver .login-container-diver /*i*/ {
-  padding: 0 3vw;
+  padding: 0;
   color: #231F20;
   font-size: 2.5vh;
 }
 
 nav .arrow-icon {
-  padding: 0 3vw;
+  padding: 0;
   color: #231F20;
   font-size: 2.5vh;
   transition: transform .5s ease-in-out;

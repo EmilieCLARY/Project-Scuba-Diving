@@ -20,154 +20,132 @@ function loadInfo() {
 
 loadInfo();
 
+
 function getIsAdmin(isAdmin){
     if(isAdmin == 1){
-        //diver_div.style.display = 'block';
-        //createDivDiver();
-        //createAppUserDiv();
         createDiverBubble();
         createAppUserBubble();
     }
 }
 
-/*function createDivDiver(){
-    // Create the main div element
-    var diverDiv = document.createElement('div');
-    diverDiv.setAttribute('class', 'home-list-item reversed');
-    diverDiv.setAttribute('onclick', "location.href='/diver';");
-    diverDiv.setAttribute('style', 'cursor: pointer;');
-
-    // Create the first inner div element
-    var imgDiv = document.createElement('div');
-
-    // Create the image element
-    var img = document.createElement('img');
-    img.setAttribute('src', '/protected/front/img/boat.jpg');
-    img.setAttribute('alt', 'boat');
-
-    // Append the image to the first inner div
-    imgDiv.appendChild(img);
-
-    // Create the second inner div element
-    var textDiv = document.createElement('div');
-
-    // Create the paragraph element
-    var paragraph = document.createElement('p');
-    paragraph.setAttribute('class',  "home-list-text");
-    paragraph.textContent = 'Diver (only admin)';
-
-    // Append the paragraph to the second inner div
-    textDiv.appendChild(paragraph);
-
-    // Append the inner divs to the main div
-    diverDiv.appendChild(imgDiv);
-    diverDiv.appendChild(textDiv);
-
-    // Append the main div to the document body or any other parent element
-    document.getElementById('list-container-div').appendChild(diverDiv);
-}
-
-function createAppUserDiv(){
-    // Create the main div element
-    var appUserDiv = document.createElement('div');
-    appUserDiv.setAttribute('class', 'home-list-item');
-    appUserDiv.setAttribute('onclick', "location.href='/app_user';");
-    appUserDiv.setAttribute('style', 'cursor: pointer;');
-
-    // Create the first inner div element
-    var imgDiv = document.createElement('div');
-
-    // Create the image element
-    var img = document.createElement('img');
-    img.setAttribute('src', '/protected/front/img/boat.jpg');
-    img.setAttribute('alt', 'boat');
-
-    // Append the image to the first inner div
-    imgDiv.appendChild(img);
-
-    // Create the second inner div element
-    var textDiv = document.createElement('div');
-
-    // Create the paragraph element
-    var paragraph = document.createElement('p');
-    paragraph.setAttribute('class',  "home-list-text");
-    paragraph.textContent = 'Application Users (only admin)';
-
-    // Append the paragraph to the second inner div
-    textDiv.appendChild(paragraph);
-
-    // Append the inner divs to the main div
-    appUserDiv.appendChild(imgDiv);
-    appUserDiv.appendChild(textDiv);
-
-    // Append the main div to the document body or any other parent element
-    document.getElementById('list-container-div').appendChild(appUserDiv);
-}*/
-
 function createDiverBubble() {
-        // Créer l'élément div
+    // Créer l'élément div
+    const list = document.getElementById("list-container-div");
     const div = document.createElement("div");
-    const ul = document.getElementById("bubble-list");
-    div.id = "bubble-4";
-    div.classList.add("bubble-item");
+    
+    div.classList.add("home-list-container-item");
+    div.setAttribute("id", "bubble-diver");
     div.style.cursor = "pointer";
     div.onclick = function() {
-    location.href = "/diver";
+        location.href = "/diver";
     };
-
-    // Créer l'élément section
-    const section = document.createElement("section");
-    section.className = "stage";
 
     // Créer l'élément p
     const p = document.createElement("p");
     p.className = "bubble-text";
     p.textContent = "Liste des plongeurs";
 
-    // Créer l'élément figure
-    const figure = document.createElement("figure");
-    figure.className = "ball bubble";
-
-    // Ajouter les éléments à la structure parente
-    figure.appendChild(p);
-    section.appendChild(figure);
-    div.appendChild(section);
+    // Ajouter l'élément p à l'élément div
+    div.appendChild(p);
 
     // Ajouter l'élément div au document
-    ul.appendChild(div);
+    list.appendChild(div);
 }
 
 function createAppUserBubble() {
     // Créer l'élément div
+    const list = document.getElementById("list-container-div");
     const div = document.createElement("div");
-    const ul = document.getElementById("bubble-list");
-    div.id = "bubble-5";
-    div.classList.add("bubble-item");
+    
+    div.classList.add("home-list-container-item");
+    div.setAttribute("id", "bubble-app-user");
     div.style.cursor = "pointer";
     div.onclick = function() {
-    location.href = "/app_user";
+        location.href = "/app_user";
     };
-
-    // Créer l'élément section
-    const section = document.createElement("section");
-    section.className = "stage";
 
     // Créer l'élément p
     const p = document.createElement("p");
     p.className = "bubble-text";
     p.textContent = "Utilisateurs";
 
-    // Créer l'élément figure
-    const figure = document.createElement("figure");
-    figure.className = "ball bubble";
-
-    // Ajouter les éléments à la structure parente
-    figure.appendChild(p);
-    section.appendChild(figure);
-    div.appendChild(section);
+    // Ajouter l'élément p à l'élément div
+    div.appendChild(p);
 
     // Ajouter l'élément div au document
-    ul.appendChild(div);
+    list.appendChild(div);
+
+    // Animation des bulles
+    bubbleAnimation();
+}
+
+function bubbleAnimation(){
+    let bubble_profile = document.getElementById('bubble-profile');
+    let bubble_diver = document.getElementById('bubble-diver');
+    let bubble_app_user = document.getElementById('bubble-app-user');
+    let bubble_dive_site = document.getElementById('bubble-dive-site');
+    let bubble_planned_dive = document.getElementById('bubble-planned-dive');
+
+    bubble_profile.onmouseover = function() {
+        bubble_profile.classList.add("fa-beat");
+    }
+
+    bubble_profile.onmouseout = function() {
+        bubble_profile.classList.remove("fa-beat");
+    }
+
+    bubble_profile.onclick = function() {
+        location.href = "/profile";
+    }
+
+    bubble_diver.onmouseover = function() {
+        bubble_diver.classList.add("fa-beat");
+    }
+
+    bubble_diver.onmouseout = function() {  
+        bubble_diver.classList.remove("fa-beat");
+    }
+
+    bubble_diver.onclick = function() {
+        location.href = "/diver";
+    }
+
+    bubble_app_user.onmouseover = function() {
+        bubble_app_user.classList.add("fa-beat");
+    }
+
+    bubble_app_user.onmouseout = function() {
+        bubble_app_user.classList.remove("fa-beat");
+    }
+
+    bubble_app_user.onclick = function() {
+        location.href = "/app_user";
+    }
+
+    bubble_dive_site.onmouseover = function() {
+        bubble_dive_site.classList.add("fa-beat");
+    }
+
+    bubble_dive_site.onmouseout = function() {
+        bubble_dive_site.classList.remove("fa-beat");
+    }
+
+    bubble_dive_site.onclick = function() {
+        location.href = "/dive_site";
+    }
+
+    bubble_planned_dive.onmouseover = function() {
+        bubble_planned_dive.classList.add("fa-beat");
+    }
+
+    bubble_planned_dive.onmouseout = function() {
+        bubble_planned_dive.classList.remove("fa-beat");
+    }
+
+    bubble_planned_dive.onclick = function() {
+        location.href = "/planned_dive";
+    }
+
 }
 
 

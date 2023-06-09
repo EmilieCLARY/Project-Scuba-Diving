@@ -194,3 +194,7 @@
 	cursor: move;
 	cursor: -webkit-grabbing;
 }
+
+.selected td {
+    border: 0.1vh double red !important;
+}

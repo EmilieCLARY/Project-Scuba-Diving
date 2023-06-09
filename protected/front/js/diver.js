@@ -249,7 +249,7 @@ function createDiverTableBody(tabDivers){
                 cellule3.innerHTML = "N5";
                 break;
             case "11":
-                cellule3.innerHTML = "Aucun";
+                cellule3.innerHTML = "Aucune";
                 break;
             case "12":
                 cellule3.innerHTML = "Étoile de mer 2";
@@ -258,14 +258,14 @@ function createDiverTableBody(tabDivers){
                 cellule3.innerHTML = "Étoile de mer 3";
                 break;
             default:
-                cellule3.innerHTML = "Inconnu";
+                cellule3.innerHTML = "Aucune";
                 break;
         }
 
         let cellule4 = document.createElement("td");
         switch(tabDivers[i].get_instructor_qualification()){
             case "1":
-                cellule4.innerHTML = "Aucun";
+                cellule4.innerHTML = "Aucune";
                 break;
             case "2":
                 cellule4.innerHTML = "E1";
@@ -280,7 +280,7 @@ function createDiverTableBody(tabDivers){
                 cellule4.innerHTML = "E4";
                 break;
             default:
-                cellule4.innerHTML = "Inconnu";
+                cellule4.innerHTML = "Aucune";
                 break;
         }
 
@@ -299,7 +299,7 @@ function createDiverTableBody(tabDivers){
                 cellule5.innerHTML = "Moniteur NITROX";
                 break;
             default:
-                cellule5.innerHTML = "Inconnu";
+                cellule5.innerHTML = "Aucune";
                 break;
         }
 

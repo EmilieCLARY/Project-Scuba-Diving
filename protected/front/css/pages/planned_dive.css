@@ -1,3 +1,7 @@
+/********************************************************************/
+/*                       CONTAINER GÉNÉRAL                          */
+/********************************************************************/
+
 .planned-dive-list-container{
     width  : 100vw;
     background : var(--bg-color);
@@ -9,7 +13,7 @@
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding-top: 14vh;
+    /*padding-top: 14vh;*/
 }
 
 .cards_item {
@@ -169,13 +173,13 @@
 }
 
 .form-planned-dive{
-  width  : 70vw;
+  width : 60vw;
   height: 80vh;
   background : var(--bg-color);
   display: flex;
   flex-direction: column;
   margin-top: 15vh;
-  margin-left: 15vw;
+  margin-left: 20vw;
   border-radius: 3vw;
 }
 
@@ -202,7 +206,6 @@
   cursor: pointer;
 }
 
-
 .form-planned-dive .form-body {
   display: flex;
   flex-direction: row;
@@ -218,7 +221,7 @@
   justify-content: space-between;
   align-items: end;
   height: 60vh;
-  width: 30vw;
+  width: 22vw;
   margin-right: 2.5vw;
 }
 
@@ -233,7 +236,7 @@
   flex-direction: column;
   justify-content: space-between;
   height: 60vh;
-  width: 30vw;
+  width: 40vw;
   margin: 0 2.5vw;
 }
 
@@ -301,10 +304,10 @@
   height: 10vh;
 }
 
-.form-planned-dive .form-planned-dive-validation #validate-profile {
-  width: 25vw;
+.form-planned-dive .form-planned-dive-validation #validate-planned-dive {
+  width: 20vw;
   height: 7vh;
-  margin-left: 22.5vw;
+  margin-left: 20vw;
   margin-top: 0.5vh;
   display: inline-block;
   outline: none;
@@ -316,10 +319,10 @@
   color: #fff;
   background: var(--secondary-color);
   line-height: 1.15;
-  font-size: 1.5vh;
+  font-size: 2.5vh;
 }
 
-.form-planned-dive .form-planned-dive-validation #validate-profile:hover{
+.form-planned-dive .form-planned-dive-validation #validate-planned-dive:hover {
   transition: all .1s ease;
   color: var(--text-color);
   background: var(--accent-color);
@@ -327,32 +330,9 @@
 }
 
 
-.form-planned-dive .form-planned-dive-validation #validate-profile {
-  width: 25vw;
-  height: 7vh;
-  margin-left: 22.5vw;
-  margin-top: 0.5vh;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 1vh;
-  padding: 1.3vh 2.5vw;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 1.5vh;
-}
-
-.form-planned-dive .form-planned-dive-validation #validate-profile:hover {
-  transition: all .1s ease;
-  color: var(--text-color);
-  background: var(--accent-color);
-  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
-}
-
-/* ----------_Modal Voir Plus_---------- */
+/********************************************************************/
+/*                      MODAL VOIR PLUS                             */
+/********************************************************************/
 
 .div-modal{
   width  : 70vw;
@@ -379,15 +359,14 @@
   margin-left: 2vw;
 }
 
-.div-modal-planning .title span {
+.div-modal .title span {
   font-size: 3.5vh;
   margin-right: 2.5vw;
 }
 
-.div-modal-planning .title span:hover {
+.div-modal .title span:hover {
   cursor: pointer;
 }
-
 
 .div-modal .form-body {
   display: flex;
@@ -713,7 +692,9 @@
   font-size: 1.8vh;
 }
 
-/* Modal formulaire inscription */
+/********************************************************************/
+/*               MODAL FORMULAIRE INSCRIPTION                       */
+/********************************************************************/
 
 .div-modal-inscrire{
   width : 60vw;
@@ -749,14 +730,13 @@
   cursor: pointer;
 }
 
-
 .div-modal-inscrire .form-body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 30vh;
-  width: 70vw;
+  height: 35vh;
+  width: 55vw;
 }
 
 .div-modal-inscrire .form-body .labels {
@@ -764,7 +744,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: end;
-  height: 60vh;
+  height: 20vh;
   width: 30vw;
   margin-right: 2.5vw;
 }
@@ -789,23 +769,6 @@
   height: 5vh;
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
-  padding-left: 1vw;
-  font-size: 2vh;
-}
-
-.div-modal-inscrire .form-body .inputs input[type="date"]{
-  width: 25vw;
-  height: 5vh;
-  border-radius: 1vh;
-  border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
-}
-
-.div-modal-inscrire .form-body .inputs input[type="time"]{
-  width: 25vw;
-  height: 5vh;
-  border-radius: 1vh;
-  border: 0.2vh solid var(--accent-color);
   font-size: 2vh;
 }
 
@@ -816,5 +779,65 @@
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
   font-size : 2vh;
+}
 
+.div-modal-inscrire .form-diver-registration-validation #inscription-planned-dive-modal{
+  width: 10vw;
+  height: 5vh;
+  margin-left: 25vw;
+  margin-bottom: 2vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 2.5vh;
+}
+
+.div-modal-inscrire .form-diver-registration-validation #inscription-planned-dive-modal:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+/********************************************************************/
+/*                          SEARCH BAR                              */
+/********************************************************************/
+
+.input-search {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 30vw;
+  height: 5vh;
+  font-size: 2vh;
+  padding-top: 15vh;
+}
+
+.input-search input[type=text] {
+  margin-left: 1vw;
+  width: 30vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.search-icon{
+  margin-top: 2.7vh ;
+}
+
+.checkbox-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 5vh;
+  padding-left: 2vw;
+  padding-top: 0.5vh;
 }

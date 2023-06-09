@@ -3,7 +3,7 @@
     background : var(--bg-color);
     display: flex;
     flex-direction: column;
-    padding-top: 20vh;
+    padding-top: 5vh;
 }
 
 .dive-site-list-item {
@@ -371,4 +371,28 @@
   color: var(--text-color);
   background: var(--accent-color);
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+/* Search bar */
+.input-search {
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 30vw;
+  height: 5vh;
+  font-size: 2vh;
+  padding-top: 15vh;
+}
+
+.input-search input[type=text] {
+  margin-left: 1vw;
+  width: 30vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.search-icon{
+  margin-top: 2.7vh ;
 }

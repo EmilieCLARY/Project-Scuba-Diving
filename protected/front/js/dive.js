@@ -174,44 +174,227 @@ function setButtonListener(){
         attributionAutomatique();
     });
 
+    const validerButton = document.getElementById('valider');
+    validerButton.addEventListener('click', event => {
+        validerPalanquées();
+    });
+
+}
+
+function validerPalanquées(){
+
+    let idQualification;
+    let minGuidedDepth = 9999;
+
+    //Check if there is a director of diving
+    let isThereDirector = false;
+    for (let i = 1; i <= tablecounter; i++) {
+        let table = document.getElementById(i);
+        let trElements = table.getElementsByTagName('tr');
+        for(let j = 2; j < trElements.length; j++){
+            let role = trElements[j].getElementsByTagName('td')[4].innerHTML
+            if (role == "Directeur de plongée"){
+                console.log("Directeur trouvé");
+                isThereDirector = true;
+            }
+        }
+    }
+
+    //Check if each table has a guide
+    let isThereGuide = true;
+    let tableGuide = []
+    //Fill tableGuide with 1 for each tablecounter
+    tableGuide[0] = 0;
+    for (let i = 1; i <= tablecounter; i++) {
+        tableGuide.push(1);
+    }
+
+    let nbrGuide = 0;
+    console.log("Nombre de tableaux : " + tablecounter);
+
+    //Check if there is an empty table
+    for(let i = 0; i < tablecounter; i++){
+        let table = document.getElementById(i+1);
+        let trElements = table.getElementsByTagName('tr');
+
+        if (trElements.length == 2){
+            console.log("Tableau vide");
+            confirm("Impossible de valider si une palanquée est vide; \n La palanquée " + (i+1) + " est vide");
+            return;
+        }   
+    }
+
+
+    for (let i = 1; i <= tablecounter; i++) {
+        let hasGuide = false;
+        let table = document.getElementById(i);
+        let trElements = table.getElementsByTagName('tr');
+        console.log(trElements);       
+
+        
+        for(let j = 2; j < trElements.length; j++){
+            let role = trElements[j].getElementsByTagName('td')[4].innerHTML
+            if (role == "Guide de palanquée" || role == "Directeur de plongée"){
+                console.log("Guide trouvé");
+                hasGuide = true;
+                nbrGuide++;
+            }
+
+            //Check the lowest qualification
+            let qualification = trElements[j].getElementsByTagName('td')[2].innerHTML
+            console.log(qualification);
+            switch(qualification){
+                case "Etoiles de Mer 1":
+                    idQualification = 1;
+                    break;
+                case "Etoiles de Mer 2":
+                    idQualification = 12;
+                    break;
+                case "Etoiles de Mer 3":
+                    idQualification = 13;
+                    break;
+                case "Bronze":
+                    idQualification = 2;
+                    break;
+                case "Argent":
+                    idQualification = 3;
+                    break;
+                case "Or":
+                    idQualification = 4;
+                    break;
+                case "N1":
+                    idQualification = 5;
+                    break;
+                case "N2":
+                    idQualification = 6;
+                    break;
+                case "N3":
+                    idQualification = 7;
+                    break;
+                case "N4":
+                    idQualification = 8;
+                    break;
+                case "N5":
+                    idQualification = 9;
+                    break;
+                case "Aucun":
+                    idQualification = 11;
+                    break;
+                default:
+                    break;
+            }
+            
+        
+            tabMaxDepthForQualification.forEach(element => {
+                if (parseInt(element.get_diver_qualification()) == idQualification){
+                    let GuidedDepth = parseInt(element.get_guided_diver_depth());
+                    if(GuidedDepth < minGuidedDepth){
+                        minGuidedDepth = GuidedDepth;
+                    }
+                }
+            });
+
+            console.log("Profondeur minimum : " + minGuidedDepth);
+        }
+
+        if (!hasGuide){
+            isThereGuide = false;
+            console.log("Pas de guide");
+            tableGuide[i] = 0;
+            
+        }
+
+        console.log(tableGuide);    
+
+    }
+
+    if(!isThereGuide){
+        console.log(tableGuide)
+        let message ="Les palanquées suivantes n'ont pas de guide : ";
+        for(let i = 1; i < tableGuide.length; i++){
+            if (tableGuide[i] == 0){
+                message +=  i + ", ";
+            }
+        }
+        message += "\n Vous disposez de " + nbrGuide + " guides pour " + tablecounter + " palanquées : Essayez de les réorganiser";
+        confirm(message);
+        return;
+    }
+
+    if(!isThereDirector){
+        console.log("Directeur non trouvé");
+        confirm("Impossible de valider si il n'y a pas de directeur de plongée \n");
+        return;
+    }
+
+
+
 }
 
 function suppressionTableauPalanquée(tableId){
-    console.log("Suppression du tableau " + tableId);
+    //console.log("Suppression du tableau " + tableId);
     const table = document.getElementById(tableId);
     const tableBody = document.getElementById('tableBody');
-    
+    var trElements = table.getElementsByTagName('tr');
     //Check if the table is empty
-    if (tableBody.childElementCount > 5) {
-        console.log("Tableau rempli");
+    if (trElements.length > 2) {
+        //console.log("Tableau rempli");
         confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
     }
     else{
         for (let i = tableId; i < tablecounter; i++) {
-            console.log("Tableau " + i);
+            //console.log("Tableau " + i);
             let tmp = parseInt(i)+1;
-            console.log(tmp);
+            //console.log(tmp);
             let table2 = document.getElementById(tmp);
-            console.log(table2);
+            //console.log(table2);
             table2.setAttribute('id', i);
             // Append
             let td = table2.getElementsByTagName('td')[0];
             td.innerHTML = "Palanquée " + table2.id;
         }
         // Remove the table
-        console.log(tableId);
+        //console.log(tableId);
         table.parentNode.remove();
         tablecounter--; 
     }
     
 
-    console.log("Nombre tableaux : " + tablecounter)
+    //console.log("Nombre tableaux : " + tablecounter)
 }
 
 function supprimerTousLesTableaux(){
-    const tableContainer = document.getElementById('tableContainer');
-    tableContainer.innerHTML = "";
-    tablecounter = 0;
+    
+    let nbrRempli = 0;
+
+    //Firstly, check if the tables are empty
+    for(let i = 1; i < tablecounter; i++){
+        
+        const table = document.getElementById(i);
+        const tableBody = document.getElementById('tableBody');
+        var trElements = table.getElementsByTagName('tr');
+        //console.log("Id : " + i + "Nombre d'éléments : " + trElements.length + "Nombre de tableaux : " + tablecounter);
+        
+        if (trElements.length > 2) {
+            //console.log("Tableau rempli");
+            nbrRempli++;
+        }
+        
+    }
+
+    if(nbrRempli == 0){
+        if (confirm("Voulez-vous vraiment supprimer tous les tableaux ?")) {
+            const tableContainer = document.getElementById('tableContainer');
+            tableContainer.innerHTML = "";
+            tablecounter = 0;
+        }
+    }
+    else if(nbrRempli == 1){
+        confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau concerné avant la suppression");
+    }
+    else{
+        confirm("Impossible de supprimer des tableaux remplis, merci de vider les tableaux concernés avant la suppression. \n Nombre de tableaux remplis : " + nbrRempli + "");
+    }
 }
 
 function attributionAutomatique(){
@@ -275,27 +458,30 @@ function creationTableauPalanquee(rows, columns) {
 
     for (let i = 0; i < rows; i++) {
 
-        const row = document.createElement('tr');
-        row.classList.add('tr');
-        row.classList.add('my-handle');
+        if(isPassed2 == false){
+            var row = document.createElement('tr');
+            row.classList.add('tr');
+            row.classList.add('my-handle');
 
-        if(isPassed == false){
+            if(isPassed == false){
 
-            for (let j = 0; j < columns - 1; j++) {
+                for (let j = 0; j < columns - 1; j++) {
 
-                if(isPassed2 == false){
-                    const cell = document.createElement('td');
-                    // Make a colspan of the number of columns for the last cell
-                    cell.setAttribute('colspan', columns - 1);
-                    cell.classList.add('static');
-                    cell.innerHTML = "Palanquée " + tableId;
-                    isPassed2 = true;
-                              
-                    row.appendChild(cell);
+                    if(isPassed2 == false){
+                        const cell = document.createElement('td');
+                        // Make a colspan of the number of columns for the last cell
+                        cell.setAttribute('colspan', columns - 1);
+                        cell.classList.add('static');
+                        cell.innerHTML = "Palanquée " + tableId;
+                        isPassed2 = true;
+
+                        row.appendChild(cell);
+                    }
+                    isPassed = true;
+
                 }
-                isPassed = true;
-
             }
+            isPassed = true;
         }
 
         tbody.appendChild(row);
@@ -324,6 +510,8 @@ function creationTableauPalanquee(rows, columns) {
         handle: ".my-handle",
         animation: 150,
         draggable: ".tr",
+        multiDrag: true,
+        selectedClass: "selected",
     });
 }
 
@@ -458,6 +646,8 @@ function createTableInscrits() {
         handle: ".my-handle",
         animation: 150,
         draggable: ".tr",
+        multiDrag: true,
+        selectedClass: "selected",
     });
 
 }
