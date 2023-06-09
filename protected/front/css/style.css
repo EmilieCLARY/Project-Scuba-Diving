@@ -83,10 +83,6 @@ body {
   letter-spacing: 0.1vw;
 }
 
-/*.home-list-container > div:hover {
-  
-}*/
-
 /* --------_ Scrollbar _-------- */
 
 /* width */
@@ -95,8 +91,7 @@ body {
 }
 
 
-
-
+/* --------_ Modals - General _-------- */
 
 #open-site-modal {
   position: fixed;
@@ -114,7 +109,6 @@ body {
   background: var(--secondary-color);
   line-height: 1.15;
   font-size: 1.1vw;
-  
 }
 
 #open-site-modal:hover {
@@ -123,34 +117,6 @@ body {
   background: var(--accent-color);
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
-
-/* --------_ Modal Planning _-------- */
-
-
-
-
-
-/* --------_ Profile page _-------- */
-
-
-
-/* Diver Page */
-
-
-
-
-
-/* App User Page */
-
-
-
-
-
-/* Planned_Dive Page */
-
-
-
-/* --------_ Modals _-------- */
 
 .modal {
   display: none; /* Hidden by default */

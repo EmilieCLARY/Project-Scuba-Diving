@@ -82,6 +82,10 @@
   box-shadow: rgba(0, 0, 0, 0.08) 0 0.3vh 0.5vh;
 }
 
+.top-degrade {
+  background: linear-gradient(180deg, rgb(48, 32, 185) 0%, rgba(48,126,238,1) 100%);
+}
+
 .div_milieuTop{
   display: flex;
   flex-direction: row;
@@ -814,7 +818,7 @@
   display: flex;
   flex-direction: row;
   margin: auto;
-  width: 30vw;
+  width: 50vw;
   height: 5vh;
   font-size: 2vh;
   padding-top: 15vh;
@@ -840,4 +844,8 @@
   height: 5vh;
   padding-left: 2vw;
   padding-top: 0.5vh;
+}
+
+.checkbox-container input[type=checkbox]{
+  cursor: pointer;
 }

@@ -52,90 +52,90 @@ function LoadUserProfile(userProfile){
 
     switch(parseInt(userProfile.Diver_Qualifications)){
         case 1:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Etoile de mer 1";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Etoile de mer 1";
             break;
         case 2:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Bronze";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Bronze";
             break;
         case 3:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Argent";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Argent";
             break;
         case 4:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Or";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Or";
             break;
         case 5:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : N1";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> N1";
             break;
         case 6:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : N2";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> N2";
             break;
         case 7:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : N3";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> N3";
             break;
         case 8:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : N4";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> N4";
             break;
         case 11:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Aucun";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Aucun";
             break;
         case 12:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Etoile de mer 2";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Etoile de mer 2";
             break;
         case 13:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Etoile de mer 3";
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Etoile de mer 3";
             break;
         default:
-            document.getElementById("profile_dive_level").innerHTML = "Niveau de plongée : Inconnu"
+            document.getElementById("profile_dive_level").innerHTML = "<b>Niveau de plongée :</b> Inconnu"
             break;
     }
 
     switch(parseInt(userProfile.Instructor_Qualification)){
         case 1:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : Aucun";
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> Aucun";
             break;
         case 2:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : E1";
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> E1";
             break;
         case 3:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : E2";
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> E2";
             break;
         case 4:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : E3";
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> E3";
             break;
         case 5:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : E4";
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> E4";
             break;
         default:
-            document.getElementById("profile_inst_level").innerHTML = "Niveau d'encadrant : Inconnu" 
+            document.getElementById("profile_inst_level").innerHTML = "<b>Niveau d'encadrant :</b> Inconnu" 
             break;
     }
 
     switch(parseInt(userProfile.Nox_Level)){
         case 1:
-            document.getElementById("profile_nox_quali").innerHTML = "Qualification Nitrox : Aucune";
+            document.getElementById("profile_nox_quali").innerHTML = "<b>Qualification Nitrox :</b> Aucune";
             break;
         case 2:
-            document.getElementById("profile_nox_quali").innerHTML = "Qualification Nitrox : NITROX";
+            document.getElementById("profile_nox_quali").innerHTML = "<b>Qualification Nitrox :</b> NITROX";
             break;
         case 3:
-            document.getElementById("profile_nox_quali").innerHTML = "Qualification Nitrox : NITROX confirmé";
+            document.getElementById("profile_nox_quali").innerHTML = "<b>Qualification Nitrox :</b> NITROX confirmé";
             break;
         case 4:
-            document.getElementById("profile_nox_quali").innerHTML = "Qualification Nitrox : Moniteur NITROX";
+            document.getElementById("profile_nox_quali").innerHTML = "<b>Qualification Nitrox :</b> Moniteur NITROX";
             break;
         default:
-            document.getElementById("profile_nox_quali").innerHTML = "Qualification Nitrox : Inconnue";
+            document.getElementById("profile_nox_quali").innerHTML = "<b>Qualification Nitrox :</b> Inconnue";
             break;
     }
 
-    document.getElementById("profile_add_quali").innerHTML = "Qualification(s) additionnelle(s) : " + userProfile.Additional_Qualifications;
+    document.getElementById("profile_add_quali").innerHTML = "<b>Qualification(s) additionnelle(s) : </b>" + userProfile.Additional_Qualifications;
+    document.getElementById("profile_name").innerHTML = "<b>Nom : </b>" +userProfile.Lastname;
+    document.getElementById("profile_firstname").innerHTML = "<b>Prénom : </b>" + userProfile.Firstname;
+    document.getElementById("profile_license_number").innerHTML = "<b>Numéro de licence FFESSM : </b>" +userProfile.License_Number;
+    document.getElementById("profile_expi_license").innerHTML = "<b>Date d'expiration de la licence FFESSM : </b>" + userProfile.License_Expiration_Date;
+    document.getElementById("profile_expi_medic").innerHTML = "<b>Date d'expiration du certificat médical : </b>" + userProfile.Medical_Certificate_Expiration_Date;
+    document.getElementById("profile_birthdate").innerHTML = "<b>Date de naissance : </b>" + userProfile.Birthdate;
 
-    document.getElementById("profile_name").innerHTML = "Nom : " +userProfile.Lastname;
-    document.getElementById("profile_firstname").innerHTML = "Prénom : " + userProfile.Firstname;
-    document.getElementById("profile_license_number").innerHTML = "Numéro de licence FFESSM : " +userProfile.License_Number;
-    document.getElementById("profile_expi_license").innerHTML = "Date d'expiration de la licence FFESSM : " + userProfile.License_Expiration_Date;
-    document.getElementById("profile_expi_medic").innerHTML = "Date d'expiration du certificat médical : " + userProfile.Medical_Certificate_Expiration_Date;
-    document.getElementById("profile_birthdate").innerHTML = "Date de naissance : " + userProfile.Birthdate;
 
     //console.log(userProfile); // Le tableau est bien reçu par le front
     updateModal(userProfile);

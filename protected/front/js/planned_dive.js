@@ -48,6 +48,7 @@ document.getElementById("mézon").addEventListener("click", (e) => {
 // Hide the loading ring
 //document.getElementById("ring-loading").style.display = "none";
 document.getElementById("open-planned-dive-form").style.display = "none";
+document.getElementById("checkbox-coming").checked = true;
 
 /********************************************************************/
 /*                             MODALS                               */
@@ -238,92 +239,93 @@ function createDiveSitesList(){
 }
 
 function createInfoPlannedDive(id) { 
+    
+    let PlannedDiveInfo = getPlannedDiveById(id);
+    let PlannedDiveInfoDiveSite = getDiveSiteById(PlannedDiveInfo.get_id_dive_site());
+    //console.log(PlannedDiveInfo);
+
+    currentPlannedDive = PlannedDiveInfo.get_id();
+    currentDiveSite = PlannedDiveInfoDiveSite.get_id();
+
+    //console.log(currentPlannedDive, currentDiveSite);
+
+    document.getElementById("see-more").style.display = "block";
+
+    document.getElementById("site-name-pd").innerHTML = PlannedDiveInfoDiveSite.get_site_name();
+    if(PlannedDiveInfo.get_diver_dive_price() == 0){
+        document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>Gratuit";
+    }
+    else{
+        document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>" + PlannedDiveInfo.get_diver_dive_price() + "€";
+    }
+    if(PlannedDiveInfo.get_instructor_dive_price() == 0){
+        document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>Gratuit";
+    }
+    else{
+        document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>" + PlannedDiveInfo.get_instructor_dive_price() + "€";
+    }
+    if(PlannedDiveInfo.get_comments() == ""){
+        document.getElementById("comments-pd").innerHTML = "Aucun commentaire";
+    }
+    else{
+        document.getElementById("comments-pd").innerHTML = PlannedDiveInfo.get_comments();
+    }
+    if(PlannedDiveInfo.get_special_needs() == ""){
+        document.getElementById("special-needs-pd").innerHTML = "Aucun besoin spécial";
+    }
+    else{
+        document.getElementById("special-needs-pd").innerHTML = PlannedDiveInfo.get_special_needs();
+    }
+    let month = PlannedDiveInfo.get_planned_date().substring(5,7);
+    let day = PlannedDiveInfo.get_planned_date().substring(8,10);
+    let year = PlannedDiveInfo.get_planned_date().substring(0,4);
+    switch(month){
+        case "01":
+            month = "Janvier";
+            break;
+        case "02":
+            month = "Février";
+            break;
+        case "03":
+            month = "Mars";
+            break;
+        case "04":
+            month = "Avril";
+            break;
+        case "05":
+            month = "Mai";
+            break;
+        case "06":
+            month = "Juin";
+            break;
+        case "07":
+            month = "Juillet";
+            break;
+        case "08":
+            month = "Août";
+            break;
+        case "09":
+            month = "Septembre";
+            break;
+        case "10":
+            month = "Octobre";
+            break;
+        case "11":
+            month = "Novembre";
+            break;
+        case "12":
+            month = "Décembre";
+            break;
+    }
+    document.getElementById("date-pd-month").innerHTML = month + " " + year;
+    document.getElementById("date-pd-day").innerHTML = day;
+    document.getElementById("time-pd").innerHTML = PlannedDiveInfo.get_planned_time();
+
+
+    let see_more_btn_modal = document.getElementById("buttons-modal-see-more");
+    see_more_btn_modal.innerHTML = "";
+
     if(new Date(getPlannedDiveById(id).get_planned_date()) >= new Date()) {
-        let PlannedDiveInfo = getPlannedDiveById(id);
-        let PlannedDiveInfoDiveSite = getDiveSiteById(PlannedDiveInfo.get_id_dive_site());
-        //console.log(PlannedDiveInfo);
-
-        currentPlannedDive = PlannedDiveInfo.get_id();
-        currentDiveSite = PlannedDiveInfoDiveSite.get_id();
-
-        //console.log(currentPlannedDive, currentDiveSite);
-
-        document.getElementById("see-more").style.display = "block";
-
-        document.getElementById("site-name-pd").innerHTML = PlannedDiveInfoDiveSite.get_site_name();
-        if(PlannedDiveInfo.get_diver_dive_price() == 0){
-            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>Gratuit";
-        }
-        else{
-            document.getElementById("diver-price-pd").innerHTML = "Prix plongeur :<br>" + PlannedDiveInfo.get_diver_dive_price() + "€";
-        }
-        if(PlannedDiveInfo.get_instructor_dive_price() == 0){
-            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>Gratuit";
-        }
-        else{
-            document.getElementById("instructor-price-pd").innerHTML = "Prix moniteur :<br>" + PlannedDiveInfo.get_instructor_dive_price() + "€";
-        }
-        if(PlannedDiveInfo.get_comments() == ""){
-            document.getElementById("comments-pd").innerHTML = "Aucun commentaire";
-        }
-        else{
-            document.getElementById("comments-pd").innerHTML = PlannedDiveInfo.get_comments();
-        }
-        if(PlannedDiveInfo.get_special_needs() == ""){
-            document.getElementById("special-needs-pd").innerHTML = "Aucun besoin spécial";
-        }
-        else{
-            document.getElementById("special-needs-pd").innerHTML = PlannedDiveInfo.get_special_needs();
-        }
-        let month = PlannedDiveInfo.get_planned_date().substring(5,7);
-        let day = PlannedDiveInfo.get_planned_date().substring(8,10);
-        let year = PlannedDiveInfo.get_planned_date().substring(0,4);
-        switch(month){
-            case "01":
-                month = "Janvier";
-                break;
-            case "02":
-                month = "Février";
-                break;
-            case "03":
-                month = "Mars";
-                break;
-            case "04":
-                month = "Avril";
-                break;
-            case "05":
-                month = "Mai";
-                break;
-            case "06":
-                month = "Juin";
-                break;
-            case "07":
-                month = "Juillet";
-                break;
-            case "08":
-                month = "Août";
-                break;
-            case "09":
-                month = "Septembre";
-                break;
-            case "10":
-                month = "Octobre";
-                break;
-            case "11":
-                month = "Novembre";
-                break;
-            case "12":
-                month = "Décembre";
-                break;
-        }
-        document.getElementById("date-pd-month").innerHTML = month + " " + year;
-        document.getElementById("date-pd-day").innerHTML = day;
-        document.getElementById("time-pd").innerHTML = PlannedDiveInfo.get_planned_time();
-
-
-        let see_more_btn_modal = document.getElementById("buttons-modal-see-more");
-        see_more_btn_modal.innerHTML = "";
-
         // Create 'S'inscrire' button
         let inscriptionBtn = document.createElement("button");
         inscriptionBtn.setAttribute('id', "inscription-planned-dive");
@@ -350,15 +352,16 @@ function createInfoPlannedDive(id) {
             organisationBtn.setAttribute('id', "planned-dive-organisation");
             organisationBtn.textContent = "Organisation";
             see_more_btn_modal.appendChild(organisationBtn);
-            
+                
             setModificationListener(id);
             setSuppressionListener(id);
             setOrganisationListener(id);
-        }        
+        }
+    }        
 
-        // Table divers
-        updateTableDivers();
-    }
+    // Table divers
+    updateTableDivers();
+    
 }
 
 function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
@@ -385,6 +388,7 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
             /* Div Haut */
             let div_haut = document.createElement("div");
             div_haut.classList.add("div_haut");
+            div_haut.classList.add("top-degrade");
 
             let div_ville = document.createElement("div");
             div_ville.classList.add("div_ville");
@@ -504,6 +508,142 @@ function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
             li.appendChild(div);
             ul.appendChild(li);
         }
+        else{
+            /* Création des cartes */
+            let li = document.createElement("li");
+            li.classList.add("cards_item");
+            li.setAttribute('id', "card-item"+tabPlannedDives[i].get_id());
+
+            /* Remplissage des cartes */   
+
+            let div = document.createElement("div");
+            div.classList.add("card");
+
+            /* Div Haut */
+            let div_haut = document.createElement("div");
+            div_haut.classList.add("div_haut");
+            div_haut.classList.add("top-degrade");
+
+            let div_ville = document.createElement("div");
+            div_ville.classList.add("div_ville");
+            let dive_ville = document.createElement("h1");
+            dive_ville.innerHTML = "Plongée à " + getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city();
+            dive_ville.classList.add("card_title");
+            div_ville.appendChild(dive_ville);
+            div_haut.appendChild(div_ville);
+
+            let div_date = document.createElement("div");
+            div_date.classList.add("div_date");
+            let dive_date = document.createElement("h2");
+            dive_date.innerHTML = "Prévue le : " + tabPlannedDives[i].get_planned_date();
+            dive_date.classList.add("card_title");
+            dive_date.classList.add("card_date");
+            div_date.appendChild(dive_date);
+            div_haut.appendChild(div_date);     
+
+            div.appendChild(div_haut);
+
+            /* Div Milieu Top */
+            let div_milieuTop = document.createElement("div");
+            div_milieuTop.classList.add("div_milieuTop");
+
+            let dive_site_name = document.createElement("h2");
+            dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
+            dive_site_name.classList.add("card_title");
+            dive_site_name.setAttribute('id', "dive-site-name"+tabPlannedDives[i].get_id());
+            div_milieuTop.appendChild(dive_site_name);
+
+            let dive_time = document.createElement("h2");
+            dive_time.innerHTML = "À : " + tabPlannedDives[i].get_planned_time();
+            dive_time.classList.add("card_title");
+            dive_time.classList.add("card_date");
+            div_milieuTop.appendChild(dive_time);
+
+            div.appendChild(div_milieuTop);
+
+            /* Div MilieuBot */
+            let div_milieuBot = document.createElement("div");
+            div_milieuBot.classList.add("div_milieuBot");
+
+            let dive_price_diver = document.createElement("p");
+            if(tabPlannedDives[i].get_diver_dive_price() == 0){
+                dive_price_diver.innerHTML = "Prix plongeur : Gratuit";
+            }else{
+                dive_price_diver.innerHTML = "Prix plongeur : " + tabPlannedDives[i].get_diver_dive_price() + "€";
+            }
+            dive_price_diver.classList.add("card_text");
+            div_milieuBot.appendChild(dive_price_diver);
+
+            let dive_price_instructor = document.createElement("p");
+            if(tabPlannedDives[i].get_instructor_dive_price() == 0){
+                dive_price_instructor.innerHTML = "Prix moniteur : Gratuit";
+            }else{
+                dive_price_instructor.innerHTML = "Prix moniteur : " + tabPlannedDives[i].get_instructor_dive_price() + "€";
+            }
+            dive_price_instructor.classList.add("card_text");
+            div_milieuBot.appendChild(dive_price_instructor);
+            
+            div.appendChild(div_milieuBot);
+
+            /* Div Bas */
+            let div_bas = document.createElement("div");
+            div_bas.classList.add("div_bas");
+                /* Div Statut */
+            let div_statut = document.createElement("div");
+            let dive_status = document.createElement("p");
+            if(tabPlannedDives[i].get_statut() == 'Close'){
+                dive_status.innerHTML = "Statut : Fermée ";
+            } else{
+                dive_status.innerHTML = "Statut : Ouverte ";
+            }
+
+            // Si l'utilisateur est inscrit à la plongée
+            if(isUserInDive(tabPlannedDives[i].get_id())){
+                //console.log("true")
+                let span = document.createElement("span");
+                let i = document.createElement("i");
+                i.classList.add("fa-solid");
+                i.classList.add("fa-circle-check");
+                i.style.color = "lime";
+                span.appendChild(i);
+                dive_status.textContent += "-- Inscrit ";
+                dive_status.appendChild(span);
+            }
+            else{
+                //console.log("false")
+                let span = document.createElement("span");
+                let i = document.createElement("i");
+                i.classList.add("fa-solid");
+                i.classList.add("fa-circle-xmark");
+                i.style.color = "red";
+                span.appendChild(i);
+                dive_status.textContent += "-- Non inscrit ";
+                dive_status.appendChild(span);
+            }
+
+            dive_status.classList.add("card_text");
+            div_statut.appendChild(dive_status);
+
+            div_bas.appendChild(div_statut);
+
+                /* Div bouton plus */
+            let div_boutonPlus = document.createElement("div");
+            div_boutonPlus.classList.add("div_boutonPlus");
+
+            let bouton_plus = document.createElement("button");
+            bouton_plus.innerHTML = "Voir plus";
+            bouton_plus.setAttribute("id", "PD_btn" + tabPlannedDives[i].get_id());
+            div_boutonPlus.appendChild(bouton_plus);
+
+            div_bas.appendChild(div_boutonPlus);
+
+            div.appendChild(div_bas);
+
+            li.appendChild(div);
+            ul.appendChild(li);
+
+            li.style.display = "none";
+        }
     }
 }
 
@@ -596,12 +736,12 @@ function setListeners(){
     for(let i = 0; i < tabPlannedDives.length; i++){
         let actualDate = new Date();
 
-        if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()) {
+        //if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()) {
             document.getElementById("PD_btn" + tabPlannedDives[i].get_id()).addEventListener("click", (e) => {
                 let tmp = tabPlannedDives[i].get_id();
                 createInfoPlannedDive(tmp); 
             });
-        }
+        //}
     }
 }
 
@@ -684,6 +824,14 @@ document.getElementById("input-search-text").addEventListener("keyup", function(
 });
 
 document.getElementById("checkbox-registered").addEventListener("click", function(event) {
+    searchDiveSite();
+});
+
+document.getElementById("checkbox-coming").addEventListener("click", function(event) {
+    searchDiveSite();
+});
+
+document.getElementById("checkbox-past").addEventListener("click", function(event) {
     searchDiveSite();
 });
 
@@ -878,90 +1026,85 @@ function supprimerPlannedDive(id){
 /********************************************************************/
 
 function createCalendar() {
-    //document.addEventListener('DOMContentLoaded', function() {
-        let statut_color, titre;
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
-        slotDuration: '01:00:00',
-        //slotMinTime: '08:00:00',
-        //slotMaxTime: '18:00:00',
+    let statut_color, titre;
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'timeGridWeek',
+    slotDuration: '01:00:00',
+    //slotMinTime: '08:00:00',
+    //slotMaxTime: '18:00:00',
 
-        allDaySlot: false,
-        defaultTimedEventDuration: '02:30:00',
-        headerToolbar: {
-        left: 'prev custom1 next',
-        center: 'title',
-        right: 'custom2,custom3,custom4' // user can switch between the two
-        },
+    allDaySlot: false,
+    defaultTimedEventDuration: '02:30:00',
+    headerToolbar: {
+    left: 'prev custom1 next',
+    center: 'title',
+    right: 'custom2,custom3,custom4' // user can switch between the two
+    },
         
-        customButtons: {
-            custom1: {
-            text: 'Actuel',
-            click: function() {
-                calendar.today();
-            }
-            },  
-            custom2: {
-            text: 'Jour',
-            click: function() { calendar.changeView('timeGridDay'); }
-            },
-            custom3: {
-            text: 'Semaine',
-            click: function() { calendar.changeView('timeGridWeek'); }
-            },
-            custom4: {
-            text: 'Mois',
-            click: function() { calendar.changeView('dayGridMonth'); }
-            },
+    customButtons: {
+        custom1: {
+        text: 'Actuel',
+        click: function() {
+            calendar.today();
+        }
+        },  
+        custom2: {
+        text: 'Jour',
+        click: function() { calendar.changeView('timeGridDay'); }
         },
-
-        eventClick: function(event, element) {
-            // Affichage détaillé de l'événement cliqué
-            //console.log(event.event.id);
-            createInfoPlannedDive(event.event.id);
+        custom3: {
+        text: 'Semaine',
+        click: function() { calendar.changeView('timeGridWeek'); }
         },
+        custom4: {
+        text: 'Mois',
+        click: function() { calendar.changeView('dayGridMonth'); }
+        },
+    },
+
+    eventClick: function(event, element) {
+        // Affichage détaillé de l'événement cliqué
+        //console.log(event.event.id);
+        createInfoPlannedDive(event.event.id);
+    },});
         
-        });
-        
-        tabPlannedDives.forEach(element => {
-            switch(element.get_statut()) {
-                case "Ouverte":
-                    statut_color = "lime";
-                    titre = "Ouverte"
+    tabPlannedDives.forEach(element => {
+        switch(element.get_statut()) {
+            case "Ouverte":
+                statut_color = "lime";
+                titre = "Ouverte"
+                break;
+            case "Close":
+                statut_color = "red";
+                titre = "Fermée"
                     break;
-                case "Close":
-                    statut_color = "red";
-                    titre = "Fermée"
-                        break;
-                case "Prévue":
-                    statut_color = "#F3DE8A";
-                    titre = "Prévue"
-                    break;
-                default:
-                    console.log("Erreur de statut");
-                    statut_color = "blue";
-                    titre = "Indisponible"
-                    break;
-            }
+            case "Prévue":
+                statut_color = "#F3DE8A";
+                titre = "Prévue"
+                break;
+            default:
+                console.log("Erreur de statut");
+                statut_color = "blue";
+                titre = "Indisponible"
+                break;
+        }
 
-            calendar.addEvent({
-                id: element.get_id(),
-                title: getDiveSiteById(element.get_id_dive_site()).get_site_name() + " : " + titre,
-                start  : element.get_planned_date() + "T" + element.get_planned_time(),
-                textColor   : '#1C0B19',
-                borderColor : '#140D4F',
-                backgroundColor: statut_color,
-            });    
-        });
+        calendar.addEvent({
+            id: element.get_id(),
+            title: getDiveSiteById(element.get_id_dive_site()).get_site_name() + " : " + titre,
+            start  : element.get_planned_date() + "T" + element.get_planned_time(),
+            textColor   : '#1C0B19',
+            borderColor : '#140D4F',
+            backgroundColor: statut_color,
+        });    
+    });
 
-        calendar.setOption('locale', 'fr');
-        calendar.render();
-        setTimeout(function() {
-            calendar.changeView('timeGridWeek');
-        }, 1);
-
-    //});
+    calendar.setOption('locale', 'fr');
+    calendar.render();
+    setTimeout(function() {
+        calendar.changeView('timeGridWeek');
+    }, 1);
 }
 
 /********************************************************************/
@@ -1021,12 +1164,67 @@ function checkLoaded(){
 function searchDiveSite(){
     let input = document.getElementById("input-search-text");
     let filter = input.value.toUpperCase();
-    let checkbox = document.getElementById("checkbox-registered");
+    let checkbox_registered = document.getElementById("checkbox-registered");
+    let checkbox_coming = document.getElementById("checkbox-coming");
+    let checkbox_past = document.getElementById("checkbox-past");
     // Search in all planned dives displayed
     for(let i = 0; i < tabPlannedDives.length; i++){
-        if(checkbox.checked){
-            if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
+        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+        if(checkbox_coming.checked && !checkbox_past.checked){
+            if(checkbox_registered.checked){
+                if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                    }
+                    else{
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                    }
+                }
+            }
+            else{
+                if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                    }
+                    else{
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                    }
+                }
+            }
+        }
+        else if(!checkbox_coming.checked && checkbox_past.checked){
+            if(checkbox_registered.checked){
+                if(new Date(tabPlannedDives[i].get_planned_date()) < new Date()){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                    }
+                    else{
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                    }
+                }
+            }
+            else{
+                if(new Date(tabPlannedDives[i].get_planned_date()) < new Date()){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                    }
+                    else{
+                        document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                    }
+                }
+            }
+        }
+        else if(checkbox_past.checked && checkbox_coming.checked){
+            if(checkbox_registered.checked){
                 if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
+                }
+                else{
+                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
+                }
+            }
+            else{
+                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
                     document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                 }
                 else{
@@ -1035,14 +1233,8 @@ function searchDiveSite(){
             }
         }
         else{
-            if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
-                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
-                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
-                }
-                else{
-                    document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
-                }
-            }
+            // Hide all planned dives
+            document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
         }
     }
 }

@@ -294,7 +294,10 @@ function validerPalanquées(){
                 }
             });
 
-            console.log("Profondeur minimum : " + minGuidedDepth);
+            console.log("Profondeur minimum encadrée : " + minGuidedDepth);
+
+            
+
         }
 
         if (!hasGuide){
@@ -304,7 +307,8 @@ function validerPalanquées(){
             
         }
 
-        console.log(tableGuide);    
+        console.log(tableGuide); 
+
 
     }
 

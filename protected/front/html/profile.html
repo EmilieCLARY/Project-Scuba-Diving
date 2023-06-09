@@ -22,6 +22,9 @@
                     <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
                 </a>
             </span>
+            <span class="nav-title">
+                <span><p>PROFIL</p></span>
+            </span>
             <span class="nav-center">
                 <span class ="nav-name"> <p id="username"></p> </span>
             </span>
@@ -37,26 +40,28 @@
         <h1>Mon profil</h1>
 
         <button id="open-site-modal-profile">Modifier mon profil</button>
-
-        <div class="profile-container-item">
-            <div class="profile-item" id="profile_name"></div>
-            <div class="profile-item" id="profile_firstname"></div>
-            <div class="profile-item"  id="profile_birthdate"></div>
+        
+        <div class="profile-item-list">
+            <div class="profile-container-item">
+                <div class="profile-item" id="profile_name"></div>
+                <div class="profile-item" id="profile_firstname"></div>
+                <div class="profile-item"  id="profile_birthdate"></div>
+            </div>
+    
+            <div class="profile-container-item">
+                <div class="profile-item"  id="profile_license_number"></div>
+                <div class="profile-item"  id="profile_expi_license"></div>
+                <div class="profile-item"  id="profile_expi_medic"></div>
+            </div>
+    
+            <div class="profile-container-item">
+                <div class="profile-item"  id="profile_dive_level"></div>
+                <div class="profile-item"  id="profile_inst_level"></div>
+                <div class="profile-item"  id="profile_nox_quali"></div>
+                <div class="profile-item"  id="profile_add_quali"></div>
+            </div>
         </div>
-
-        <div class="profile-container-item">
-            <div class="profile-item"  id="profile_license_number"></div>
-            <div class="profile-item"  id="profile_expi_license"></div>
-            <div class="profile-item"  id="profile_expi_medic"></div>
-        </div>
-
-        <div class="profile-container-item">
-            <div class="profile-item"  id="profile_dive_level"></div>
-            <div class="profile-item"  id="profile_inst_level"></div>
-            <div class="profile-item"  id="profile_nox_quali"></div>
-            <div class="profile-item"  id="profile_add_quali"></div>
-        </div>
-
+        
         <div class="div-return-home" id="mézon">
             <a><i class="fa-solid fa-house"></i></a>
         </div>

@@ -1,5 +1,3 @@
-/* --------_ Navbar _-------- */
-
 nav {
     /*background-color: var(--main-color);*/
     background: rgb(20,13,79);
@@ -10,12 +8,10 @@ nav {
 nav .navbar {
   display: flex;
   flex-direction: row;
-  background-color: none;
   width: 100vw;
   align-items: center;
   height: 13vh;
 }
-
 
 nav .navbar .logo-main {
   width: 10vw;
@@ -30,7 +26,17 @@ nav .navbar .logo-main img {
 
 nav .navbar .nav-center {
   width: 25vw;
-  margin-left: 55vw;
+  margin-left: 15vw;
+}
+
+nav .navbar .nav-title {
+  width: 25vw;
+  margin-left: 20vw;
+  color: var(--text-color);
+  font-size: 4vh;
+  text-shadow: 0 0 1vh lightblue,
+               0 0 2vh lightblue,
+               0 0 3vh lightblue;
 }
 
 nav .navbar .nav-center .nav-name {
