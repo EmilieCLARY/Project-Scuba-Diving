@@ -23,6 +23,7 @@ let userProfile;
 
 let currentDiveSite = 0;
 let currentPlannedDive = 0;
+let nextSort = "asc";
 
 let loaded = 0;
 let nbOfLoaded = 6;
@@ -167,7 +168,8 @@ function LoadAllPlannedDives(tab) {
     document.getElementById("ring-loading").style.display = "block";
     document.body.style.cursor = "wait";
     setTimeout(function(){
-        createCardsPlannedDive(tabPlannedDives, tabDiveSites);
+        sortPlannedDivesAsc();
+        createCardsPlannedDive();
         setListeners();
         loaded++;
         checkLoaded();
@@ -364,7 +366,7 @@ function createInfoPlannedDive(id) {
     
 }
 
-function createCardsPlannedDive(tabPlannedDives, tabDiveSites){
+function createCardsPlannedDive(){
     let ul = document.getElementById("liste_planned_dive");
     ul.innerHTML = "";
     ul.classList.add("cards");
@@ -819,21 +821,40 @@ function setButtonRegisterListener(){
 
 setButtonRegisterListener();
 
-document.getElementById("input-search-text").addEventListener("keyup", function(event) {
-    searchDiveSite();
-});
+function setSortAndSearchListeners(){
+    document.getElementById("input-search-text").addEventListener("keyup", function(event) {
+        searchDiveSite();
+    });
 
-document.getElementById("checkbox-registered").addEventListener("click", function(event) {
-    searchDiveSite();
-});
+    document.getElementById("checkbox-registered").addEventListener("click", function(event) {
+        searchDiveSite();
+    });
 
-document.getElementById("checkbox-coming").addEventListener("click", function(event) {
-    searchDiveSite();
-});
+    document.getElementById("checkbox-coming").addEventListener("click", function(event) {
+        searchDiveSite();
+    });
 
-document.getElementById("checkbox-past").addEventListener("click", function(event) {
-    searchDiveSite();
-});
+    document.getElementById("checkbox-past").addEventListener("click", function(event) {
+        searchDiveSite();
+    });
+
+    document.getElementById("sort-date").addEventListener("click", function(event) {
+        if(nextSort == "asc"){
+            sortPlannedDivesAsc();
+            createCardsPlannedDive();
+            setListeners();
+            searchDiveSite();
+            document.getElementById("icon-sort").classList = "fa-solid fa-arrow-up-1-9 fa-xl";
+        }
+        else{
+            sortPlannedDivesDesc();
+            createCardsPlannedDive();
+            setListeners();
+            searchDiveSite();
+            document.getElementById("icon-sort").classList = "fa-solid fa-arrow-down-9-1 fa-xl";
+        }
+    });
+}
 
 /********************************************************************/
 /*                         UPDATING FUNCTIONS                       */
@@ -1158,6 +1179,7 @@ function checkLoaded(){
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
         loaded = 0;
+        setSortAndSearchListeners();
     }
 }
 
@@ -1237,6 +1259,22 @@ function searchDiveSite(){
             document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "none";
         }
     }
+}
+
+// Sort planned dives table by date (descending)
+function sortPlannedDivesDesc(){
+    tabPlannedDives.sort(function(a, b){
+        return new Date(b.get_planned_date()) - new Date(a.get_planned_date());
+    });
+    nextSort = "asc";
+}
+
+// Sort planned dives table by date (ascending)
+function sortPlannedDivesAsc(){
+    tabPlannedDives.sort(function(a, b){
+        return new Date(a.get_planned_date()) - new Date(b.get_planned_date());
+    });
+    nextSort = "desc";
 }
 
 // Exports

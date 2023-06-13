@@ -37,8 +37,6 @@
     padding: 1vw;
 }
 
-
-
 .dive-right {
     width: 30vw;
     display: flex;
@@ -89,7 +87,7 @@
     text-align: center;
   }
   
-  .blueTable tr:nth-child(even) {
+  .blueTable tbody tr:nth-child(even) {
     background: #D0E4F5;
   }
   
@@ -142,7 +140,7 @@
     padding: 0.2vh 0.8vh;
     border-radius: 0.5vh;
   }
-  
+  /*
   .th1 {
     width: 3%;
   }
@@ -186,7 +184,7 @@
   .th11 {
     width: 8%;
   }
-
+*/
 
 /* Handle */
 
@@ -197,4 +195,28 @@
 
 .selected td {
     border: 0.1vh double red !important;
+}
+
+/* Info */
+
+.infoDiv{
+  display: flex;
+  flex-direction: row;
+  margin-left : 1vw;
+}
+
+.infoIcon{
+  margin-top: 2vh;
+  margin-right: 0.5vw;
+}
+.p-info{
+  font-size: 0.7vw;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
 }

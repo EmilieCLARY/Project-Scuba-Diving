@@ -1,0 +1,248 @@
+.profile-container{
+  width : 100%;
+  height: 100%;
+  background : var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  padding-top: 13vh;
+}
+
+.profile-container h1 {
+  text-decoration: underline;
+  padding: 2vh 0 0 2vw;
+}
+
+.profile-container .profile-container-item {
+  display: block;
+  padding: 3vh 0 0 2vw;
+}
+
+.profile-item {
+  padding: 1vh 0 1vh 0;
+  font-size: 2.5vh;
+  color: var(--text-color);
+  letter-spacing: 0.1vw;
+}
+
+
+/* Pictures */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2vh 0 0 2vw;
+  height: 80vh;
+  margin: 15vh 20vw 0 0;
+}
+
+.img-container .img-man {
+  background-image: url("../../img/DiverH.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20vw;
+  height: 8vw;
+}
+
+.img-container .img-woman {
+  background-image: url("../../img/DiverF.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20vw;
+  height: 11vw;
+}
+
+
+
+/* Modal */
+
+#open-site-modal-profile {
+  position: fixed;
+  left: 85vw;
+  top: 22vh;
+  width: 12vw;
+  height: 3vw;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 2.5vh;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 0.9vw;
+}
+  
+#open-site-modal-profile:hover {
+    transition: all .1s ease;
+    color: var(--text-color);
+    background: var(--accent-color);
+    box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
+.form-profile{
+    width  : 70vw;
+    height: 80vh;
+    background : var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    margin-top: 15vh;
+    margin-left: 15vw;
+    border-radius: 3vw;
+}
+
+.form-profile .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  padding-left: 2vw;
+}
+
+.form-profile .title h1 {
+  font-size: 3.5vh;
+  margin-left: 2vw;
+}
+
+.form-profile .title span {
+  font-size: 3.5vh;
+  margin-right: 2.5vw;
+}
+
+.form-profile .title span:hover {
+  cursor: pointer;
+}
+
+
+.form-profile .form-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 60vh;
+  width: 70vw;
+}
+
+.form-profile .form-body .labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 60vh;
+  width: 30vw;
+  margin-right: 2.5vw;
+}
+
+.form-profile .form-body .labels label {
+  font-size: 2.5vh;
+  height: 5vh;
+  padding-top: 0.5vh;
+}
+
+.form-profile .form-body .inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  width: 30vw;
+  margin: 0 2.5vw;
+}
+
+.form-profile .form-body .inputs input[type=text] {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-profile .form-body .inputs input[type="date"]{
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-profile .form-body .inputs input[type="time"]{
+  width: 25vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-profile .form-body .inputs select{
+  background-color: white;
+  width: 25.3vw;
+  height: 5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 2vh;
+}
+
+.form-profile .form-body .inputs #profile-image-button {
+  width: 15vw;
+  height: 4vh;
+  margin-left: 4vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-profile .form-body .inputs #profile-image-button:hover {
+  transition: all .1s ease;
+  color: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
+}
+
+.form-profile .form-profile-validation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 10vh;
+}
+
+.form-profile .form-profile-validation #validate-profile {
+  width: 25vw;
+  height: 7vh;
+  margin-left: 22.5vw;
+  margin-top: 0.5vh;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 1vh;
+  padding: 1.3vh 2.5vw;
+  border: 0;
+  color: #fff;
+  background: var(--secondary-color);
+  line-height: 1.15;
+  font-size: 1.5vh;
+}
+
+.form-profile .form-profile-validation #validate-profile:hover{
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}

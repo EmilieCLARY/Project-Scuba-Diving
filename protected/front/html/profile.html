@@ -14,7 +14,9 @@
     <link rel="icon" type="image/x-icon" href="/protected/front/img/snorkel.png">
     <title>Scuba-Diving Manager</title>
 </head>
+
 <body>
+
     <nav>
         <div class="navbar">
             <span class="logo-main">
@@ -23,7 +25,7 @@
                 </a>
             </span>
             <span class="nav-title">
-                <span><p>PROFIL</p></span>
+                <span><p>MON PROFIL</p></span>
             </span>
             <span class="nav-center">
                 <span class ="nav-name"> <p id="username"></p> </span>
@@ -36,36 +38,71 @@
         </div>
     </nav>
 
-    <div class="profile-container">
-        <h1>Mon profil</h1>
+    <div class="container">
 
-        <button id="open-site-modal-profile">Modifier mon profil</button>
-        
-        <div class="profile-item-list">
-            <div class="profile-container-item">
-                <div class="profile-item" id="profile_name"></div>
-                <div class="profile-item" id="profile_firstname"></div>
-                <div class="profile-item"  id="profile_birthdate"></div>
-            </div>
-    
-            <div class="profile-container-item">
-                <div class="profile-item"  id="profile_license_number"></div>
-                <div class="profile-item"  id="profile_expi_license"></div>
-                <div class="profile-item"  id="profile_expi_medic"></div>
-            </div>
-    
-            <div class="profile-container-item">
-                <div class="profile-item"  id="profile_dive_level"></div>
-                <div class="profile-item"  id="profile_inst_level"></div>
-                <div class="profile-item"  id="profile_nox_quali"></div>
-                <div class="profile-item"  id="profile_add_quali"></div>
+        <div class="main-body">
+            <div class="col-md-8">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    
+                    <div class="profile_header">
+                      <div class="profile_info_name" id="profile_full_name"></div>
+                      <button id="open-site-modal-profile">Modifier mon profil</button>
+                    </div>
+
+                    <div class="profile_group_info">
+
+                        <div class="profile_left">
+                            <div class="row">
+                                <p class="profile_info_title">Date de naissance</p>
+                                <div id="profile_birthdate"></div>
+                            </div>
+                        
+                            <div class="row">
+                                <p class="profile_info_title  ">Numéro de licence FFESSM</p>
+                                <div id="profile_license_number"></div>
+                            </div>
+                        
+                            <div class="row">
+                                <p class="profile_info_title">Date d'expiration de la licence FFESSM</p>
+                                <div id="profile_expi_license"></div>
+                            </div>
+                        
+                            <div class="row">
+                                <p class="profile_info_title">Date d'expiration du certificat médical</p>
+                                <div id="profile_expi_medic"></div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="profile_right">
+                          <div class="row">
+                                <p class="profile_info_title">Niveau de plongée</p>
+                                <div id="profile_dive_level"></div>
+                          </div>
+                      
+                          <div class="row">
+                                <p class="profile_info_title">Niveau d'encadrant</p>
+                                <div id="profile_inst_level"></div>
+                          </div>
+                      
+                          <div class="row">
+                                <p class="profile_info_title">Qualification NITROX</p>
+                                <div id="profile_nox_quali"></div>
+                          </div>
+                      
+                          <div class="row">
+                                <p class="profile_info_title">Qualification(s) additionnelle(s)</p>
+                                <div id="profile_add_quali"></div>
+                          </div>
+                      
+                        </div>
+                    </div>
+
+                  </div>
+                </div>
             </div>
         </div>
-        
-        <div class="div-return-home" id="mézon">
-            <a><i class="fa-solid fa-house"></i></a>
-        </div>
-
     </div>
 
     <div id="form-profile-container" class="modal">
@@ -133,9 +170,14 @@
         </div>
     </div>
 
+    <div class="div-return-home" id="mézon">
+        <a><i class="fa-solid fa-house"></i></a>
+    </div>
+
     <div id="ring-loading" class="ring">Chargement
         <span class="span-ring"></span>
     </div>
+
 
 </body>
 <script type="module" src="/protected/front/js/profile.js"></script>

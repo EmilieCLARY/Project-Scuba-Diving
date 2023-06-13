@@ -1,49 +1,112 @@
-.profile-container{
-  width : 100vw;
-  height: 100vh;
-  background : var(--bg-color);
-  display: flex;
-  flex-direction: column;
-  padding-top: 13vh;
-  position: fixed;
+.container {
+    margin-top: 20vh;
 }
 
-.profile-container h1 {
-  text-decoration: underline;
-  padding: 2vh 0 0 2vw;
+body{
+    color: #1a202c;
+    text-align: left;   
+    display: flex;
+    flex-direction: column; 
 }
 
-.profile-container .profile-container-item {
-  display: block;
-  padding: 3vh 0 0 2vw;
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    margin: 0 20vw 10vh 20vw;
 }
 
-.profile-item {
-  padding: 1vh 0 1vh 0;
-  font-size: 2.5vh;
-  color: var(--text-color);
-  letter-spacing: 0.1vw;
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: 2rem;
 }
 
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+    text-align: center;
+    border: solid;
+    border-radius: 2rem;
+    border-color: var(main-color);
+    background-color: rgb(219, 252, 255, 0.25);
+}
+
+
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+/* POSITIONEMENT CHIANT */
+
+.profile_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-left: 6vh;
+}
+
+.profile_group_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.profile-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profile-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profile_info_title {
+    font-size: 2.5vh;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.row {
+    padding-top: 4vh;
+}
+
+.profile_info_name {
+    font-size: 3.5vh;
+    font-weight: bold;
+    color: var(--text-color);
+    padding-top: 1.9vh;
+}
 
 /* Modal */
 
 #open-site-modal-profile {
-  position: fixed;
-  left: 85vw;
-  top: 22vh;
-  width: 12vw;
-  height: 3vw;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 2.5vh;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 0.9vw;
+    left: 85vw;
+    top: 22vh;
+    width: 12vw;
+    height: 3vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 2.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.9vw;
 }
   
 #open-site-modal-profile:hover {

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/protected/front/css/pages/profile.css" />
+    <link rel="stylesheet" href="/protected/front/css/style.css" />
+    <link rel="stylesheet" href="/protected/front/css/navbar.css" />
+
+    <script src="https://kit.fontawesome.com/b89837f3ad.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <link rel="icon" type="image/x-icon" href="/protected/front/img/snorkel.png">
+    <title>Scuba-Diving Manager</title>
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <span class="logo-main">
+                <a href="/protected/">
+                    <img src="/protected/front/img/logo.jpg" alt="SAGW" onclick="location.href='/';" style="cursor: pointer;"/>
+                </a>
+            </span>
+            <span class="nav-title">
+                <span><p>PROFIL</p></span>
+            </span>
+            <span class="nav-center">
+                <span class ="nav-name"> <p id="username"></p> </span>
+            </span>
+            <span class="login-container">
+                <a href="/login" class="text-reset">
+                    <i class="fa-solid fa-right-to-bracket arrow-icon"></i>
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-container">
+            <h1>Mon profil</h1>
+
+            <button id="open-site-modal-profile">Modifier mon profil</button>
+
+            <div class="profile-item-list">
+                <div class="profile-container-item">
+                    <div class="profile-item" id="profile_name"></div>
+                    <div class="profile-item" id="profile_firstname"></div>
+                    <div class="profile-item"  id="profile_birthdate"></div>
+                </div>
+            
+                <div class="profile-container-item">
+                    <div class="profile-item"  id="profile_license_number"></div>
+                    <div class="profile-item"  id="profile_expi_license"></div>
+                    <div class="profile-item"  id="profile_expi_medic"></div>
+                </div>
+            
+                <div class="profile-container-item">
+                    <div class="profile-item"  id="profile_dive_level"></div>
+                    <div class="profile-item"  id="profile_inst_level"></div>
+                    <div class="profile-item"  id="profile_nox_quali"></div>
+                    <div class="profile-item"  id="profile_add_quali"></div>
+                </div>
+            </div>
+
+            <div class="div-return-home" id="mézon">
+                <a><i class="fa-solid fa-house"></i></a>
+            </div>
+        </div>
+
+        <div class="img-container">
+            <div class="img-man"></div>
+            <div class="img-woman"></div>
+        </div>
+    </div>
+
+    <div id="form-profile-container" class="modal">
+        <div class="form-profile">
+            <div class="title">
+                <h1 id="title-diver-modal">Modification de mon profil</h1>
+                <span id="close-site-modal"><i id="profile-close-button" class="fa-regular fa-circle-xmark"></i></span>
+            </div>
+
+            <div class="form-body">
+                <div class="labels">
+                    <label for="dive-site-name">Prénom</label>
+                    <label for="dive-site-gps-latitude">Nom</label>
+                    <label for="diver-qualification">Qualification</label>
+                    <label for="diver-instructor-qualification">Qualification Instructeur</label>
+                    <label for="diver-nox-level">Niveau Nitrox</label>
+                    <label for="diver-additionnal-qualification">Qualifications Additionnelles</label>
+                    <label for="diver-license-number">Numéro de license</label>
+                    <label for="diver-license-expiration-date">Date d'expiration de la license</label>
+                    <label for="diver-medical-certificate-expiration-date">Date d'expiration du certificat médical</label>
+                    <label for="diver-birthdate">Date d'anniversaire</label>
+                </div>
+                <div class="inputs">
+                    <input type="text" id="diver-firstname" name="diver-firstname" placeholder="Firstname" required>                    
+                    <input type="text" id="diver-lastname" name="diver-lastname" placeholder="Lastname" required>
+                    <select type="text" id="diver-qualification" name="diver-qualification" placeholder="Qualification" required>
+                        <option value="11">Aucun</option>
+                        <option value="1">Etoile de Mer 1</option>
+                        <option value="12">Etoile de Mer 2</option>
+                        <option value="13">Etoile de Mer 3</option>
+                        <option value="2">Bronze</option>
+                        <option value="3">Argent</option>
+                        <option value="4">Or</option>
+                        <option value="5">N1</option>
+                        <option value="6">N2</option>
+                        <option value="7">N3</option>
+                        <option value="8">N4</option>
+                        <option value="9">N5</option>
+                    </select>
+                    <select type="text" id="diver-instructor-qualification" name="diver-instructor-qualification" placeholder="Instructor Qualification" required>
+                        <option value="1">Aucun</option>
+                        <option value="2">E1</option>
+                        <option value="3">E2</option>
+                        <option value="4">E3</option>
+                        <option value="5">E4</option>
+                    </select>
+                    <select type="text" id="diver-nox-level" name="diver-nox-level" placeholder="Nox Level" required>
+                        <option value="1">Aucun</option>
+                        <option value="2">NITROX</option>
+                        <option value="3">NITROX Confirmé</option>
+                        <option value="4">Moniteur NITROX</option>
+                    </select>
+                    <input type="text" id="diver-additionnal-qualification" name="diver-additionnal-qualification" placeholder="Additionnal Qualification" required>
+                    <input type="text" id="diver-license-number" name="diver-license-number" placeholder="License number" required>
+                    <input type="date" id="diver-license-expiration-date" name="diver-license-expiration-date" placeholder="License expiration date" required>
+                    <input type="date" id="diver-medical-certificate-expiration-date" name="diver-medical-certificate-expiration-date" placeholder="Medical certificate expiration date" required>
+                    <input type="date" id="diver-birthdate" name="diver-birthdate" placeholder="Birthdate" required>
+                </div>
+                
+            </div>
+
+            <div class="form-profile-validation">
+                <button id="validate-profile">Modifier mon profil</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ring-loading" class="ring">Chargement
+        <span class="span-ring"></span>
+    </div>
+
+</body>
+<script type="module" src="/protected/front/js/profile.js"></script>
+<script type="module" src="/protected/front/js/user_info.js"></script>
+</html>

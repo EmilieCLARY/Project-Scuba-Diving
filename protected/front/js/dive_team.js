@@ -8,6 +8,7 @@ let tabDiveTeams = [];
 // Classe privée pour une palanquée
 class dive_team {
     constructor() {
+        this.id = null;
         this.max_depth = max_depth;
         this.max_duration = max_duration;
         this.actual_depth = actual_depth;
