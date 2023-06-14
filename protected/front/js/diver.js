@@ -421,6 +421,14 @@ function setButtonValidateListener(){
                 alert("Une date n'est pas valide");
             return;
         }
+
+        // Vérification de la qualification
+        let age = dateActuelle.getFullYear() - new Date(birth_date).getFullYear();
+        console.log(age);
+        if(age < 16 && (diver_qualification == "5" || diver_qualification == "6" || diver_qualification == "7" || diver_qualification == "8" || diver_qualification == "9")){
+            alert("Le plongeur ne peut pas avoir cette qualification");
+            return;
+        }
         
         // Send to server
         //console.log(tabDivers);
