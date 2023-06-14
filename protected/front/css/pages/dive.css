@@ -199,6 +199,10 @@
 
 /* Info */
 
+.infoDivContainer{
+  width: 15vw;
+}
+
 .infoDiv{
   display: flex;
   flex-direction: row;
@@ -219,4 +223,12 @@
 
 .green {
   color: green;
+}
+
+.selectList{
+  background-color: white;
+  height: 2.5vh;
+  border-radius: 1vh;
+  border: 0.2vh solid var(--accent-color);
+  font-size: 0.7vw;
 }

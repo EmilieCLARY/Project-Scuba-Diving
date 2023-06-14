@@ -5,62 +5,122 @@ nav {
     position: fixed;
 }
 
-nav .navbar {
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  align-items: center;
-  height: 13vh;
-}
-
-nav .navbar .logo-main {
-  width: 10vw;
-}
-
-nav .navbar .logo-main img {
-    height: 10.4vh;
-    width: 12.06vh;  
-    margin-left: 1vw;
-    justify-self: center;
-}
-
-nav .navbar .nav-center {
-  width: 25vw;
-  margin-left: 15vw;
-}
-
-nav .navbar .nav-title {
-  width: 25vw;
-  margin-left: 20vw;
-  color: var(--text-color);
-  font-size: 4vh;
-  text-shadow: 0 0 1vh lightblue,
-               0 0 2vh lightblue,
-               0 0 3vh lightblue;
-}
-
 nav .navbar .nav-center .nav-name {
   align-self: flex-end;
 }
 
-nav .navbar .login-container {
-  width: 10vw;
+@media (min-width: 21.25rem) {
+  nav .navbar {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    height: 10vh;
+  }
+  
+  nav .navbar .logo-main {
+    width: 10vw;
+  }
+  
+  nav .navbar .logo-main img {
+      height: 7vh;
+      width: 9.34vh;  
+      margin-left: 1vh;
+      padding-left: 3vh;
+      justify-self: center;
+  }
+  
+  nav .navbar .nav-center {
+    width: 30%;
+    margin-left: 2vh;
+  }
+  
+  nav .navbar .nav-title {
+    width: 30%;
+    margin-left: 20vw;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    text-shadow: 0 0 0.2rem lightblue,
+                 0 0 0.3rem lightblue,
+                 0 0 0.5rem lightblue;
+  }
+
+  nav .navbar .login-container {
+    width: 10vw;
+  }
+  
+  nav .navbar .login-container /*i*/ {
+      padding: 0;
+      margin-right: 3vw;
+      color: #231F20;
+      font-size: 0.8rem;
+  }
+  
+  .nav-name{
+    color: var(--text-color);
+    font-size: 0.8rem;
+    text-shadow: 0 0 0.2rem lightblue,
+                 0 0 0.3rem lightblue,
+                 0 0 0.5rem lightblue;
+  }
 }
 
-nav .navbar .login-container /*i*/ {
-    padding: 0;
-    margin-right: 3vw;
-    color: #231F20;
-    font-size: 2.5vh;
+
+@media (min-width: 56rem) {
+  nav .navbar {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    height: 13vh;
+  }
+  
+  nav .navbar .logo-main {
+    width: 10vw;
+  }
+  
+  nav .navbar .logo-main img {
+      height: 10.4vh;
+      width: 12.06vh;  
+      margin-left: 1vw;
+      justify-self: center;
+  }
+  
+  nav .navbar .nav-center {
+    width: 25vw;
+    margin-left: 15vw;
+  }
+  
+  nav .navbar .nav-title {
+    width: 33.3%;
+    margin-left: 20vw;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    text-shadow: 0 0 1vh lightblue,
+                 0 0 2vh lightblue,
+                 0 0 3vh lightblue;
+  }
+  
+  nav .navbar .login-container {
+    width: 10vw;
+  }
+  
+  nav .navbar .login-container /*i*/ {
+      padding: 0;
+      margin-right: 3vw;
+      color: #231F20;
+      font-size: 2.5vh;
+  }
+  
+  .nav-name{
+    color: var(--text-color);
+    font-size: 1.5rem;
+    text-shadow: 0 0 1vh lightblue,
+                 0 0 2vh lightblue,
+                 0 0 3vh lightblue;
+  }
 }
 
-.nav-name{
-  color: var(--text-color);
-  font-size: 3vh;
-  text-shadow: 0 0 1vh lightblue,
-               0 0 2vh lightblue,
-               0 0 3vh lightblue;
-}
 
 /* --------_ Navbar diver _-------- */
 
@@ -70,35 +130,18 @@ nav {
   z-index: 19;
 }
 
-nav .navbar-diver {
-display: flex;
-flex-direction: row;
-background-color: none;
-width: 100vw;
-align-items: center;
-height: 13vh;
-justify-content: space-between;
+nav .navbar-diver .nav-button-diver .nav-center-diver .nav-name-diver {
+  align-self: flex-end;
 }
 
-
-nav .navbar-diver .logo-main-diver {
-width: 10vw;
-}
-
-nav .navbar-diver .logo-main-diver img {
-  height: 10.4vh;
-  width: 12.06vh;  
-  margin-left: 1vw;
-  justify-self: center;
+nav .arrow-icon:hover {
+  color: rgb(200, 0, 0);
+  transform: rotate(360deg);
 }
 
 nav .navbar-diver .nav-button-diver .nav-center-diver {
   width: 25vw;
   margin-left: 55vw;
-}
-
-nav .navbar-diver .nav-button-diver .nav-center-diver .nav-name-diver {
-  align-self: flex-end;
 }
 
 nav .navbar-diver .login-container-diver {
@@ -118,7 +161,49 @@ nav .arrow-icon {
   transition: transform .5s ease-in-out;
 }
 
-nav .arrow-icon:hover {
-  color: rgb(200, 0, 0);
-  transform: rotate(360deg);
+@media (min-width: 21.25rem) {
+  nav .navbar-diver {
+    display: flex;
+    flex-direction: row;
+    background-color: none;
+    width: 100vw;
+    align-items: center;
+    height: 10vh;
+    justify-content: space-between;
+    }    
+    
+    nav .navbar-diver .logo-main-diver {
+      width: 10vw;
+    }
+    
+    nav .navbar-diver .logo-main-diver img {
+        height: 7vh;
+        width: 9.34vh;  
+        margin-left: 1vh;
+        padding-left: 3vh;
+        justify-self: center;
+    }
+}
+
+@media (min-width: 56rem) {
+  nav .navbar-diver {
+    display: flex;
+    flex-direction: row;
+    background-color: none;
+    width: 100vw;
+    align-items: center;
+    height: 13vh;
+    justify-content: space-between;
+    }
+    
+    nav .navbar-diver .logo-main-diver {
+    width: 10vw;
+    }
+    
+    nav .navbar-diver .logo-main-diver img {
+      height: 10.4vh;
+      width: 12.06vh;  
+      margin-left: 1vw;
+      justify-self: center;
+    }
 }

@@ -11,7 +11,8 @@
     background : var(--bg-color);
     display: flex;
     flex-direction: column;
-    padding-top: 14vh;
+    padding-top: 15vh;
+    padding-bottom: 6vh;
     align-items: center;
 }
 

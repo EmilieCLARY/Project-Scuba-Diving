@@ -183,6 +183,21 @@ document.getElementById("validate-profile").addEventListener("click", (e) => {
         return;
     }
 
+    // Vérification de la qualification
+    let age = dateActuelle.getFullYear() - new Date(birth_date).getFullYear();
+    if(age < 16 && (diver_qualification == "5" || diver_qualification == "6" || diver_qualification == "7" || diver_qualification == "8" || diver_qualification == "9")){
+        alert("Le plongeur est trop jeune pour avoir cette qualification");
+        return;
+    }
+    if(age > 16 && (diver_qualification == "1" || diver_qualification == "12" || diver_qualification == "13" || diver_qualification == "2" || diver_qualification == "3" || diver_qualification == "4")){
+        alert("Le plongeur est trop agé pour avoir cette qualification");
+        return;
+    }
+    if(age < 16 && instructor_qualification != "1"){
+        alert("Le plongeur est trop jeune pour avoir être moniteur");
+        return;
+    }
+
 
     // Send to server
     //console.log(tabDivers);

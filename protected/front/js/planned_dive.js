@@ -415,17 +415,23 @@ function createCardsPlannedDive(){
             let div_milieuTop = document.createElement("div");
             div_milieuTop.classList.add("div_milieuTop");
 
+            let div_site_name = document.createElement("div");
+            div_site_name.classList.add("div-title");
             let dive_site_name = document.createElement("h2");
             dive_site_name.innerHTML = getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name();
             dive_site_name.classList.add("card_title");
             dive_site_name.setAttribute('id', "dive-site-name"+tabPlannedDives[i].get_id());
-            div_milieuTop.appendChild(dive_site_name);
+            div_site_name.appendChild(dive_site_name);
+            div_milieuTop.appendChild(div_site_name);
 
+            let div_dive_time = document.createElement("div");
+            div_dive_time.classList.add("div-title");
             let dive_time = document.createElement("h2");
             dive_time.innerHTML = "À : " + tabPlannedDives[i].get_planned_time();
             dive_time.classList.add("card_title");
             dive_time.classList.add("card_date");
-            div_milieuTop.appendChild(dive_time);
+            div_dive_time.appendChild(dive_time);
+            div_milieuTop.appendChild(div_dive_time);
 
             div.appendChild(div_milieuTop);
 
@@ -791,6 +797,7 @@ function setButtonRegisterListener(){
         let car_pooling_seat_request;
         let tmp_blablacar = document.getElementById("car-pooling").value;
 
+        // Covoiturage
         if(tmp_blablacar == "-1"){
             car_pooling_seat_offered = 0;
             car_pooling_seat_request = "1";
@@ -802,6 +809,47 @@ function setButtonRegisterListener(){
         else{
             car_pooling_seat_offered = parseInt(tmp_blablacar);
             car_pooling_seat_request = "0";
+        }
+
+        
+        let id_diver = userProfile.Id_Diver;
+        let diver_qualification = getDiverById(id_diver).get_diver_qualification();
+        let instructor_qualification = getDiverById(id_diver).get_instructor_qualification();
+
+        let birth_date = getDiverById(id_diver).get_birth_date();
+        let age = new Date().getFullYear() - new Date(birth_date).getFullYear();
+        //console.log("Age : " + age);
+
+        //console.log("Diver qualification : " + diver_qualification);
+        //console.log("Instructor qualification : " + instructor_qualification);
+
+
+        // Si il est déjà inscrit
+        for(let i = 0; i < tabDiveRegistrations.length; i++){
+            if(tabDiveRegistrations[i].get_planned_dive_id() == id_planned_dive && tabDiveRegistrations[i].get_diver_id() == id_diver){
+                alert("Vous êtes déjà inscrit à cette plongée.\nAfin de modifier votre inscription, veuillez vous désinscrire puis vous réinscrire.");
+                return;
+            }
+        }
+
+        // Role du plongeur en fonction de ses qualifications et de son âge
+        if(diver_role == "Directeur de plongée" && diver_qualification != "9"){
+            alert("Vous n'avez pas la qualification pour être directeur de plongée");
+            return;
+        }
+        else if(diver_role == "Guide de palanquée" && age < 16){
+            alert("Vous n'avez pas l'âge requis pour être guide de palanquée");
+            return;
+        }
+
+        // Si il y a déjà un directeur de plongée
+        if(diver_role == "Directeur de plongée"){
+            for(let i = 0; i < tabDiveRegistrations.length; i++){
+                if(tabDiveRegistrations[i].get_planned_dive_id() == id_planned_dive && tabDiveRegistrations[i].get_diver_role() == "Directeur de plongée"){
+                    alert("Il y a déjà un directeur de plongée pour cette plongée");
+                    return;
+                }
+            }
         }
 
         SocketManager.diverRegistration(id_planned_dive, diver_role, registration_timestamp, personal_comment, car_pooling_seat_offered, car_pooling_seat_request);
@@ -818,8 +866,6 @@ function setButtonRegisterListener(){
         }, 1000);
     });
 }
-
-setButtonRegisterListener();
 
 function setSortAndSearchListeners(){
     document.getElementById("input-search-text").addEventListener("keyup", function(event) {
@@ -1180,6 +1226,7 @@ function checkLoaded(){
         document.body.style.cursor = "default";
         loaded = 0;
         setSortAndSearchListeners();
+        setButtonRegisterListener();
     }
 }
 
