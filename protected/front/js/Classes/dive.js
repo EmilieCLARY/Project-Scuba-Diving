@@ -1,11 +1,11 @@
 // Classe privée de plongée
 export default class Dive {
-    constructor(id_, begin_time_, begin_date_, end_time_, end_date_, comment_, surface_security_, diver_price_, instructor_price_, max_ppo2_, id_dive_director_, id_planned_dive_){
+    constructor(id_, begin_time_, begin_date_, end_date_, end_time_, comment_, surface_security_, diver_price_, instructor_price_, max_ppo2_, id_dive_director_, id_planned_dive_){
         this.id = id_;
         this.begin_time = begin_time_;
         this.begin_date = begin_date_;
-        this.end_time = end_time_;
         this.end_date = end_date_;
+        this.end_time = end_time_;
         this.comment = comment_;
         this.surface_security = surface_security_;
         this.diver_price = diver_price_;

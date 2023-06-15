@@ -194,7 +194,7 @@ document.getElementById("validate-profile").addEventListener("click", (e) => {
         return;
     }
     if(age < 16 && instructor_qualification != "1"){
-        alert("Le plongeur est trop jeune pour avoir être moniteur");
+        alert("Le plongeur est trop jeune pour être moniteur");
         return;
     }
 

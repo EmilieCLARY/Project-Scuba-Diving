@@ -204,7 +204,7 @@ function createDiveInDB(id_dive, begin_time, begin_date, end_date, end_time, com
         //console.log('BDD : Connected to the database.');
     });
 
-    let sql = `INSERT INTO Dive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Safety, Dive_Price, Instructor_Price, Max_PPO2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive)
+    let sql = `INSERT INTO Dive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Dive_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive)
     VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.run(sql, [id_dive, begin_time, begin_date, end_date, end_time, comment, surface_safety, dive_price, instructor_price, max_ppo2, diver_id_diver, planned_dive_id_planned_dive], (err) => {
         if(err) {
@@ -230,7 +230,7 @@ function createDiveTeamInDB(id_dive_team, max_depth, max_duration, actual_depth,
         }
         //console.log('BDD : Connected to the database.');
     });   
-    let sql = `INSERT INTO Dive_team(Id_Dive_Team, Max_Depth, Max_Duration, Actual Depth, Actual_Duration, Dive_Type, Sequence_number, Start_Time, Stop_Time, Comment, Diver_Id_Diver, Dive_Id_Dive)
+    let sql = `INSERT INTO Dive_team(Id_Dive_Team, Max_Depth, Max_Duration, Real_Depth, Real_Duration, Dive_Type, Sequence_number, Start_Time, Stop_Time, Comment, Diver_Guide_Id_Diver, Dive_Id_Dive)
     VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`;
     db.run(sql, [id_dive_team, max_depth, max_duration, actual_depth, actual_duration, dive_type, sequence_number, start_time, stop_time, comment, diver_id_diver, dive_id_dive], (err) => {
         if(err) {
@@ -323,6 +323,33 @@ function createDiverRegistrationInDB(id_diver, id_planned_dive, diver_role, resg
         }
         //console.log('BDD : Close the database connection.');
     });
+}
+
+function createDiveTeamMemberInDB(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye) {
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        //console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `INSERT INTO Dive_Team_Member(Diver_Id_Diver, Dive_team_Id_Dive_Team, Temporary_Diver_Qualification, Current_Diver_Qualification, Diver_Role, Current_Instructorr_Qualification, Nox_Percentage, Comment, Paid_Amount)
+    VALUES(?,?,?,?,?,?,?,?,?)`;
+
+    db.run(sql, [idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('Dive team member was added to the table');
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        //console.log('BDD : Close the database connection.');
+    });
+
 }
 
 /*********************************************************************/
@@ -557,6 +584,7 @@ module.exports = {
     createDiveTeamInDB,
     createEmergencyInDB,
     createDiverRegistrationInDB,
+    createDiveTeamMemberInDB,
 
     // Login function
     login

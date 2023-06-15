@@ -9,7 +9,13 @@ nav .navbar .nav-center .nav-name {
   align-self: flex-end;
 }
 
-@media (min-width: 21.25rem) {
+nav .arrow-icon {
+  padding: 0;
+  color: #231F20;
+  transition: transform .5s ease-in-out;
+}
+
+@media (max-width: 42rem) {
   nav .navbar {
     display: flex;
     flex-direction: row;
@@ -37,7 +43,7 @@ nav .navbar .nav-center .nav-name {
   
   nav .navbar .nav-title {
     width: 30%;
-    margin-left: 20vw;
+    margin-left: 15vw;
     font-size: 0.8rem;
     color: var(--text-color);
     text-shadow: 0 0 0.2rem lightblue,
@@ -65,8 +71,62 @@ nav .navbar .nav-center .nav-name {
   }
 }
 
+@media (min-width: 42rem) {
+  nav .navbar {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    height: 13vh;
+  }
+  
+  nav .navbar .logo-main {
+    width: 10vw;
+  }
+  
+  nav .navbar .logo-main img {
+      height: 10.4vh;
+      width: 12.06vh;
+      padding-left: 5vh;
+      justify-self: center;
+  }
+  
+  nav .navbar .nav-center {
+    width: 25vw;
+    margin-left: 15vw;
+  }
+  
+  nav .navbar .nav-title {
+    width: 33.3%;
+    margin-left: 20vw;
+    color: var(--text-color);
+    font-size: 1.15rem;
+    text-shadow: 0 0 1vh lightblue,
+                 0 0 2vh lightblue,
+                 0 0 3vh lightblue;
+  }
+  
+  nav .navbar .login-container {
+    width: 10vw;
+  }
+  
+  nav .navbar .login-container /*i*/ {
+      padding: 0;
+      margin-right: 3vw;
+      color: #231F20;
+      font-size: 1.15rem;
+  }
+  
+  .nav-name{
+    color: var(--text-color);
+    font-size: 1.15rem;
+    text-shadow: 0 0 1vh lightblue,
+                 0 0 2vh lightblue,
+                 0 0 3vh lightblue;
+  }
+}
 
-@media (min-width: 56rem) {
+@media (min-width: 52.813rem) {
   nav .navbar {
     display: flex;
     flex-direction: row;
@@ -109,7 +169,7 @@ nav .navbar .nav-center .nav-name {
       padding: 0;
       margin-right: 3vw;
       color: #231F20;
-      font-size: 2.5vh;
+      font-size: 1.5rem;
   }
   
   .nav-name{
@@ -152,13 +212,6 @@ nav .navbar-diver .login-container-diver /*i*/ {
   padding: 0;
   color: #231F20;
   font-size: 2.5vh;
-}
-
-nav .arrow-icon {
-  padding: 0;
-  color: #231F20;
-  font-size: 2.5vh;
-  transition: transform .5s ease-in-out;
 }
 
 @media (min-width: 21.25rem) {

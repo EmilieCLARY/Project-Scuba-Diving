@@ -13,7 +13,6 @@
 }
 
 .blueTable tbody td {
-  font-size: 2vh;
   text-align: center;
 }
 
@@ -45,7 +44,15 @@
   border-left: none;
 }
 
+@media (max-width: 37.5rem){
+  .blueTable thead {
+    font-size: 0.8rem;
+  }
 
+  .blueTable tbody {
+    font-size: 0.6rem;
+  }
+}
 
 
 .blueTable tfoot {

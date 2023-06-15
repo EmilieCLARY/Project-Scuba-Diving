@@ -21,20 +21,26 @@
     /*padding-top: 14vh;*/
 }
 
+@media (max-width: 62.5rem) {
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    justify-content: center;
+  }
+}
+
+
 .cards_item {
   display: flex;
   padding: 1rem;
-  margin-left: 5%;
   margin-top: 2%;
   min-height: 310px;
   flex-wrap: wrap;
 }
 
 @media (min-width: 21.563rem) {
-  .cards_item {
-    min-width: 310px;
-  }
-
   .div-title {
     max-width: 200px;
   }  
@@ -58,6 +64,11 @@
   }
 }
 
+@media (min-width: 62.5rem) {
+  .cards_item {
+    margin-left: 5%;
+  }
+}
 
 .card {
   background-color: var(--main-color);
@@ -71,17 +82,46 @@
   min-height: 20vh;
 }
 
+@media (max-width: 47.75rem){
+  .card {
+    min-height: 250px;
+  }
+}
+
+@media (min-width: 47.75rem) {
+  .card {
+    min-height: 295px;
+  }
+}
+
+@media (min-width: 80rem) {
+  .card {
+    min-height: 280px;
+  }
+}
+
 .card_content {
   background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
 }
 
-.card_title {
-  color: var(--text-color);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: capitalize;
-  margin: 0px;
+@media (max-width: 62.5rem){
+  .card_title {
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 0px;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .card_title {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 0px;
+  }
 }
 
 .card_text {
@@ -150,22 +190,66 @@
   font-size: 1.5vh;
 }
 
-#open-planned-dive-planning {
-  position: fixed;
-  top: 35vh;
-  left: 88vw;
-  width: 11vw;
-  height: 5vw;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 2.5vh;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 1.5vh;
+@media (max-width: 62.5rem) {
+  .div_bas button {
+    width: auto;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  #open-planned-dive-planning {
+    position: fixed;
+    top: 40vh;
+    left: 88vw;
+    width: 11vw;
+    height: 7vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 62.5rem) {
+  .div-buttons-planned-dive {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 15vh;
+  }
+
+  #open-planned-dive-planning {
+    width: auto;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+  }
 }
 
 #open-planned-dive-planning:hover {
@@ -175,22 +259,41 @@
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
 
-#open-planned-dive-form {
-  position: fixed;
-  top: 20vh;
-  left: 88vw;
-  width: 11vw;
-  height: 5vw;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 2.5vh;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 1.5vh;
+@media (min-width: 62.5rem) {
+  #open-planned-dive-form {
+    position: fixed;
+    top: 25vh;
+    left: 88vw;
+    width: 11vw;
+    height: 7vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 62.5rem) {
+  #open-planned-dive-form {
+    width: auto;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+  }
 }
 
 #open-planned-dive-form:hover {
@@ -628,7 +731,7 @@
 
 @media screen and (min-width: 1000px) {
   .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
-    font-size: 43px;
+    font-size: 40px;
   }
 } 
 
@@ -842,33 +945,69 @@
   display: flex;
   flex-direction: row;
   margin: auto;
-  width: 70vw;
+  width: auto;
   height: 5vh;
-  font-size: 2vh;
-  padding-top: 15vh;
+  justify-content: center;
 }
 
-.input-search input[type=text] {
-  margin-left: 1vw;
-  width: 30vw;
-  height: 5vh;
-  border-radius: 1vh;
-  border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
+@media (max-width: 62.5rem) {
+  .input-search {
+    padding-top: 4vh;
+    font-size: 0.6rem;
+  }
+
+  .checkbox-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 5vh;
+    padding-left: 5vw;
+    padding-top: 1vh;
+    width: auto;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .input-search {
+    padding-top: 16vh;
+    font-size: 1rem;
+  }
+
+  .checkbox-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 5vh;
+    padding-left: 2vw;
+    padding-top: 0.5vh;
+    width: 5vw;
+  }
+}
+
+@media (max-width: 62.5rem) {
+  .input-search input[type=text] {
+    margin-left: 1vw;
+    width: 20vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .input-search input[type=text] {
+    margin-left: 1vw;
+    width: 30vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 1rem;
+  }
 }
 
 .search-icon{
   margin-top: 2.7vh ;
-}
-
-.checkbox-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 5vh;
-  padding-left: 2vw;
-  padding-top: 0.5vh;
-  width: 5vw;
 }
 
 .checkbox-container input[type=checkbox]{
@@ -880,9 +1019,9 @@
   flex-direction: row;
   align-items: center;
   height: 5vh;
-  padding-left: 2vw;
+  margin-left: 3vw;
   padding-top: 0.5vh;
-  width: 10vw;
+  width: auto;
   color: var(--text-color);
   cursor: pointer;
   user-select: none;

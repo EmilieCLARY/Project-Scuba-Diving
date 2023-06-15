@@ -48,6 +48,26 @@ function getIdPlannedDive(){
     socket.emit('getIdPlannedDive');
 }
 
+// ADD
+
+function addDive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive) {
+    socket.emit('addDive', Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive);
+}
+
+function addDiveTeam(id, minGuidedDepth, maxduration, temp, temp2, dive_type, sequence_number, planned_time, endTime, commentaireInput, guide_id, dive_id) {
+    socket.emit('addDiveTeam', id, minGuidedDepth, maxduration, temp, temp2, dive_type, sequence_number, planned_time, endTime, commentaireInput, guide_id, dive_id);
+}
+
+function addDiveTeamMember(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye) {
+    socket.emit('addDiveTeamMember', idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
+}
+
+// UPDATE
+
+function updateDive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive) {
+    socket.emit('modifyDive', Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -118,4 +138,8 @@ export default {
     getIsAdmin,
     getUserProfile,
     getIdPlannedDive,
+    addDive,
+    addDiveTeam,
+    addDiveTeamMember,
+    updateDive,
 }

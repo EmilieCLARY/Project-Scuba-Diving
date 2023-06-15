@@ -290,6 +290,19 @@ io.on('connection', (socket) =>{
         });       
     });
 
+    socket.on('addDive', (id, planned_time, planned_date, real_date, stop_time, comment, temp, prix_plongeur, prix_instructeur, temp2, directeurPlongée, plannedDiveID) => {
+        BDD.createDiveInDB(id, planned_time, planned_date, real_date, stop_time, comment, temp, prix_plongeur, prix_instructeur, temp2, directeurPlongée, plannedDiveID);
+    });
+
+    socket.on('addDiveTeam', (id, minGuidedDepth, maxduration, temp, temp2, dive_type, sequence_number, planned_time, endTime, commentaireInput, guide_id, dive_id) => {
+        BDD.createDiveTeamInDB(id, minGuidedDepth, maxduration, temp, temp2, dive_type, sequence_number, planned_time, endTime, commentaireInput, guide_id, dive_id);
+    });
+
+    socket.on('addDiveTeamMember', (idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye) => { 
+        BDD.createDiveTeamMemberInDB(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
+    });
+
+
     socket.on('disconnect', () => {
         console.log('SOCKET : User disconnected');
     });
@@ -351,12 +364,26 @@ io.on('connection', (socket) =>{
         BDD.updateDb("Planned_Dive", "Dive_Site_Id_Dive_Site", id_dive_site, id);
     });
 
+    socket.on('modifyDive', (Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive)=> {
+        BDD.updateDb("Dive", "Begin_Time", Begin_Time, Id_Dive);
+        BDD.updateDb("Dive", "Begin_Date", Begin_Date, Id_Dive);
+        BDD.updateDb("Dive", "End_Date", End_Date, Id_Dive);
+        BDD.updateDb("Dive", "End_Time", End_Time, Id_Dive);
+        BDD.updateDb("Dive", "Comment", Comment, Id_Dive);
+        BDD.updateDb("Dive", "Surface_Security", Surface_Security, Id_Dive);
+        BDD.updateDb("Dive", "Diver_Price", Diver_Price, Id_Dive);
+        BDD.updateDb("Dive", "Instructor_Price", Instructor_Price, Id_Dive);
+        BDD.updateDb("Dive", "Max_Ppo2", Max_Ppo2, Id_Dive);
+        BDD.updateDb("Dive", "Diver_Id_Diver", Diver_Id_Diver, Id_Dive);
+    });
+
     /* ------------------------------ OTHER FUNCTIONS ----------------------------- */
     
     socket.on('setPlannedDive', (id_planned_dive) => {
         socket.handshake.session.idPlannedDive = id_planned_dive;
         socket.handshake.session.save();
     });
+
 });
 
 http.listen(port, () => {
