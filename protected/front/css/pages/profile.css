@@ -1,3 +1,7 @@
+/********************************************************************/
+/*                         CARDS CREATION                           */
+/********************************************************************/
+
 .container {
     margin-top: 20vh;
 }
@@ -7,11 +11,6 @@ body{
     text-align: left;   
     display: flex;
     flex-direction: column; 
-}
-
-.card {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-    margin: 0 20vw 10vh 20vw;
 }
 
 .card {
@@ -26,6 +25,20 @@ body{
     border-radius: 2rem;
 }
 
+@media (max-width: 1000px) {
+  .card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    margin: 0 10vw 10vh 10vw;
+  }
+}
+
+@media (min-width: 1000px) {
+  .card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    margin: 0 20vw 10vh 20vw;
+  }
+}
+
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
@@ -37,18 +50,20 @@ body{
     background-color: rgb(219, 252, 255, 0.25);
 }
 
-
 .mb-3, .my-3 {
     margin-bottom: 1rem!important;
 }
 
-/* POSITIONEMENT CHIANT */
+
+/*******************************************************************/
+/*                         POSITIONNING                            */
+/*******************************************************************/
 
 .profile_header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-left: 6vh;
+    align-items: center;
 }
 
 .profile_group_info {
@@ -90,9 +105,30 @@ body{
     padding-top: 1.9vh;
 }
 
-/* Modal */
 
-#open-site-modal-profile {
+/***********************************************************************/
+/*                       MODAL CHANGE PROFILE                          */
+/***********************************************************************/
+
+@media (max-width: 62.5rem) {
+  #open-site-modal-profile {
+    width: auto;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  #open-site-modal-profile {
     left: 85vw;
     top: 22vh;
     width: 12vw;
@@ -107,6 +143,7 @@ body{
     background: var(--secondary-color);
     line-height: 1.15;
     font-size: 0.9vw;
+  }
 }
   
 #open-site-modal-profile:hover {

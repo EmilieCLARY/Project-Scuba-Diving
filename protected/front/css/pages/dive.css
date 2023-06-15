@@ -1,5 +1,46 @@
+body {
+  font-size: 12px;
+}
+
+@media (min-width: 1350px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1540px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1730px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 2110px) {
+  body {
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 2300px) {
+  body {
+    font-size: 24px;
+  }
+}
+
 .container-dive {
     width  : 100vw;
+    height: 100vh;
     background : var(--bg-color);
     display: flex;
     flex-direction: row;
@@ -15,7 +56,7 @@
 }
 
 .container-dive .btn-gestion {
-  width: 15vw;
+  width: 25vw;
   height: 3vh;
   margin-top: 0.5vh;
   outline: none;
@@ -37,20 +78,21 @@
 }
 
 .dive-left .button-container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
     justify-content: space-between;
-    margin-bottom: 1vh;
+    margin-bottom: 1em;
 }
 
-.dive-left .button-container .btn-tableau-dive {
+.dive-left .button-container div{
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
 .dive-right {
-    width: 30vw;
+    width: 45vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,20 +131,40 @@
   cursor: pointer;  
 }
 
+.TabSupprButton:hover {
+  color: red;
+}
+
 /* Tableau */
 
 .blueTable {
     border: 0.1vh solid var(--text-color);
     background-color: rgb(229, 233, 245);
-    width: 90%;
+    width: 95%;
     text-align: left;
     border-collapse: collapse;
   }
 
   .blueTable input {
-    width: 2vw;
+    width: 3.5em;
   }
 
+  .blueTable .commentInput {
+    width: 4.5em;
+    resize: none;
+    padding: 0;
+    height: 1.7em;
+  }
+
+  .blueTable .commentInput:focus {
+    outline: none;
+    min-height: -webkit-fill-available;
+    min-width: -webkit-fill-available;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
   
   .blueTable td, table.blueTable th {
     border: 0.1vh solid #cfe0ee;
@@ -110,8 +172,13 @@
   }
   
   .blueTable tbody td {
-    font-size: 2vh;
+    font-size: 0.9em;
     text-align: center;
+    position: relative;
+  }
+
+  .blueTable tbody tr {
+    height: 3.2em;
   }
   
   .blueTable tbody tr:nth-child(even) {
@@ -124,32 +191,28 @@
     background: -moz-linear-gradient(top, #383274 0%, #241d61 66%, #140D4F 100%);
     background: -webkit-linear-gradient(top,#383274 0%, #241d61 66%, #140D4F 100%);
     background: linear-gradient(to bottom, #383274 0%, #241d61 66%, #140D4F 100%);
-    /*
-    background: #1C6EA4;
-    background: -moz-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-    background: -webkit-linear-gradient(top, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-    background: linear-gradient(to bottom, #5592bb 0%, #327cad 66%, #1C6EA4 100%);
-    */
     border-bottom: 0.2vh solid #444444;
-    top: 13vh;
-    z-index: 1;
+    font-size: 1em;
   }
 
   .blueTable thead .whiteTr {
     background: #edf0f3;
-
-    
   }
   
   .blueTable thead th {
-    font-size: 1.5vh;
     font-weight: bold;
     color: #FFFFFF;
     border-left: 0.2vh solid #D0E4F5;
+    min-width: 2em;
+    position: relative;
   }
   
   .blueTable thead th:first-child {
     border-left: none;
+  }
+
+  .blueTable thead input[type="time"]{
+    width: 5em;
   }
   
   .blueTable tfoot {
@@ -178,6 +241,7 @@
     padding: 0.2vh 0.8vh;
     border-radius: 0.5vh;
   }
+
   /*
   .th1 {
     width: 3%;
@@ -250,9 +314,6 @@
 .infoIcon{
   margin-top: 2vh;
   margin-right: 0.5vw;
-}
-.p-info{
-  font-size: 0.7vw;
 }
 
 .red {

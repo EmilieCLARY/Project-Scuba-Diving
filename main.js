@@ -371,10 +371,14 @@ io.on('connection', (socket) =>{
         BDD.updateDb("Dive", "End_Time", End_Time, Id_Dive);
         BDD.updateDb("Dive", "Comment", Comment, Id_Dive);
         BDD.updateDb("Dive", "Surface_Security", Surface_Security, Id_Dive);
-        BDD.updateDb("Dive", "Diver_Price", Diver_Price, Id_Dive);
+        BDD.updateDb("Dive", "Dive_Price", Diver_Price, Id_Dive);
         BDD.updateDb("Dive", "Instructor_Price", Instructor_Price, Id_Dive);
         BDD.updateDb("Dive", "Max_Ppo2", Max_Ppo2, Id_Dive);
         BDD.updateDb("Dive", "Diver_Id_Diver", Diver_Id_Diver, Id_Dive);
+    });
+
+    socket.on('deleteDiveTeamsInfos' , (id_dive, id_dive_team_table) => {
+        BDD.deleteAllDiveTeamAndDiveTeamMemberOfDiveInDb(id_dive, id_dive_team_table);
     });
 
     /* ------------------------------ OTHER FUNCTIONS ----------------------------- */

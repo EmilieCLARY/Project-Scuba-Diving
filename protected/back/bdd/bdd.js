@@ -536,6 +536,48 @@ function deleteRowInDb(table, id){
     });
 }
 
+function deleteAllDiveTeamAndDiveTeamMemberOfDiveInDb(id_dive, id_dive_team_table){
+    db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        //console.log('BDD : Connected to the database.');
+    });
+
+    let sql = `DELETE FROM Dive_Team_Member WHERE Dive_team_Id_Dive_Team IN (` + id_dive_team_table[0];
+    for(let i = 1; i < id_dive_team_table.length; i++){
+        sql += `, ` + id_dive_team_table[i];
+        if(i == id_dive_team_table.length - 1){
+            sql += `)`;
+        }
+    }    
+
+    console.log(sql);
+    
+    db.run(sql, [],(err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('BDD : ALL FUCKING DIVE TEAM MEMBERS was deleted');
+    });
+
+    sql = `DELETE FROM Dive_team WHERE Dive_Id_Dive = ?`;
+
+    db.run(sql, [id_dive], (err) => {
+        if(err) {
+            return console.log(err.message);
+        }
+        console.log('BDD : ALL FUCKING DIVE TEAMS was deleted');
+    });
+
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        //console.log('BDD : Close the database connection.');
+    });
+}
+
 function deleteDiveRegistrationInDB(id_diver, id_planned_dive){
     db = new sqlite3.Database('./protected/back/bdd/ScubaDB.db', sqlite3.OPEN_READWRITE , (err) => {
         if (err) {
@@ -575,6 +617,7 @@ module.exports = {
     updateDb,
     deleteRowInDb,
     deleteDiveRegistrationInDB,
+    deleteAllDiveTeamAndDiveTeamMemberOfDiveInDb,
 
     // Creation functions
     createDiverInDB,

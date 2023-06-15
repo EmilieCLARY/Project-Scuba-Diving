@@ -411,7 +411,11 @@ function createCardsPlannedDive(){
 
             div.appendChild(div_haut);
 
+            let div_milieu = document.createElement("div");
+            div_milieu.classList.add("div-milieu");
+
             /* Div Milieu Top */
+
             let div_milieuTop = document.createElement("div");
             div_milieuTop.classList.add("div_milieuTop");
 
@@ -433,7 +437,7 @@ function createCardsPlannedDive(){
             div_dive_time.appendChild(dive_time);
             div_milieuTop.appendChild(div_dive_time);
 
-            div.appendChild(div_milieuTop);
+            div_milieu.appendChild(div_milieuTop);
 
             /* Div MilieuBot */
             let div_milieuBot = document.createElement("div");
@@ -457,7 +461,7 @@ function createCardsPlannedDive(){
             dive_price_instructor.classList.add("card_text");
             div_milieuBot.appendChild(dive_price_instructor);
             
-            div.appendChild(div_milieuBot);
+            div_milieu.appendChild(div_milieuBot);
 
             /* Div Bas */
             let div_bas = document.createElement("div");
@@ -511,7 +515,8 @@ function createCardsPlannedDive(){
 
             div_bas.appendChild(div_boutonPlus);
 
-            div.appendChild(div_bas);
+            div_milieu.appendChild(div_bas);
+            div.appendChild(div_milieu);
 
             li.appendChild(div);
             ul.appendChild(li);

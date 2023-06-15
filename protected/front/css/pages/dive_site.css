@@ -1,9 +1,19 @@
+/*****************************************************************/
+/*                        DIVESITES LIST                         */
+/*****************************************************************/
+
 .dive-site-list-container {
     width  : 100vw;
     background : var(--bg-color);
     display: flex;
     flex-direction: column;
     padding-top: 5vh;
+}
+
+@media (max-width: 62.5rem) {
+  .dive-site-list-container {
+    padding-top: 1vh;
+  }
 }
 
 .dive-site-list-item {
@@ -26,7 +36,6 @@
 .dive-site-list-item .top-part {
   display: flex;
   flex-direction: row;
-  
   align-items: center;
   height: 9vh;
   border-radius: 2vw;
@@ -59,6 +68,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 }
 
@@ -87,6 +97,10 @@
   height: 20vh;
   width: 42vw;
 }
+
+/******************************************************************/
+/*                         HOVER VILLE                            */
+/******************************************************************/
 
 .linkhover {
   display: flex;
@@ -198,6 +212,11 @@
   box-shadow: 0 0 0 0 var(--accent-color), 0 0 0 0.25vh var(--accent-color);
 }
 
+
+/*********************************************************************/
+/*                      FORM CREATE DIVESITE                         */
+/*********************************************************************/
+
 .form-dive-site{
   width  : 70vw;
   height: 80vh;
@@ -290,6 +309,83 @@
   font-size: 2vh;
 }
 
+@media (max-width: 42rem) {
+  .div-top-dive-site {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 11vh;
+  }
+
+  #open-site-modal {
+    width: auto;
+    height: 3vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 42rem) {
+  .div-top-dive-site {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 14vh;
+  }
+
+  #open-site-modal {
+    width: auto;
+    height: 3vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  #open-site-modal {
+    position: fixed;
+    left: 90vw;
+    top: 20vh;
+    width: 8vw;
+    height: 4.1vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 2.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.1vw;
+  }
+}
+
+#open-site-modal:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}
+
 .form-dive-site .form-body .inputs #dive-site-image-button {
   width: 15vw;
   height: 4vh;
@@ -373,26 +469,51 @@
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
 
-/* Search bar */
+
+/*****************************************************************/
+/*                         SEARCH BAR                            */
+/*****************************************************************/
+
 .input-search {
   display: flex;
   flex-direction: row;
-  margin: auto;
-  width: 30vw;
+  width: auto;
   height: 5vh;
-  font-size: 2vh;
-  padding-top: 15vh;
+  align-items: center;
 }
 
-.input-search input[type=text] {
-  margin-left: 1vw;
-  width: 30vw;
-  height: 5vh;
-  border-radius: 1vh;
-  border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
+@media (max-width: 62.5rem) {
+  .input-search {
+    font-size: 0.6rem;
+  }
 }
 
-.search-icon{
-  margin-top: 2.7vh ;
+@media (min-width: 62.5rem) {
+  .input-search {
+    padding-top: 5vh;
+    font-size: 1rem;
+    margin: auto;
+  }
+}
+
+@media (max-width: 62.5rem) {
+  .input-search input[type=text] {
+    margin-left: 1vw;
+    width: 20vw;
+    height: 3vw;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .input-search input[type=text] {
+    margin-left: 1vw;
+    width: 30vw;
+    height: 5vh;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 1rem;
+  }
 }

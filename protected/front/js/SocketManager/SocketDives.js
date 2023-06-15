@@ -68,6 +68,10 @@ function updateDive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment
     socket.emit('modifyDive', Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive);
 }
 
+function deleteAllDiveTeamsInfos(id_dive, id_dive_team_table){
+    socket.emit('deleteDiveTeamsInfos', id_dive, id_dive_team_table);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -142,4 +146,5 @@ export default {
     addDiveTeam,
     addDiveTeamMember,
     updateDive,
+    deleteAllDiveTeamsInfos
 }

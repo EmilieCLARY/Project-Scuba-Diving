@@ -36,7 +36,10 @@ body {
   /*background-image: url("../img/test.png");*/
 }
 
-/* --------_ Bouton retour page d'accueil _-------- */
+
+/**************************************************************************/
+/*                       RETURN HOMEPAGE BUTTONS                          */
+/**************************************************************************/
 
 .div-return-home {
   width:3vw;
@@ -53,37 +56,159 @@ body {
   align-items: center;
 }
 
+@media (max-width: 570px) {
+  .div-return-home a {
+    font-size: 1rem;
+  }
+
+  .div-return-home {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+  }
+}
+
+@media (min-width: 570px) {
+  .div-return-home a {
+    font-size: 1.2rem;
+  }
+
+  .div-return-home {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+  }
+}
+
+@media (min-width: 820px) {
+  .div-return-home a {
+    font-size: 1.5rem;
+  }
+
+  .div-return-home {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .div-return-home a {
+    font-size: 1.4rem;
+  }
+
+  .div-return-home {
+    width: 4vw;
+    height: 4vw;
+    top: 85vh;
+    left: 92vw;
+  }
+}
+
 .div-return-home:hover {
   cursor: pointer;
 }
 
-/* --------_ Containers Homepage _-------- */
+
+/**********************************************************************/
+/*                       CONTAINERS HOMEPAGE                          */
+/**********************************************************************/
 
 .home-list-container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-around;
   padding-top: 36vh;
+  background-color: var(--bg-color);
+  margin-bottom: 2vh;
 }
 
 .home-list-container > div {
-  width:15vw;
-  height:15vw;
   background-image: url("../img/Bubble.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  font-size: 1.4vw;
-  font-weight: 600;
   color: var(--text-color);
   text-align: center;
   letter-spacing: 0.1vw;
+  margin: 1vw;
 }
 
-/* --------_ Scrollbar _-------- */
+@media (min-width: 1599px) {
+  .home-list-container {
+    padding-top: 36vh;
+  }
+
+  .home-list-container > div {
+    width:18rem;
+    height:18rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 1599px) {
+  .home-list-container {
+    padding-top: 25vh;
+  }
+  .home-list-container > div {
+    width:17rem;
+    height:17rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 1253px) {
+  .home-list-container {
+    padding-top: 19vh;
+  }
+
+  .home-list-container > div {
+    width:15rem;
+    height:15rem;
+    font-size: 1.2rem;
+    font-weight: 450;
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-list-container {
+    padding-top: 16vh;
+  }
+
+  .home-list-container > div {
+    width:13rem;
+    height:13rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 672px) {
+  .home-list-container {
+    padding-top: 15vh;
+  }
+
+  .home-list-container > div {
+    width:10rem;
+    height:10rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+
+
+/******************************************************************/
+/*                          SCROLLBAR                             */
+/******************************************************************/
 
 /* width */
 ::-webkit-scrollbar {
@@ -91,32 +216,9 @@ body {
 }
 
 
-/* --------_ Modals - General _-------- */
-
-#open-site-modal {
-  position: fixed;
-  left: 90vw;
-  top: 20vh;
-  width: 8vw;
-  height: 2vw;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 2.5vh;
-  border: 0;
-  color: #fff;
-  background: var(--secondary-color);
-  line-height: 1.15;
-  font-size: 1.1vw;
-}
-
-#open-site-modal:hover {
-  transition: all .1s ease;
-  color: var(--text-color);
-  background: var(--accent-color);
-  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
-}
+/*******************************************************************/
+/*                       MODALS - GENERAL                          */
+/*******************************************************************/
 
 .modal {
   display: none; /* Hidden by default */
@@ -131,7 +233,10 @@ body {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-/* --------_ Calendar _-------- */
+
+/*****************************************************************/
+/*                          CALENDAR                             */
+/*****************************************************************/
 
 #calendar {
   width: 100%;
@@ -163,7 +268,9 @@ body {
 }
 
 
-/* --------_ Loading animation _-------- */
+/********************************************************************/
+/*                       LOADING ANIMATION                          */
+/********************************************************************/
 
 .ring
 {
@@ -250,7 +357,9 @@ body {
 }
 
 
-/*Waves*/
+/*************************************************************/
+/*                          WAVES                            */
+/*************************************************************/
 
 .waves {
   position: fixed;
