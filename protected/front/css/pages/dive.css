@@ -1,4 +1,12 @@
+html,
+body,
+.full-screen {
+	height: 100%;
+}
+
+
 body {
+  margin: 0;
   font-size: 12px;
 }
 
@@ -105,6 +113,8 @@ body {
     display: flex;
     align-items: center;
     position: fixed;
+    width: 45vw;
+    height: 87vh;
 }
 
 .dive-right #tableContainerInscrits {
@@ -112,6 +122,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    flex-grow: 1;
+    overflow: auto;
 }
 
 .tableDiv {
@@ -154,6 +166,8 @@ body {
     resize: none;
     padding: 0;
     height: 1.7em;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
   }
 
   .blueTable .commentInput:focus {
@@ -213,6 +227,23 @@ body {
 
   .blueTable thead input[type="time"]{
     width: 5em;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.8vw;
+  }
+
+  .blueTable input[type="text"]{
+    width: 5em;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.8vw;
+  }
+
+  .blueTable input[type="number"]{
+    text-align: center;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.8vw;
   }
   
   .blueTable tfoot {
@@ -329,5 +360,5 @@ body {
   height: 2.5vh;
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
-  font-size: 0.7vw;
+  font-size: 0.8vw;
 }

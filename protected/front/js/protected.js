@@ -26,6 +26,8 @@ function getIsAdmin(isAdmin){
         createDiverBubble();
         createAppUserBubble();
     }
+    // Animation des bulles
+    bubbleAnimation(isAdmin);
 }
 
 function createDiverBubble() {
@@ -74,15 +76,10 @@ function createAppUserBubble() {
 
     // Ajouter l'élément div au document
     list.appendChild(div);
-
-    // Animation des bulles
-    bubbleAnimation();
 }
 
-function bubbleAnimation(){
+function bubbleAnimation(isAdmin){
     let bubble_profile = document.getElementById('bubble-profile');
-    let bubble_diver = document.getElementById('bubble-diver');
-    let bubble_app_user = document.getElementById('bubble-app-user');
     let bubble_dive_site = document.getElementById('bubble-dive-site');
     let bubble_planned_dive = document.getElementById('bubble-planned-dive');
 
@@ -96,30 +93,6 @@ function bubbleAnimation(){
 
     bubble_profile.onclick = function() {
         location.href = "/profile";
-    }
-
-    bubble_diver.onmouseover = function() {
-        bubble_diver.classList.add("fa-beat");
-    }
-
-    bubble_diver.onmouseout = function() {  
-        bubble_diver.classList.remove("fa-beat");
-    }
-
-    bubble_diver.onclick = function() {
-        location.href = "/diver";
-    }
-
-    bubble_app_user.onmouseover = function() {
-        bubble_app_user.classList.add("fa-beat");
-    }
-
-    bubble_app_user.onmouseout = function() {
-        bubble_app_user.classList.remove("fa-beat");
-    }
-
-    bubble_app_user.onclick = function() {
-        location.href = "/app_user";
     }
 
     bubble_dive_site.onmouseover = function() {
@@ -146,6 +119,35 @@ function bubbleAnimation(){
         location.href = "/planned_dive";
     }
 
+
+    if(isAdmin == 1){
+        let bubble_diver = document.getElementById('bubble-diver');
+        let bubble_app_user = document.getElementById('bubble-app-user');
+
+        bubble_diver.onmouseover = function() {
+            bubble_diver.classList.add("fa-beat");
+        }
+
+        bubble_diver.onmouseout = function() {  
+            bubble_diver.classList.remove("fa-beat");
+        }
+
+        bubble_diver.onclick = function() {
+            location.href = "/diver";
+        }
+
+        bubble_app_user.onmouseover = function() {
+            bubble_app_user.classList.add("fa-beat");
+        }
+
+        bubble_app_user.onmouseout = function() {
+            bubble_app_user.classList.remove("fa-beat");
+        }
+
+        bubble_app_user.onclick = function() {
+            location.href = "/app_user";
+        }
+    }
 }
 
 

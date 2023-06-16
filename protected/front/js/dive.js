@@ -93,7 +93,7 @@ function LoadAllDiveRegistrations(tab){
         let tmp = new DiveRegistration(element.Diver_Id_Diver,element.Planned_Dive_Id_Planned_Dive,element.Diver_Role,element.Resgistration_Timestamp,element.Personal_Comment,element.Car_Pooling_Seat_Offered,element.Car_Pooling_Seat_Request);
         tabDiveRegistrations.push(tmp);
     });
-    //console.log(tabDiveRegistrations);
+    console.log(tabDiveRegistrations);
     loaded++;
     checkLoaded();
 }
@@ -160,7 +160,7 @@ function LoadIdPlannedDive(idPlannedDive_){
 function setButtonListener(){
     const ajoutTabBouton = document.getElementById('ajouter-tableau');
     ajoutTabBouton.addEventListener('click', event => {
-        creationTableauPalanquee(5,10);
+        creationTableauPalanquee(5,10,false);
     });
 
     const deleteAllTab = document.getElementById('clear-tableaux');
@@ -170,7 +170,7 @@ function setButtonListener(){
 
     const attributionAutomatique = document.getElementById('attribution-automatique');
     attributionAutomatique.addEventListener('click', event => {
-        attributionAutomatique();
+        console.log("Non implémenté");
     });
 
     const validerButton = document.getElementById('valider');
@@ -469,7 +469,6 @@ function validerPalanquées(){
         for(let i = 1; i <= tablecounter; i++){
             let table = document.getElementById(i);
             let trElements = table.getElementsByTagName('tr');
-    
             créationDiveTeam(i, tableGuide, dive);
             for(let j = 4; j < trElements.length; j++){
                 créationDiveTeamMember(i, j, trElements, tableGuide);
@@ -480,9 +479,6 @@ function validerPalanquées(){
 }
 
 function créationDive(directeurPlongée,i){
-    
-    //console.log("Pushing palanquées to BDD");
-    
     //Création Dive
 
     let temp = -1;
@@ -492,6 +488,7 @@ function créationDive(directeurPlongée,i){
     let prix_instructeur = 0;
     let comment = "";
     let ppo2 = document.getElementById("ppo2").value;
+    let surface_security = document.getElementById("surface_security").value;
 
     let plannedDiveID = idPlannedDive
     tabPlannedDives.forEach(element => {
@@ -519,13 +516,13 @@ function créationDive(directeurPlongée,i){
     let dive;
     
     if(!isDiveExist){
-        SocketManager.addDive(tabDives.length+1, planned_time, planned_date, planned_date, temp, comment, temp, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
-        dive = new Dive(tabDives.length+1,planned_time, planned_date, planned_date, temp, comment, temp, prix_plongeur, prix_instructeur, temp, directeurPlongée, plannedDiveID);
+        SocketManager.addDive(tabDives.length+1, planned_time, planned_date, planned_date, temp, comment, surface_security, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
+        dive = new Dive(tabDives.length+1,planned_time, planned_date, planned_date, temp, comment, surface_security, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
     }
     else{
         //console.log("Dive déjà existante");
-        dive = new Dive(diveId,planned_time, planned_date, planned_date, temp, comment, temp, prix_plongeur, prix_instructeur, temp, directeurPlongée, plannedDiveID);
-        SocketManager.updateDive(diveId, planned_time, planned_date, planned_date, temp, comment, temp, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
+        dive = new Dive(diveId,planned_time, planned_date, planned_date, temp, comment, surface_security, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
+        SocketManager.updateDive(diveId, planned_time, planned_date, planned_date, temp, comment, surface_security, prix_plongeur, prix_instructeur, ppo2, directeurPlongée, plannedDiveID);
     }
     return dive;
 }
@@ -550,6 +547,7 @@ function créationDiveTeam(i, tableGuide, dive){
     });
    
     //tabDiveRegistrations[i].get_planned_dive_id()
+
     let table = document.getElementById(i);
     let trElements = table.getElementsByTagName('tr');
 
@@ -557,39 +555,18 @@ function créationDiveTeam(i, tableGuide, dive){
 
     let maxduration = document.getElementById('dureePlongee' + i).value;
     let endTime = addTimes(planned_time, maxduration);
-    //console.log("Heure de début : " + planned_time + "Temps de plongée max : " + maxduration + " Heure de fin : " + endTime)
 
     let dive_type = document.getElementById('typePlongee' + i).value;
 
     let minGuidedDepth = document.getElementById('profondeurPlongee' + i).value;
 
-    //console.log(minGuidedDepth)
+    let id_dive_team = tabDiveTeams.length + i;
 
-    // Check si la diveTeam existe déjà
-    /*let isDiveTeamExist = false;
-    let diveTeamId = [];
-    tabDiveTeams.forEach(element => {
-        if(element.get_id_dive() == id_dive){
-            isDiveTeamExist = true;
-            diveTeamId.push(element.get_id());
-        }
-    });*/
-
-    let tmp = new DiveTeam(i, minGuidedDepth, maxduration, temp, temp, dive_type, i, planned_time, endTime, commentaireInput, tableGuide[i], id_dive);
+    let tmp = new DiveTeam(id_dive_team, minGuidedDepth, maxduration, temp, temp, dive_type, i, planned_time, endTime, commentaireInput, tableGuide[i], id_dive);
     tabDiveTeams.push(tmp);
 
-    //if(!isDiveTeamExist){
     console.log("Création DiveTeam");
-    SocketManager.addDiveTeam(i, minGuidedDepth, maxduration, temp, temp, dive_type, i, planned_time, endTime, commentaireInput, tableGuide[i], id_dive);
-    /*}
-    else{
-        console.log("Update DiveTeam");
-        console.log(diveTeamId);
-        SocketManager.deleteAllDiveTeamsInfos(id_dive, diveTeamId);
-    }*/
-
-    
-
+    SocketManager.addDiveTeam(id_dive_team, minGuidedDepth, maxduration, temp, temp, dive_type, i, planned_time, endTime, commentaireInput, tableGuide[i], id_dive);
 }
 
 function créationDiveTeamMember(i, j, trElements, tableGuide){
@@ -634,12 +611,14 @@ function créationDiveTeamMember(i, j, trElements, tableGuide){
 
     let montantPaye = document.getElementById("montantPayeInput"+idDiveRegInputs).value;
 
-    let tmp = new DiveTeamMember(idDiver, i, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
+    let id_dive_team = tabDiveTeams.length + i - 1;
+
+    let tmp = new DiveTeamMember(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
 
     tabDiveTeamMembers.push(tmp);
     //console.log(tmp);
 
-    SocketManager.addDiveTeamMember(idDiver, i, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
+    SocketManager.addDiveTeamMember(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
 }
 
 function getIdQualification(qualification){
@@ -685,7 +664,7 @@ function getIdQualification(qualification){
             idQualification = 11;
             break;
         default:
-            idQualification = "Erreur";
+            idQualification = 11;
             break;
     }
     return idQualification;
@@ -703,7 +682,6 @@ function getIdDiverByLastnameFirstNameAge(lastname, firstname, age){
             }
         }
     }
-    
 }
 
 
@@ -714,7 +692,6 @@ function suppressionTableauPalanquée(tableId){
     var trElements = table.getElementsByTagName('tr');
 
     //Check if the table is empty
-    //console.log(trElements.length);
     if (trElements.length > 4) {
         //console.log("Tableau rempli");
         confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
@@ -736,13 +713,10 @@ function suppressionTableauPalanquée(tableId){
         table.parentNode.remove();
         tablecounter--; 
     }
-    
-
     //console.log("Nombre tableaux : " + tablecounter)
 }
 
 function supprimerTousLesTableaux(){
-    
     let nbrRempli = 0;
 
     //Firstly, check if the tables are empty
@@ -757,7 +731,6 @@ function supprimerTousLesTableaux(){
             //console.log("Tableau rempli");
             nbrRempli++;
         }
-        
     }
 
     if(nbrRempli == 0){
@@ -775,16 +748,9 @@ function supprimerTousLesTableaux(){
     }
 }
 
-function attributionAutomatique(){
-    // Cette fonction a pour but de répartir les inscrits en fonction de l'âge et du niveau dans les différentes palanquées
-    console.log("Non réalisé")
-    
-}
-
 // TABLEAU PALANQUÉE
 
-function creationTableauPalanquee(rows, columns) {
-
+function creationTableauPalanquee(rows, columns, isTabToFill, item) {
     tablecounter++;
 
     const tableDiv = document.createElement('div');
@@ -929,6 +895,13 @@ function creationTableauPalanquee(rows, columns) {
     thComment.appendChild(thCommentInput);
     tr3.appendChild(thComment);
 
+    // Filling the table if we need to
+    if(isTabToFill){
+        thDurationInput.value = item.get_max_duration();
+        thDiveTypeInput.value = item.get_dive_type();
+        thDepthInput.value = item.get_max_depth();
+        thCommentInput.value = item.get_comment();
+    }
 
     const tr4 = document.createElement('tr');
     tr4.classList.add('tr');
@@ -983,42 +956,6 @@ function creationTableauPalanquee(rows, columns) {
     const tbody = document.createElement('tbody');
     tbody.id = "tableBody"+tableId;
 
-    let isPassed = false;
-    let isPassed2 = false;
-
-
-    /*
-    for (let i = 0; i < rows; i++) {
-
-        if(isPassed2 == false){
-            var row = document.createElement('tr');
-            row.classList.add('tr');
-            row.classList.add('my-handle');
-
-            if(isPassed == false){
-
-                for (let j = 0; j < columns - 1; j++) {
-
-                    if(isPassed2 == false){
-                        const cell = document.createElement('td');
-                        // Make a colspan of the number of columns for the last cell
-                        cell.setAttribute('colspan', columns - 1);
-                        cell.classList.add('static');
-                        cell.innerHTML = "Palanquée " + tableId;
-                        isPassed2 = true;
-
-                        row.appendChild(cell);
-                    }
-                    isPassed = true;
-
-                }
-            }
-            isPassed = true;
-        }
-
-        //tbody.appendChild(row);
-    }*/
-
     table.appendChild(tbody);
 
 
@@ -1036,78 +973,6 @@ function creationTableauPalanquee(rows, columns) {
     });
     tableContainer.appendChild(tableDiv);
 
-    // Create the info div
-    /*
-    let div = document.createElement('div');
-    div.classList.add('infoDivContainer');
-
-    // Select list type de plongée
-    let div_typePlongee = document.createElement('div');
-    div_typePlongee.classList.add('infoDiv');
-    let selectList = document.createElement('select');
-    selectList.id = "typePlongee" + tableId;
-    selectList.classList.add('selectList');
-    let option1 = document.createElement('option');
-    option1.value = 1;
-    option1.text = "Exploration - encadrée";
-    let option2 = document.createElement('option');
-    option2.value = 2;
-    option2.text = "Exploration - autonome";
-    let option3 = document.createElement('option');
-    option3.value = 3;
-    option3.text = "Enseignement";
-    selectList.appendChild(option1);
-    selectList.appendChild(option2);
-    selectList.appendChild(option3);
-    div_typePlongee.appendChild(selectList);
-    div.appendChild(div_typePlongee);
-
-
-    // Info nb plongeurs
-    let div_nbPlongeurs = document.createElement('div');
-    div_nbPlongeurs.classList.add('infoDiv');
-    let p_info = document.createElement('p');
-    let i_info = document.createElement('i');
-    i_info.classList.add('fa-solid', 'fa-xmark', 'fa-2xs', 'red', 'infoIcon');
-    i_info.id = "iNbPlongeur" + tableId;
-    p_info.innerHTML = (rows - 5) + " / 5";
-    p_info.classList.add('p-info', 'red');
-    p_info.id = "nbPlongeur" + tableId;
-    div_nbPlongeurs.appendChild(i_info);
-    div_nbPlongeurs.appendChild(p_info);
-    div.appendChild(div_nbPlongeurs);
-    //tableDiv.appendChild(div);
-
-    // Info Dive Guide
-    let div_diveGuide = document.createElement('div');
-    div_diveGuide.classList.add('infoDiv');
-    let p_info2 = document.createElement('p');
-    let i_info2 = document.createElement('i');
-    i_info2.classList.add('fa-solid', 'fa-xmark', 'fas', 'red');
-    i_info2.id = "iDiveGuide" + tableId;
-    p_info2.innerHTML = "Guide de palanquée";
-    p_info2.classList.add('p-info', 'red');
-    p_info2.id = "diveGuide" + tableId;
-    div_diveGuide.appendChild(i_info2);
-    div_diveGuide.appendChild(p_info2);
-    div.appendChild(div_diveGuide);
-    //tableDiv.appendChild(div);
-
-    // Info Max Depth
-    let div_maxDepth = document.createElement('div');
-    div_maxDepth.classList.add('infoDiv');
-    let p_info3 = document.createElement('p');
-    let i_info3 = document.createElement('i');
-    i_info3.classList.add("fa-regular", "fa-mask-snorkel", 'infoIcon');
-    i_info3.id = "iMaxDepth" + tableId;
-    p_info3.innerHTML = "Profondeur max : 0m";
-    p_info3.id = "maxDepth" + tableId;
-    div_maxDepth.appendChild(i_info3);
-    div_maxDepth.appendChild(p_info3);
-    div.appendChild(div_maxDepth);
-    //tableDiv.appendChild(div);
-    */
-
     // Initialize SortableJS for the new table
     new Sortable(tbody, {
         filter : ".static",
@@ -1120,94 +985,45 @@ function creationTableauPalanquee(rows, columns) {
         
         // Called by any change to the list (add / update / remove)
         onUpdate: function (evt) {
-            let itemEl = evt.item;  // dragged HTMLElement
-            //console.log(itemEl);
-            evt.to;    // target list
-            //console.log(evt.to);
-            evt.from;  // previous list
-            //console.log(evt.from);
-            evt.oldIndex;  // element's old index within old parent
-            //console.log(evt.oldIndex);
-            evt.newIndex;  // element's new index within new parent
-            //console.log(evt.newIndex);
-            
-            // If empty table
-            //console.log("Déplacement de " + itemEl.firstChild.innerHTML + " " + itemEl.firstChild.nextSibling.innerHTML + " de la palanquée " + evt.from.id + " à la palanquée " + evt.to.id);
-            updateInfoDiv(evt, 'update');
+            setDivInfosPalanquee(evt.to.id.replace("tableBody", ""));
         },
         onRemove: function (evt) {
-            let itemEl = evt.item;  // dragged HTMLElement
-            //console.log(itemEl);
-            evt.from;  // previous list
-            //console.log(evt.from);
-            //console.log("Retrait de " + itemEl.firstChild.innerHTML + " " + itemEl.firstChild.nextSibling.innerHTML + " de la palanquée " + evt.from.id);
-            updateInfoDiv(evt, 'remove');
+            setDivInfosPalanquee(evt.from.id.replace("tableBody", ""));
         },
         onAdd: function (evt) {
-            let itemEl = evt.item;  // dragged HTMLElement
-            //console.log(itemEl);
-            evt.from;  // previous list
-            //console.log(evt.from);
-            //console.log("Ajout de " + itemEl.firstChild.innerHTML + " " + itemEl.firstChild.nextSibling.innerHTML + " à la palanquée " + evt.to.id);
-            updateInfoDiv(evt, 'add');
+            setDivInfosPalanquee(evt.to.id.replace("tableBody", ""));
         }
     });
-
-    //selectList.addEventListener('change', event => {
-    //    let id = event.target.id.replace("typePlongee", "");
-    //    console.log(id);
-    //});
 }
 
-function updateInfoDiv(evt, type){
-    // Récupération de l'id de la palanquée
-    let id;
-    if(type != 'remove'){
-        id = evt.to.id.replace("tableBody", "");
-    }
-    else{
-        id = evt.from.id.replace("tableBody", "");
-    }
+function setDivInfosPalanquee(id){
+    let table = document.getElementById("tableBody"+id);
+    let trElements = table.getElementsByTagName('tr');
+    let nbDiver = trElements.length;
 
-    // Récupération du type de plongée
     let typePlongee = document.getElementById("typePlongee" + id).value;
-    //console.log(typePlongee);
-    
-    // Mise à jour du nombre de plongeurs
-    updateNbPlongeur(evt, id, type, typePlongee);
 
-    // Mise à jour du guide de palanquée
-    updateDiveGuide(evt, id, type);
+    // Nombre de plongeurs
+    let nbPlongeurDiv = document.getElementById("nbPlongeur" + id);
 
-    // Mise à jour de la profondeur max
-    updateMaxDepth(evt, id, type);
-}
-
-function updateNbPlongeur(evt, id, type, typePlongee){
-    let nbPlongeur = document.getElementById("nbPlongeur" + id);
-    let iNbPlongeur = document.getElementById("iNbPlongeur" + id);
-
-    let error = false;
+    let errorNbPlongeur = false;
     let errorAdditionnalDiver = false;
 
-    if(type != 'remove' && typePlongee != 2){
-        // Si il y a plus de 5 plongeursNom	Prénom	Niveau	Âge	RôleNom	Prénom	Niveau	Âge	Rôle
-
-
-        if(evt.to.childElementCount > 5){
-            error = true;
+    if(typePlongee != 2){
+        if(nbDiver > 5){
+            errorNbPlongeur = true;
         }
-        else if(evt.to.childElementCount < 2){
-            error = true;
+        else if(nbDiver < 2){
+            errorNbPlongeur = true;
         }
-        else if(evt.to.childElementCount == 5){
+        else if(nbDiver == 5){
             // Vérification de la présence de deux guides de palanquée
             let isThereTwoDiveGuide = false;
             let nbrDiveGuide = 0;
 
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let role = evt.to.children[i].getElementsByTagName('td')[4].innerHTML
-                if (role == "Guide de palanquée" || role == "Directeur de plongée"){
+            for(let i = 0; i < nbDiver; i++){
+                let role = trElements[i].getElementsByTagName('td')[4].innerHTML;
+                if(role == "Guide de palanquée" || role == "Directeur de plongée"){
                     nbrDiveGuide++;
                 }
             }
@@ -1215,31 +1031,29 @@ function updateNbPlongeur(evt, id, type, typePlongee){
                 isThereTwoDiveGuide = true;
             }
 
-            // Vérification si il y a un guide de palanquée que 1 plongeur soit au moins niveau 4 sauf le guide de palanquée
-            let isThereOneLevel4 = false;
+            let isThereOneLevel4= false;
 
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let level = evt.to.children[i].getElementsByTagName('td')[2].innerHTML
-                let role = evt.to.children[i].getElementsByTagName('td')[4].innerHTML
-                if ((level == "N4" || level == "N5") && role != "Guide de palanquée" && role != "Directeur de plongée"){
+            for(let i = 0; i < nbDiver; i++){
+                let level = trElements[i].getElementsByTagName('td')[2].innerHTML;
+                let role = trElements[i].getElementsByTagName('td')[4].innerHTML;
+                if((level == "N4" || level == "N5") && role != "Guide de palanquée" && role != "Directeur de plongée"){
                     isThereOneLevel4 = true;
                 }
             }
 
             if(!isThereTwoDiveGuide && !isThereOneLevel4){
-                error = true;
+                errorNbPlongeur = true;
                 errorAdditionnalDiver = true;
             }
-            
         }
 
         // Vérification de la présence d'enfants
         let isThereUnderage = false;
         let nbrUnderage = 0;
 
-        if(evt.to.childElementCount > 0){
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let age = evt.to.children[i].getElementsByTagName('td')[3].innerHTML
+        if(nbDiver > 0){
+            for(let i = 0; i < nbDiver; i++){
+                let age = trElements[i].getElementsByTagName('td')[3].innerHTML
                 if (age < 16){
                     //console.log("Enfant trouvé");
                     isThereUnderage = true;
@@ -1249,115 +1063,37 @@ function updateNbPlongeur(evt, id, type, typePlongee){
         }
 
         // Contrôle du nombre d'enfants
-        if(isThereUnderage && evt.to.childElementCount > 3){
-            error = true;
+        if(isThereUnderage && nbDiver > 3){
+            errorNbPlongeur = true;
         }
         else if(nbrUnderage > 2){
-            error = true;
+            errorNbPlongeur = true;
         }
 
         // Mise à jour du nombre de plongeurs
         if(isThereUnderage){
-            nbPlongeur.innerHTML = (evt.to.childElementCount) + " / 3";
+            nbPlongeurDiv.innerHTML = (nbDiver) + " / 3";
         }
         else if(!errorAdditionnalDiver){
-            nbPlongeur.innerHTML = (evt.to.childElementCount) + " / 5";
+            nbPlongeurDiv.innerHTML = (nbDiver) + " / 5";
         }
         else{
-            nbPlongeur.innerHTML = "Le plongeur supplémentaire doit être au moins niveau 4 ou guide de palanquée";
+            nbPlongeurDiv.innerHTML = "Le plongeur supplémentaire doit être au moins niveau 4 ou guide de palanquée";
         }
     }
-    else if(type == 'remove' && typePlongee != 2){
-        // Si il y a plus de 5 plongeurs
-        if(evt.from.childElementCount > 5){
-            error = true;
+    else{
+        if(nbDiver > 3){
+            errorNbPlongeur = true;
         }
-        else if(evt.from.childElementCount < 2){
-            error = true;
-        }
-        else if(evt.to.childElementCount == 5){
-            // Vérification de la présence de deux guides de palanquée
-            let isThereTwoDiveGuide = false;
-            let nbrDiveGuide = 0;
-
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let role = evt.to.children[i].getElementsByTagName('td')[4].innerHTML
-                if (role == "Guide de palanquée" || role == "Directeur de plongée"){
-                    nbrDiveGuide++;
-                }
-            }
-            if(nbrDiveGuide >= 2){
-                isThereTwoDiveGuide = true;
-            }
-
-            // Vérification si il y a un guide de palanquée que 1 plongeur soit au moins niveau 4 sauf le guide de palanquée
-            let isThereOneLevel4 = false;
-
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let level = evt.to.children[i].getElementsByTagName('td')[2].innerHTML
-                let role = evt.to.children[i].getElementsByTagName('td')[4].innerHTML
-                if ((level == "N4" || level == "N5") && role != "Guide de palanquée" && role != "Directeur de plongée"){
-                    isThereOneLevel4 = true;
-                }
-            }
-
-            if(!isThereTwoDiveGuide && !isThereOneLevel4){
-                error = true;
-                errorAdditionnalDiver = true;
-            }
-            
-        }
-
         // Vérification de la présence d'enfants
         let isThereUnderage = false;
-        let nbrUnderage = 0;
 
-        if(evt.from.childElementCount > 0){
-            for(let i = 0; i < evt.from.childElementCount; i++){
-                let age = evt.from.children[i].getElementsByTagName('td')[3].innerHTML
+        if(nbDiver > 0){
+            for(let i = 0; i < nbDiver; i++){
+                let age = trElements[i].getElementsByTagName('td')[3].innerHTML
                 if (age < 16){
                     //console.log("Enfant trouvé");
-                    isThereUnderage = true;
-                    nbrUnderage++;
-                }
-            }
-        }
-
-        // Contrôle du nombre d'enfants
-        if(isThereUnderage && evt.from.childElementCount > 3){
-            error = true;
-        }
-        else if(nbrUnderage > 2){
-            error = true;
-        }
-
-        // Mise à jour du nombre de plongeurs
-        if(isThereUnderage){
-            nbPlongeur.innerHTML = (evt.from.childElementCount) + " / 3";
-        }
-        else if(!errorAdditionnalDiver){
-            nbPlongeur.innerHTML = (evt.from.childElementCount) + " / 5";
-        }
-        else{
-            nbPlongeur.innerHTML = "Le plongeur supplémentaire doit être au moins niveau 4 ou guide de palanquée";
-        }
-    }
-    // Maximum 3 plongeurs et pas d'enfants
-    else if(type != 'remove' && typePlongee == 2){
-        if(evt.to.childElementCount > 3){
-            error = true;
-        }
-        
-        // Vérification de la présence d'enfants
-
-        let isThereUnderage = false;
-
-        if(evt.to.childElementCount > 0){
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let age = evt.to.children[i].getElementsByTagName('td')[3].innerHTML
-                if (age < 16){
-                    //console.log("Enfant trouvé");
-                    error = true;
+                    errorNbPlongeur = true;
                     isThereUnderage = true;
                 }
             }
@@ -1365,179 +1101,80 @@ function updateNbPlongeur(evt, id, type, typePlongee){
 
         // Mise à jour du nombre de plongeurs
         if(isThereUnderage){
-            nbPlongeur.innerHTML = "Enfant non autorisé en plongée en autonomie";
+            nbPlongeurDiv.innerHTML = "Enfant non autorisé en plongée en autonomie";
         }
         else{
-            nbPlongeur.innerHTML = "Nombre de plongeurs : " + (evt.to.childElementCount) + " / 3";
-        }
-    }
-    else if(type == 'remove' && typePlongee == 2){
-        if(evt.from.childElementCount > 3){
-            error = true;
-        }
-        
-        // Vérification de la présence d'enfants
-
-        let isThereUnderage = false;
-
-        if(evt.from.childElementCount > 0){
-            for(let i = 0; i < evt.from.childElementCount; i++){
-                let age = evt.from.children[i].getElementsByTagName('td')[3].innerHTML
-                if (age < 16){
-                    //console.log("Enfant trouvé");
-                    error = true;
-                    isThereUnderage = true;
-                }
-            }
-        }
-
-        // Mise à jour du nombre de plongeurs
-        if(isThereUnderage){
-            nbPlongeur.innerHTML = "Enfant non autorisé en plongée en autonomie";
-        }
-        else{
-            nbPlongeur.innerHTML = "Nombre de plongeurs : " + (evt.from.childElementCount) + " / 3";
+            nbPlongeurDiv.innerHTML = "Nombre de plongeurs : " + (nbDiver) + " / 3";
         }
     }
 
     // Affichage du message d'erreur
-    if(error){
-        nbPlongeur.classList.remove("green");
-        nbPlongeur.classList.add("red");
-        //iNbPlongeur.classList.remove("fa-check", "green");
-        //iNbPlongeur.classList.add("red", "fa-solid", "fa-xmark");
+    if(errorNbPlongeur){
+        nbPlongeurDiv.classList.remove("green");
+        nbPlongeurDiv.classList.add("red");
     }
     else{
-        nbPlongeur.classList.remove("red");
-        nbPlongeur.classList.add("green");
-        //iNbPlongeur.classList.remove("red", "fa-solid", "fa-xmark");
-        //iNbPlongeur.classList.add("fa-solid", "fa-check", "green");
+        nbPlongeurDiv.classList.remove("red");
+        nbPlongeurDiv.classList.add("green");
     }
-}
 
-function updateDiveGuide(evt, id, type){
-    let diveGuide = document.getElementById("diveGuide" + id);
     let iDiveGuide = document.getElementById("iDiveGuide" + id);
-
     let isThereGuide = false;
 
-    if(type != 'remove'){
-        // Si il y a un guide de palanquée
-        if(evt.to.childElementCount > 0){
-            for(let i = 0; i < evt.to.childElementCount; i++){
-                let role = evt.to.children[i].getElementsByTagName('td')[4].innerHTML
-                if (role == "Guide de palanquée" || role == "Directeur de plongée"){
-                    isThereGuide = true;
-                }
-            }
-        }
-    }
-    else{
-        // Si il y a un guide de palanquée
-        if(evt.from.childElementCount > 0){
-            for(let i = 0; i < evt.from.childElementCount; i++){
-                let role = evt.from.children[i].getElementsByTagName('td')[4].innerHTML
-                if (role == "Guide de palanquée" || role == "Directeur de plongée"){
-                    isThereGuide = true;
-                }
+    if(nbDiver > 0){
+        for(let i = 0; i < nbDiver; i++){
+            let role = trElements[i].getElementsByTagName('td')[4].innerHTML;
+            if(role == "Guide de palanquée" || role == "Directeur de plongée"){
+                isThereGuide = true;
             }
         }
     }
 
     // Affichage du message d'erreur
     if(isThereGuide){
-        //diveGuide.classList.remove("red");
-        //diveGuide.classList.add("green");
         iDiveGuide.classList.remove("red", "fa-solid", "fa-xmark");
         iDiveGuide.classList.add("fa-solid", "fa-check", "green");
     }
     else{
-        //diveGuide.classList.remove("green");
-        //diveGuide.classList.add("red");
         iDiveGuide.classList.remove("fa-check", "green");
         iDiveGuide.classList.add("red", "fa-solid", "fa-xmark");
     }
-}
 
-function updateMaxDepth(evt, id, type){
-    let maxDepth = document.getElementById("maxDepth" + id);
-    // Parcours des plongeurs dans la palanquée
+    let maxDepthDiv = document.getElementById("maxDepth" + id);
     let max = 9999;
 
-    if(type != 'remove'){
-        evt.to.childNodes.forEach(function (item) {
-            //console.log(item);
-            let lastname = item.getElementsByTagName('td')[0].innerHTML;
-            let firstname = item.getElementsByTagName('td')[1].innerHTML;
-            let age = item.getElementsByTagName('td')[3].innerHTML;
+    for(let i = 0; i < nbDiver; i++){
+        let lastname = trElements[i].getElementsByTagName('td')[0].innerHTML;
+        let firstname = trElements[i].getElementsByTagName('td')[1].innerHTML;
+        let age = trElements[i].getElementsByTagName('td')[3].innerHTML;
 
-            let id_diver = getIdDiverByLastnameFirstNameAge(lastname, firstname, age);
-            let diver = getDiverById(id_diver);
+        let id_diver = getIdDiverByLastnameFirstNameAge(lastname, firstname, age);
+        let diver = getDiverById(id_diver);
 
-            let Diver_Qualification = diver.get_diver_qualification();
-            let Instructor_Qualification = diver.get_instructor_qualification(); // Pas utilisé pour le moment
+        let Diver_Qualification = diver.get_diver_qualification();
 
-            //console.log(Diver_Qualification, Instructor_Qualification);
-
-            for(let i = 0; i < tabMaxDepthForQualification.length; i++){
-                let qualification = tabMaxDepthForQualification[i].get_diver_qualification();
-                //console.log(qualification);
-                //console.log(Diver_Qualification);
-                if(qualification == Diver_Qualification){
-                    if(tabMaxDepthForQualification[i].get_guided_diver_depth() == ""){
-                        //console.log("Pas de profondeur max");
-                    }
-                    else if(tabMaxDepthForQualification[i].get_guided_diver_depth() < max){
-                        max = tabMaxDepthForQualification[i].get_guided_diver_depth();
-                        //console.log(max);
-                    }
+        for(let i = 0; i < tabMaxDepthForQualification.length; i++){
+            let qualification = tabMaxDepthForQualification[i].get_diver_qualification();
+            if(Diver_Qualification == qualification){
+                if(tabMaxDepthForQualification[i].get_guided_diver_depth() == ""){
+                    // Pas de profondeur max
+                }
+                else if(tabMaxDepthForQualification[i].get_guided_diver_depth() < max){
+                    max = tabMaxDepthForQualification[i].get_guided_diver_depth();
                 }
             }
-        });
+        }        
     }
-    else{
-        evt.from.childNodes.forEach(function (item) {
-            //console.log(item);
-            let lastname = item.getElementsByTagName('td')[0].innerHTML;
-            let firstname = item.getElementsByTagName('td')[1].innerHTML;
-            let age = item.getElementsByTagName('td')[3].innerHTML;
-
-            let id_diver = getIdDiverByLastnameFirstNameAge(lastname, firstname, age);
-            let diver = getDiverById(id_diver);
-
-            let Diver_Qualification = diver.get_diver_qualification();
-            let Instructor_Qualification = diver.get_instructor_qualification(); // Pas utilisé pour le moment
-
-            //console.log(Diver_Qualification, Instructor_Qualification);
-
-            for(let i = 0; i < tabMaxDepthForQualification.length; i++){
-                let qualification = tabMaxDepthForQualification[i].get_diver_qualification();
-                //console.log(qualification);
-                //console.log(Diver_Qualification);
-                if(qualification == Diver_Qualification){
-                    if(tabMaxDepthForQualification[i].get_guided_diver_depth() == ""){
-                        //console.log("Pas de profondeur max");
-                    }
-                    else if(tabMaxDepthForQualification[i].get_guided_diver_depth() < max){
-                        max = tabMaxDepthForQualification[i].get_guided_diver_depth();
-                        //console.log(max);
-                    }
-                }
-            }
-        });
-    }
-    //console.log(max);
     if(max == 9999){
-        maxDepth.innerHTML = "Profondeur max : 60+m";
+        maxDepthDiv.innerHTML = "Profondeur max : 60+m";
     }
     else{
-        maxDepth.innerHTML = "Profondeur max : " + max + "m";
+        maxDepthDiv.innerHTML = "Profondeur max : " + max + "m";
     }
 }
+
 // TABLEAU INSCRITS
-
 function createTableInscrits() {
-
     // Create a new table element
     const table = document.createElement('table');
     table.classList.add('blueTable');
@@ -1595,12 +1232,36 @@ function createTableInscrits() {
 
     // Create the table body with rows and cells
 
+    let idDive = -1;
+    tabDives.forEach(function (item) {
+        if(item.get_id_planned_dive() == idPlannedDive) { // Mettre l'id de la plongée ici
+            idDive = item.get_id();
+            document.getElementById("ppo2").value = item.get_max_ppo2();
+            document.getElementById("surface_security").value = item.get_surface_security();
+        }
+    });
+
+    let tabIdDiveTeams = [];
+    tabDiveTeams.forEach(function (item) {
+        if(item.get_id_dive() == idDive) { // Mettre l'id de la plongée ici
+            tabIdDiveTeams.push(item.get_id());
+        }
+    });
+    // J'ai fait ça car des fois les palanquées ne sont pas dans l'ordre dans le tableau tabDiveTeams
+    tabIdDiveTeams.sort();
+    tabIdDiveTeams.forEach(function (item) {
+        tabDiveTeams.forEach(function (item2) {
+            if(item == item2.get_id()) {
+                creationTableauPalanquee(5, 10, true, item2);
+            }
+        });
+        //creationTableauPalanquee(5, 10, true, item);
+    });
+
     const tbody = document.createElement('tbody');
 
     for (let i = 0; i < tabDiveRegistrations.length; i++) {
-
         if(tabDiveRegistrations[i].get_planned_dive_id() == idPlannedDive) { // Mettre l'id de la plongée ici
-            
             let ligne = document.createElement('tr');
             ligne.classList.add('tr');
             //ligne.classList.add('my-handle');
@@ -1667,16 +1328,7 @@ function createTableInscrits() {
             let celluleQualifTemp = document.createElement('td');
             let qualifTempInput = document.createElement('input');
             qualifTempInput.setAttribute("type", "text");
-            qualifTempInput.setAttribute("id", "qualifTempInput" + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);
-            
-            /*let qualifTemp = "";
-            if(getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification() == null || getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification() == "" || getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification() == "Aucune"){
-                qualifTemp = "";
-            }
-            else{
-                qualifTemp = getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification();
-            }*/
-            
+            qualifTempInput.setAttribute("id", "qualifTempInput" + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);            
             qualifTempInput.setAttribute("value", "");
             celluleQualifTemp.appendChild(qualifTempInput);
 
@@ -1724,11 +1376,99 @@ function createTableInscrits() {
             ligne.appendChild(celluleCommentaire);
             ligne.appendChild(celluleHandle);
 
+            let tmp = false;
+            let tabDiveTeamId = [];
+            tabDiveTeams.forEach(element => {
+                tabDives.forEach(element2 => {
+                    if(element.get_id_dive() == element2.get_id() && element2.get_id_planned_dive() == idPlannedDive){
+                        tmp = true;
+                        //console.log("tmp = true");
+                        tabDiveTeamId.push(element.get_id());
+                    }
+                });
+            });
+            tabDiveTeamId.sort();
+            //console.log(tabDiveTeamId);
+            let diveTeamMemberFound = false;
+            let diveTeamMemberDiveTeamId = 0;
+            tabDiveTeamMembers.forEach(element => {
+                tabDiveTeamId.forEach(element2 => {
+                    if(element.get_id_palanquée() == element2){
+                        if(element.get_id() == tabDiveRegistrations[i].get_diver_id() && tmp){
+                            switch(parseInt(element.get_temporary_diver_qualification())){
+                                case 1:
+                                    qualifTempInput.value = "Etoile de mer 1";
+                                    break;
+                                case 2:
+                                    qualifTempInput.value = "Bronze";
+                                    break;
+                                case 3:
+                                    qualifTempInput.value = "Argent";
+                                    break;
+                                case 4:
+                                    qualifTempInput.value = "Or";
+                                    break;
+                                case 5:
+                                    qualifTempInput.value = "N1";
+                                    break;
+                                case 6:
+                                    qualifTempInput.value = "N2";
+                                    break;
+                                case 7:
+                                    qualifTempInput.value = "N3";
+                                    break;
+                                case 8:
+                                    qualifTempInput.value = "N4";
+                                    break;
+                                case 9:
+                                    qualifTempInput.value = "N5";
+                                    break;
+                                case 11:
+                                    qualifTempInput.value = "Aucune";
+                                    break;
+                                case 12:
+                                    qualifTempInput.value = "Etoile de mer 2";
+                                    break;
+                                case 13:
+                                    qualifTempInput.value = "Etoile de mer 3";
+                                    break;
+                                default:
+                                    qualifTempInput.value = "Inconnue"
+                                    break;
+                            }
+                            pourcentageNoxInput.value = element.get_nox_percentage();
+                            montantPayeInput.value = element.get_paid_amount();
+                            commentaireInput.value = element.get_comment();
+                            diveTeamMemberFound = true;
+                            diveTeamMemberDiveTeamId = element.get_id_palanquée();
+                            //console.log(diveTeamMemberDiveTeamId);
+                            tmp = false;
+                        }
+                    }
+                });
+            });
+            
 
-            tbody.appendChild(ligne);
+            if(diveTeamMemberFound){;
+                //let idTab = diveTeamMemberDiveTeamId - countNotDiveTeam;
+                let idTab = tabDiveTeamId.indexOf(diveTeamMemberDiveTeamId) + 1;
+                //console.log("idTab = " + idTab)
+                //console.log("diveTeamMemberDiveTeamId = " + diveTeamMemberDiveTeamId)
+                let tableBodyPalanquee = document.getElementById("tableBody"+idTab);
+                tableBodyPalanquee.appendChild(ligne);
+                tabDiveTeams.forEach(function (item) {
+                    if(item.get_id_dive() == idDive) { // Mettre l'id de la plongée ici
+                        setDivInfosPalanquee(idTab);
+                    }
+                });
+            }
+            else{
+                tbody.appendChild(ligne);
+            }
         }
-
     }
+
+    
 
     table.appendChild(tbody);
 
@@ -1749,6 +1489,7 @@ function createTableInscrits() {
     });
 
 }
+
 
 
 function addTimes(startTime, duration) {
@@ -1776,7 +1517,6 @@ function formatTime(time) {
   return time < 10 ? '0' + time : time;
 }
 
-
 function calculerAge(dateNaissance) {
     let maintenant = new Date();
     let anneeActuelle = maintenant.getFullYear();
@@ -1786,7 +1526,6 @@ function calculerAge(dateNaissance) {
     
     return age;
 }
-
 
 function getDiverById(id){
     for(let i = 0; i < tabDivers.length; i++){

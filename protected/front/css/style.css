@@ -66,6 +66,7 @@ body {
     height: 7vw;
     top: 90vh;
     left: 92vw;
+    position: fixed;
   }
 }
 

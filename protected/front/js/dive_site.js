@@ -229,7 +229,7 @@ function create_elements(tab_dive_sites) {
         siteElementButtonContainer.appendChild(siteElementButton);
         siteElement.appendChild(siteElementButtonContainer);
 
-        // Partie avec les boutons de modification et de suppression (FAIRE CSS)
+        // Partie avec les boutons de modification et de suppression
         if(isAdmin == 1){
             document.getElementById("open-site-modal").style.display = "block";
             let span_modif = document.createElement('span');
