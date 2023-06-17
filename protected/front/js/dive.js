@@ -8,6 +8,8 @@ import Diver from './Classes/diver.js';
 import DiveTeamMember from './Classes/dive_team_member.js';
 import PlannedDive from './Classes/planned_dive.js';
 import MaxDepthForQualification from './Classes/max_depth_for_qualification.js'
+
+
 // Calling socket functions
 SocketManager.getIdPlannedDive();
 SocketManager.getAllDiveSites();
@@ -37,6 +39,9 @@ let idPlannedDive;
 
 let loaded = 0;
 let nbOfLoaded = 11;
+var palanqueesValide = false;
+
+let attributionAutomatique = false;
 
 var tablecounter = 0;
 
@@ -170,7 +175,7 @@ function setButtonListener(){
 
     const attributionAutomatique = document.getElementById('attribution-automatique');
     attributionAutomatique.addEventListener('click', event => {
-        console.log("Non implémenté");
+        funcAttributionAutomatique()
     });
 
     const validerButton = document.getElementById('valider');
@@ -179,7 +184,7 @@ function setButtonListener(){
     });
 }
 
-function validerPalanquées(){
+function validerPalanquées(attributionAutomatique){
 
     let idQualification;
     let minGuidedDepth = 9999;
@@ -189,7 +194,9 @@ function validerPalanquées(){
 
     //Check if there is a table
     if (tablecounter == 0){
-        alert("Il n'y a aucune palanquée à valider, merci d'en créer au moins une.");
+        if(attributionAutomatique == false){
+            alert("Il n'y a aucune palanquée à valider, merci d'en créer au moins une.");
+        }
         return;
     }
     //Check if tableInscrits is empty
@@ -198,7 +205,9 @@ function validerPalanquées(){
 
     let trElements = tableInscrits.getElementsByTagName('tr');
     if (trElements.length > 1){
-        alert("Une ou plusieurs personnes n'ont pas été attribuées à une palanquée, merci de les attribuer manuellement.");
+        if(attributionAutomatique == false){
+            alert("Une ou plusieurs personnes n'ont pas été attribuées à une palanquée, merci de les attribuer manuellement.");
+        }
         return;
     }
 
@@ -244,7 +253,9 @@ function validerPalanquées(){
 
         if (trElements.length == 2){
             //console.log("Tableau vide");
-            confirm("Impossible de valider si une palanquée est vide.\nLa palanquée " + (i+1) + " est vide");
+            if(attributionAutomatique == false){
+                confirm("Impossible de valider si une palanquée est vide.\nLa palanquée " + (i+1) + " est vide");
+            }
             return;
         }   
     }
@@ -281,18 +292,26 @@ function validerPalanquées(){
         
 
         if(isThereUnderage && nbrDiver > 3){
-            confirm("Impossible de valider si une palanquée contient un enfant de moins de 16 ans et plus de 3 personnes totales.\nLa palanquée " + (i+1) + " contient " + nbrUnderage + " enfants de moins de 16 ans et " + nbrDiver + " plongeurs au total.");
+            if(attributionAutomatique == false){
+                confirm("Impossible de valider si une palanquée contient un enfant de moins de 16 ans et plus de 3 personnes totales.\nLa palanquée " + (i+1) + " contient " + nbrUnderage + " enfants de moins de 16 ans et " + nbrDiver + " plongeurs au total.");
+            }
             return;
         }
         else if(nbrDiver > 5){
-            confirm("Impossible de valider si une palanquée contient plus de 5 plongeurs.\nLa palanquée " + (i+1) + " contient " + nbrDiver + " plongeurs.");
+            if(attributionAutomatique == false){
+                confirm("Impossible de valider si une palanquée contient plus de 5 plongeurs.\nLa palanquée " + (i+1) + " contient " + nbrDiver + " plongeurs.");
+            }
             return;
         } else if(nbrUnderage > 2){
-            confirm("Impossible de valider si une palanquée contient plus de 2 enfants de moins de 16 ans.\nLa palanquée " + (i+1) + " contient " + nbrUnderage + " enfants de moins de 16 ans.");
+            if(attributionAutomatique == false){
+                confirm("Impossible de valider si une palanquée contient plus de 2 enfants de moins de 16 ans.\nLa palanquée " + (i+1) + " contient " + nbrUnderage + " enfants de moins de 16 ans.");
+            }
             return;
         }
         else if(nbrDiver == 5 && nbrGuide < 2){
-            confirm("Impossible de valider si une palanquée contient 5 plongeurs et moins de 2 guides.\nLa palanquée " + (i+1) + " contient " + nbrGuide + " guide(s).");
+            if(attributionAutomatique == false){
+                confirm("Impossible de valider si une palanquée contient 5 plongeurs et moins de 2 guides.\nLa palanquée " + (i+1) + " contient " + nbrGuide + " guide(s).");
+            }
             return;
         }
     }
@@ -383,7 +402,11 @@ function validerPalanquées(){
                 }
             }); 
         }
+        console.log("Vérifications terminées")
+        
     }
+
+    console.log('oui' + isThereGuide + isThereDirector);
 
     if(!isThereGuide){
         //console.log(tableGuide)
@@ -398,16 +421,22 @@ function validerPalanquées(){
         }else if (nbrGuide < tablecounter){
             message += "\n Vous disposez de " + nbrGuide + " guides pour " + tablecounter + " palanquées : Vous devez réduire le nombre de palanquées. ";
         }
-
-        confirm(message);
+        if(attributionAutomatique == false){
+            confirm(message);
+        }
         return;
     }
 
     if(!isThereDirector){
         //console.log("Directeur non trouvé");
-        confirm("Impossible de valider si il n'y a pas de directeur de plongée \n");
+        if(attributionAutomatique == false){
+            confirm("Impossible de valider si il n'y a pas de directeur de plongée \n");
+        }
         return;
     }
+
+    console.log("oui2")
+    palanqueesValide = true;
 
     //console.log("Directeur trouvé : " + directeurPlongée);
     let dive = créationDive(directeurPlongée);
@@ -621,6 +650,279 @@ function créationDiveTeamMember(i, j, trElements, tableGuide){
     SocketManager.addDiveTeamMember(idDiver, id_dive_team, qualificationTempNombre, qualification, role, instructor_qualification, pourcentageNox, comment, montantPaye);
 }
 
+function funcAttributionAutomatique(){
+    
+    let nbDiversPlongeeActuelle = 0;
+    attributionAutomatique = true;
+
+    //Counting the number of divers for the current dive
+    for (let i = 0; i < tabDiveRegistrations.length; i++) {
+        if(tabDiveRegistrations[i].get_planned_dive_id() == idPlannedDive) {
+            nbDiversPlongeeActuelle += 1;
+        }
+    }
+    console.log("Nombre de plongeurs à la plongée actuelle : " + nbDiversPlongeeActuelle);
+
+    //Calculating the number of dive teams depending on the number of divers
+    let nbDiveTeams = Math.ceil(nbDiversPlongeeActuelle/4);
+    console.log("Nombre de palanquées : " + nbDiveTeams);
+
+    //Deleting all the already registered dive teams
+    if(supprimerTousLesTableaux(attributionAutomatique) == false){
+        console.log("Erreur lors de la suppression des tableaux");
+        return;
+    }
+
+    //Creating the dive teams tables depending on the number of dive teams
+    for(let i = 0; i < nbDiveTeams; i++){
+        creationTableauPalanquee(5,10,false);
+        console.log("Création tableau palanquée " + i);
+    }
+
+    //Creating the dive teams randomly
+    let idDive = -1;
+
+    while(palanqueesValide == false){
+    
+    for (let i = 0; i < tabDiveRegistrations.length; i++) {
+        if(tabDiveRegistrations[i].get_planned_dive_id() == idPlannedDive) {
+        //Calculating the random dive team for the current diver
+        let random = Math.floor(Math.random() * nbDiveTeams);
+        console.log("Plongeur " + i + " dans la palanquée " + random);
+        random = random + 1;
+
+        let palanquee = document.getElementById("tableBody" + random);
+        let ligne = document.createElement("tr");
+        ligne.classList.add("tr");
+        console.log(tabDiveRegistrations)
+        console.log(tabDiveRegistrations[i].get_diver_id())
+        let diver = getDiverById(tabDiveRegistrations[i].get_diver_id());
+        console.log(diver);
+
+        let celluleNom = document.createElement("td");
+        celluleNom.innerHTML = getDiverById(tabDiveRegistrations[i].get_diver_id()).get_last_name();
+
+        let cellulePrenom = document.createElement('td');
+        cellulePrenom.innerHTML = getDiverById(tabDiveRegistrations[i].get_diver_id()).get_first_name();
+
+        let celluleNiveau = document.createElement('td');
+        let diverqualif = getDiverById(tabDiveRegistrations[i].get_diver_id()).get_diver_qualification();
+
+        switch(parseInt(diverqualif)){
+            case 1:
+                celluleNiveau.innerHTML = "Etoile de mer 1";
+                break;
+            case 2:
+                celluleNiveau.innerHTML = "Bronze";
+                break;
+            case 3:
+                celluleNiveau.innerHTML = "Argent";
+                break;
+            case 4:
+                celluleNiveau.innerHTML = "Or";
+                break;
+            case 5:
+                celluleNiveau.innerHTML = "N1";
+                break;
+            case 6:
+                celluleNiveau.innerHTML = "N2";
+                break;
+            case 7:
+                celluleNiveau.innerHTML = "N3";
+                break;
+            case 8:
+                celluleNiveau.innerHTML = "N4";
+                break;
+            case 9:
+                celluleNiveau.innerHTML = "N5";
+                break;
+            case 11:
+                celluleNiveau.innerHTML = "Aucun";
+                break;
+            case 12:
+                celluleNiveau.innerHTML = "Etoile de mer 2";
+                break;
+            case 13:
+                celluleNiveau.innerHTML = "Etoile de mer 3";
+                break;
+            default:
+                celluleNiveau.innerHTML = "Inconnu"
+                break;
+        }
+
+
+        let celluleAge = document.createElement('td');
+        let age = calculerAge(getDiverById(tabDiveRegistrations[i].get_diver_id()).get_birth_date());
+        celluleAge.innerHTML = age;
+
+        let celluleRole = document.createElement('td');
+        celluleRole.innerHTML = tabDiveRegistrations[i].get_diver_role();
+
+        let celluleQualifTemp = document.createElement('td');
+        let qualifTempInput = document.createElement('input');
+        qualifTempInput.setAttribute("type", "text");
+        qualifTempInput.setAttribute("id", "qualifTempInput" + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);            
+        qualifTempInput.setAttribute("value", "");
+        celluleQualifTemp.appendChild(qualifTempInput);
+
+        let cellulePourcentageNox = document.createElement('td');
+        let pourcentageNoxInput = document.createElement('input');
+        pourcentageNoxInput.setAttribute("type", "number");
+
+        pourcentageNoxInput.setAttribute("min", "0");
+        pourcentageNoxInput.setAttribute("max", "100");
+
+        pourcentageNoxInput.setAttribute("id", "pourcentageNoxInput" + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);
+            
+        pourcentageNoxInput.setAttribute("value", "");
+        cellulePourcentageNox.appendChild(pourcentageNoxInput);
+
+        let celluleMontantPaye = document.createElement('td');
+        let montantPayeInput = document.createElement('input');
+        montantPayeInput.setAttribute("type", "number");
+        montantPayeInput.setAttribute("min", "0");
+        montantPayeInput.setAttribute("id", "montantPayeInput" + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);
+        //montantPayeInput.setAttribute("max", getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification());
+        montantPayeInput.setAttribute("value", "");
+        celluleMontantPaye.appendChild(montantPayeInput);
+
+        let celluleCommentaire = document.createElement('td');
+        let commentaireInput = document.createElement('textarea');
+        commentaireInput.setAttribute("id", "commentaireInput" +  + tabDiveRegistrations[i].get_diver_id()+idPlannedDive);
+        commentaireInput.setAttribute("value", "");
+        commentaireInput.setAttribute("placeholder", "Commentaire");
+        commentaireInput.classList.add("commentInput");
+        celluleCommentaire.appendChild(commentaireInput);
+
+        let celluleHandle = document.createElement('td');
+        celluleHandle.classList.add('my-handle');
+        celluleHandle.innerHTML = '<i class="fas fa-grip-vertical"></i>';
+
+        ligne.appendChild(celluleNom);
+        ligne.appendChild(cellulePrenom);
+        ligne.appendChild(celluleNiveau);
+        ligne.appendChild(celluleAge);
+        ligne.appendChild(celluleRole);
+        ligne.appendChild(celluleQualifTemp);
+        ligne.appendChild(cellulePourcentageNox);
+        ligne.appendChild(celluleMontantPaye);
+        ligne.appendChild(celluleCommentaire);
+        ligne.appendChild(celluleHandle);
+
+        let tmp = false;
+            let tabDiveTeamId = [];
+            tabDiveTeams.forEach(element => {
+                tabDives.forEach(element2 => {
+                    if(element.get_id_dive() == element2.get_id() && element2.get_id_planned_dive() == idPlannedDive){
+                        tmp = true;
+                        //console.log("tmp = true");
+                        tabDiveTeamId.push(element.get_id());
+                    }
+                });
+            });
+            tabDiveTeamId.sort();
+            //console.log(tabDiveTeamId);
+            let diveTeamMemberFound = false;
+            let diveTeamMemberDiveTeamId = 0;
+            tabDiveTeamMembers.forEach(element => {
+                tabDiveTeamId.forEach(element2 => {
+                    if(element.get_id_palanquée() == element2){
+                        if(element.get_id() == tabDiveRegistrations[i].get_diver_id() && tmp){
+                            switch(parseInt(element.get_temporary_diver_qualification())){
+                                case 1:
+                                    qualifTempInput.value = "Etoile de mer 1";
+                                    break;
+                                case 2:
+                                    qualifTempInput.value = "Bronze";
+                                    break;
+                                case 3:
+                                    qualifTempInput.value = "Argent";
+                                    break;
+                                case 4:
+                                    qualifTempInput.value = "Or";
+                                    break;
+                                case 5:
+                                    qualifTempInput.value = "N1";
+                                    break;
+                                case 6:
+                                    qualifTempInput.value = "N2";
+                                    break;
+                                case 7:
+                                    qualifTempInput.value = "N3";
+                                    break;
+                                case 8:
+                                    qualifTempInput.value = "N4";
+                                    break;
+                                case 9:
+                                    qualifTempInput.value = "N5";
+                                    break;
+                                case 11:
+                                    qualifTempInput.value = "Aucune";
+                                    break;
+                                case 12:
+                                    qualifTempInput.value = "Etoile de mer 2";
+                                    break;
+                                case 13:
+                                    qualifTempInput.value = "Etoile de mer 3";
+                                    break;
+                                default:
+                                    qualifTempInput.value = "Inconnue"
+                                    break;
+                            }
+                            pourcentageNoxInput.value = element.get_nox_percentage();
+                            montantPayeInput.value = element.get_paid_amount();
+                            commentaireInput.value = element.get_comment();
+                            diveTeamMemberFound = true;
+                            diveTeamMemberDiveTeamId = element.get_id_palanquée();
+                            //console.log(diveTeamMemberDiveTeamId);
+                            tmp = false;
+                        }
+                    }
+                });
+            });
+            
+
+            if(diveTeamMemberFound){;
+                //let idTab = diveTeamMemberDiveTeamId - countNotDiveTeam;
+                let idTab = tabDiveTeamId.indexOf(diveTeamMemberDiveTeamId) + 1;
+                //console.log("idTab = " + idTab)
+                //console.log("diveTeamMemberDiveTeamId = " + diveTeamMemberDiveTeamId)
+                let tableBodyPalanquee = document.getElementById("tableBody"+idTab);
+                tableBodyPalanquee.appendChild(ligne);
+                tabDiveTeams.forEach(function (item) {
+                    if(item.get_id_dive() == idDive) { // Mettre l'id de la plongée ici
+                        setDivInfosPalanquee(idTab);
+                    }
+                });
+            }
+            else{
+                palanquee.appendChild(ligne);
+            }
+        }
+
+
+    
+
+    let tableInscrits = document.getElementById('tableInscrits')
+    let trElements = tableInscrits.getElementsByTagName('tr');
+    console.log(trElements.length + "inscrits");
+    //Delete all the diver in table inscription
+    let tableBodyInscription = document.getElementById("tableInscrits");
+    //get child of tableBodyInscription
+    let child = tableBodyInscription.lastElementChild;
+    child.innerHTML = "";
+
+
+    validerPalanquées(attributionAutomatique);
+
+    console.log("Attribution automatique" + attributionAutomatique + " : " + palanqueesValide);
+
+    }
+    console.log("Attribution automatique" + attributionAutomatique + " : " + palanqueesValide);
+}
+    console.log("Palanquées validées : " + palanqueesValide);
+}
+
 function getIdQualification(qualification){
     let idQualification = -1;
     switch(qualification){
@@ -716,7 +1018,7 @@ function suppressionTableauPalanquée(tableId){
     //console.log("Nombre tableaux : " + tablecounter)
 }
 
-function supprimerTousLesTableaux(){
+function supprimerTousLesTableaux(attributionAutomatique){
     let nbrRempli = 0;
 
     //Firstly, check if the tables are empty
@@ -733,6 +1035,25 @@ function supprimerTousLesTableaux(){
         }
     }
 
+    if(attributionAutomatique == true){
+
+        if(nbrRempli == 0){
+            const tableContainer = document.getElementById('tableContainer');
+            tableContainer.innerHTML = "";
+            tablecounter = 0;
+            return true;
+        }
+        else if(nbrRempli == 1){
+            confirm("Merci de vider le tableau concerné avant l'attribution automatique");
+            return false;
+        }
+        else{
+            confirm("Merci de vider les tableaux concernés avant l'attribution automatique. \n Nombre de tableaux remplis : " + nbrRempli + "");
+            return false;
+        }
+
+    }
+
     if(nbrRempli == 0){
         if (confirm("Voulez-vous vraiment supprimer tous les tableaux ?")) {
             const tableContainer = document.getElementById('tableContainer');
@@ -746,6 +1067,7 @@ function supprimerTousLesTableaux(){
     else{
         confirm("Impossible de supprimer des tableaux remplis, merci de vider les tableaux concernés avant la suppression. \n Nombre de tableaux remplis : " + nbrRempli + "");
     }
+
 }
 
 // TABLEAU PALANQUÉE
