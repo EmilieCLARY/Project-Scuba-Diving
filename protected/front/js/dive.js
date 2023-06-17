@@ -920,6 +920,11 @@ function funcAttributionAutomatique(){
     }
     console.log("Attribution automatique" + attributionAutomatique + " : " + palanqueesValide);
 }
+    //validerPalanquées(attributionAutomatique);
+
+    for(let i = 0; i < nbDiveTeams; i++){
+        setDivInfosPalanquee(i+1)
+    }
     console.log("Palanquées validées : " + palanqueesValide);
 }
 
