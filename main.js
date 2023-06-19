@@ -150,6 +150,15 @@ app.get('/dive', (req, res) => {
     }
 })
 
+app.get('/security_pdf', (req, res) => {
+    if(req.session.isAdmin === 1){
+        res.sendFile(__dirname + '/protected/front/html/security_pdf.html');
+    }
+    else{
+        res.redirect('/')
+    }
+})
+
 app.get('/admin', (req, res) => {
     if(req.session.loggedIn === true){
         res.sendFile(__dirname + '/front/html/admin.html')

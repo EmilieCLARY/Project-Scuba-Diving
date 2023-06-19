@@ -1247,7 +1247,7 @@ function searchDiveSite(){
         if(checkbox_coming.checked && !checkbox_past.checked){
             if(checkbox_registered.checked){
                 if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
-                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                    if((getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1) && isUserInDive(tabPlannedDives[i].get_id())){
                         document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                     }
                     else{
@@ -1257,7 +1257,7 @@ function searchDiveSite(){
             }
             else{
                 if(new Date(tabPlannedDives[i].get_planned_date()) >= new Date()){
-                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1  || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1){
                         document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                     }
                     else{
@@ -1269,7 +1269,7 @@ function searchDiveSite(){
         else if(!checkbox_coming.checked && checkbox_past.checked){
             if(checkbox_registered.checked){
                 if(new Date(tabPlannedDives[i].get_planned_date()) < new Date()){
-                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                    if((getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1) && isUserInDive(tabPlannedDives[i].get_id())){
                         document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                     }
                     else{
@@ -1279,7 +1279,7 @@ function searchDiveSite(){
             }
             else{
                 if(new Date(tabPlannedDives[i].get_planned_date()) < new Date()){
-                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                    if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1){
                         document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                     }
                     else{
@@ -1290,7 +1290,7 @@ function searchDiveSite(){
         }
         else if(checkbox_past.checked && checkbox_coming.checked){
             if(checkbox_registered.checked){
-                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 && isUserInDive(tabPlannedDives[i].get_id())){
+                if((getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1 ) && isUserInDive(tabPlannedDives[i].get_id())){
                     document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                 }
                 else{
@@ -1298,7 +1298,7 @@ function searchDiveSite(){
                 }
             }
             else{
-                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1){
+                if(getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_site_name().toUpperCase().indexOf(filter) > -1 || getDiveSiteById(tabPlannedDives[i].get_id_dive_site()).get_city().toUpperCase().indexOf(filter) > -1){
                     document.getElementById("card-item"+tabPlannedDives[i].get_id()).style.display = "block";
                 }
                 else{

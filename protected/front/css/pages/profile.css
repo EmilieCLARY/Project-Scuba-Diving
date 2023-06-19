@@ -6,6 +6,12 @@
     margin-top: 20vh;
 }
 
+@media (max-width: 670px) {
+  .container {
+    margin-top: 13vh;
+  }
+}
+
 body{
     color: #1a202c;
     text-align: left;   

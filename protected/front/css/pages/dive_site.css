@@ -31,6 +31,12 @@
   box-shadow: rgba(50, 50, 93, 0.25) 0vh 1.5vh 3vh -0.5vh, rgba(0, 0, 0, 0.3) 0vh 0.25vh 1.6vh -0.25vh;
 }
 
+@media (max-width: 380px) {
+  .dive-site-list-item {
+    height: 35vh;
+  }
+}
+
 @media (max-width: 680px) {
   .dive-site-list-item {
     width: 25rem;
@@ -45,6 +51,7 @@
 @media (max-width: 680px) {
   .dive-site-list-item p {
     font-size: 0.8rem;
+    margin-right: 1vw;
   }
 }
 
@@ -96,6 +103,14 @@
   }
 }
 
+@media (max-width: 380px){
+  .dive-site-list-item img{
+    width: 14vh;
+    height: 14vh;
+    margin: 0 0.2rem;
+  }
+}
+
 .top-part-wrap {
   display: flex;
   flex-direction: row;
@@ -136,6 +151,12 @@
   padding: 0 0.2rem;
 }
 
+@media (max-width: 380px) {
+  .dive-site-list-item .bottom-part .bottom-right {
+    height: 14vh;
+  }
+}
+
 /******************************************************************/
 /*                         HOVER VILLE                            */
 /******************************************************************/
@@ -173,8 +194,10 @@
 
 .hover-container {
   visibility: hidden;
-  position: relative ;
-  top: 16.5vh; left: -66.5vw;
+  /*position: relative ;
+  top: 16.5vh; left: -66.5vw;*/
+  position: absolute;
+  left: 20vw;
   width: 0;
 }
 
@@ -256,13 +279,13 @@
 /*********************************************************************/
 
 .form-dive-site{
-  width  : 70vw;
-  height: 80vh;
+  width: 72vw;
+  height: 85vh;
   background : var(--bg-color);
   display: flex;
   flex-direction: column;
-  margin-top: 15vh;
-  margin-left: 15vw;
+  margin-top: 14vh;
+  margin-left: 14vw;
   border-radius: 3vw;
 }
 
@@ -280,6 +303,12 @@
   margin-left: 2vw;
 }
 
+@media (max-width: 440px){
+  .form-dive-site .title h1 {
+    font-size: 2.5vh;
+  }
+}
+
 .form-dive-site .title span {
   font-size: 3.5vh;
   margin-right: 2.5vw;
@@ -295,7 +324,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 60vh;
+  height: 65vh;
   width: 70vw;
 }
 
@@ -303,16 +332,38 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: end;
   height: 60vh;
   width: 30vw;
   margin-right: 2.5vw;
+  margin-left: 1vw;
+  text-align: right;
 }
 
-.form-dive-site .form-body .labels label {
-  font-size: 2.5vh;
-  height: 5vh;
-  padding-top: 0.5vh;
+@media (max-width: 340px){
+  .form-dive-site .form-body .labels label {
+    font-size: 1.2vh;
+  }
+}
+
+@media (min-width: 340px){
+  .form-dive-site .form-body .labels label {
+    font-size: 1.7vh;
+    height: 5vh;
+    padding-top: 0.5vh;
+  }
+}
+
+@media (min-width: 675px){
+  .form-dive-site .form-body .labels label {
+    font-size: 2vh;
+    height: 5vh;
+  }
+}
+
+@media (min-width: 966px){
+  .form-dive-site .form-body .labels label {
+    font-size: 2.5vh;
+  }
 }
 
 .form-dive-site .form-body .inputs {
@@ -330,7 +381,34 @@
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
   font-size: 2vh;
+  margin-bottom: 0.75vh;
 }
+
+@media (max-width: 340px){
+  .form-dive-site .form-body .inputs input[type=text] {
+      font-size: 1vh;
+      height: 2vh;
+    }
+  }
+  
+  @media (min-width: 340px){
+  .form-dive-site .form-body .inputs input[type=text] {
+      font-size: 1.5vh;
+      height: 3vh;
+    }
+  }
+  
+  @media (min-width: 675px){
+  .form-dive-site .form-body .inputs input[type=text] {
+      font-size: 1.8vh;
+    }
+  }
+  
+  @media (min-width: 966px){
+  .form-dive-site .form-body .inputs input[type=text] {
+      font-size: 2.2vh;
+    }
+  }
 
 .form-dive-site .form-body .inputs input[type=file] {
   width: 25vw;
@@ -436,12 +514,21 @@
   cursor: pointer;
   font-weight: 600;
   border-radius: 1vh;
-  padding: 1.3vh 2.5vw;
   border: 0;
   color: #fff;
   background: var(--secondary-color);
   line-height: 1.15;
   font-size: 1.5vh;
+}
+
+@media (max-width: 62.5rem){
+  .form-dive-site .form-body .inputs #dive-site-image-button {
+    font-size: 1.2vh;
+    padding: 0.5vh 1vh;
+    width: 20vw;
+    height: auto;
+    font-weight: 500;
+  }
 }
 
 .form-dive-site .form-body .inputs #dive-site-image-button:hover {
@@ -474,6 +561,17 @@
   background: var(--secondary-color);
   line-height: 1.15;
   font-size: 1.5vh;
+}
+
+@media (max-width: 470px){
+  .form-dive-site .form-dive-site-validation #validate-dive-site {
+    font-size: 1.2vh;
+    padding: 0.5vh 1vh;
+    width: auto;
+    height: auto;
+    font-weight: 500;
+    margin-left: 17vw;
+  }
 }
 
 .form-dive-site .form-dive-site-validation #validate-dive-site:hover{
@@ -535,7 +633,18 @@
   }
 }
 
-@media (max-width: 62.5rem) {
+@media (max-width: 550px){
+  .input-search input[type=text] {
+    margin-left: 1vw;
+    width: 30vw;
+    height: 7vw;
+    border-radius: 1vh;
+    border: 0.2vh solid var(--accent-color);
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 550px) {
   .input-search input[type=text] {
     margin-left: 1vw;
     width: 20vw;

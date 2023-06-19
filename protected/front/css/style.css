@@ -113,6 +113,77 @@ body {
   cursor: pointer;
 }
 
+/* Special diver page*/
+.div-return-home-diver {
+  width:3vw;
+  height:3vw;
+  background-image: url("../img/Bubble.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 570px) {
+  .div-return-home-diver a {
+    font-size: 1rem;
+  }
+
+  .div-return-home-diver {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+    position: fixed;
+  }
+}
+
+@media (min-width: 570px) {
+  .div-return-home-diver a {
+    font-size: 1.2rem;
+  }
+
+  .div-return-home-diver {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+  }
+}
+
+@media (min-width: 820px) {
+  .div-return-home-diver a {
+    font-size: 1.5rem;
+  }
+
+  .div-return-home-diver {
+    width: 7vw;
+    height: 7vw;
+    top: 90vh;
+    left: 92vw;
+  }
+}
+
+@media (min-width: 62.5rem) {
+  .div-return-home-diver a {
+    font-size: 1.4rem;
+  }
+
+  .div-return-home-diver {
+    width: 4vw;
+    height: 4vw;
+    top: 85vh;
+    left: 95.1vw;
+  }
+}
+
+.div-return-home-diver:hover {
+  cursor: pointer;
+}
+
 
 /**********************************************************************/
 /*                       CONTAINERS HOMEPAGE                          */

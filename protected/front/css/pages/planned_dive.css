@@ -413,6 +413,12 @@ body {
   margin-left: 2vw;
 }
 
+@media (max-width: 790px){
+  .form-planned-dive .title h1 {
+    font-size: 1.2rem;
+  }
+}
+
 .form-planned-dive .title span {
   font-size: 3.5vh;
   margin-right: 2.5vw;
@@ -434,23 +440,46 @@ body {
 .form-planned-dive .form-body .labels {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: end;
+  justify-content: space-around;
   height: 60vh;
   width: 22vw;
   margin-right: 2.5vw;
 }
 
 .form-planned-dive .form-body .labels label {
-  font-size: 2.5vh;
   height: 5vh;
   padding-top: 0.5vh;
+  text-align: right;
+}
+
+@media (max-width: 340px){
+  .form-planned-dive .form-body .labels label {
+    font-size: 1.2vh;
+  }
+}
+
+@media (min-width: 340px){
+  .form-planned-dive .form-body .labels label {
+    font-size: 1.7vh;
+  }
+}
+
+@media (min-width: 675px){
+  .form-planned-dive .form-body .labels label {
+    font-size: 2vh;
+  }
+}
+
+@media (min-width: 966px){
+  .form-planned-dive .form-body .labels label {
+    font-size: 2.5vh;
+  }
 }
 
 .form-planned-dive .form-body .inputs {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 60vh;
   width: 40vw;
   margin: 0 2.5vw;
@@ -462,6 +491,33 @@ body {
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
   font-size: 2vh;
+  margin-bottom: 0.75vh;
+}
+
+@media (max-width: 340px){
+  .form-planned-dive .form-body .inputs input[type=text] {
+      font-size: 1vh;
+      height: 2vh;
+    }
+  }
+  
+@media (min-width: 340px){
+.form-planned-dive .form-body .inputs input[type=text] {
+    font-size: 1.5vh;
+    height: 3vh;
+  }
+}
+
+@media (min-width: 675px){
+.form-planned-dive .form-body .inputs input[type=text] {
+    font-size: 1.8vh;
+  }
+}
+
+@media (min-width: 966px){
+.form-planned-dive .form-body .inputs input[type=text] {
+    font-size: 2.2vh;
+  }
 }
 
 .form-planned-dive .form-body .inputs input[type="date"]{
@@ -469,7 +525,33 @@ body {
   height: 5vh;
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
+  margin-bottom: 0.75vh;
+}
+
+@media (max-width: 340px){
+  .form-planned-dive .form-body .inputs input[type="date"] {
+      font-size: 1vh;
+      height: 2vh;
+    }
+  }
+  
+@media (min-width: 340px){
+.form-planned-dive .form-body .inputs input[type="date"] {
+    font-size: 1.5vh;
+    height: 3vh;
+  }
+}
+
+@media (min-width: 675px){
+.form-planned-dive .form-body .inputs input[type="date"] {
+    font-size: 1.8vh;
+  }
+}
+
+@media (min-width: 966px){
+.form-planned-dive .form-body .inputs input[type="date"] {
+    font-size: 2.2vh;
+  }
 }
 
 .form-planned-dive .form-body .inputs input[type="time"]{
@@ -477,7 +559,33 @@ body {
   height: 5vh;
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
+  margin-bottom: 0.75vh;
+}
+
+@media (max-width: 340px){
+  .form-planned-dive .form-body .inputs input[type="time"] {
+      font-size: 1vh;
+      height: 2vh;
+    }
+  }
+  
+@media (min-width: 340px){
+.form-planned-dive .form-body .inputs input[type="time"] {
+    font-size: 1.5vh;
+    height: 3vh;
+  }
+}
+
+@media (min-width: 675px){
+.form-planned-dive .form-body .inputs input[type="time"] {
+    font-size: 1.8vh;
+  }
+}
+
+@media (min-width: 966px){
+.form-planned-dive .form-body .inputs input[type="time"] {
+    font-size: 2.2vh;
+  }
 }
 
 .form-planned-dive .form-body .inputs select{
@@ -486,7 +594,32 @@ body {
   height: 5vh;
   border-radius: 1vh;
   border: 0.2vh solid var(--accent-color);
-  font-size: 2vh;
+}
+
+@media (max-width: 340px){
+  .form-planned-dive .form-body .inputs select {
+      font-size: 1vh;
+      height: 2vh;
+    }
+  }
+  
+@media (min-width: 340px){
+.form-planned-dive .form-body .inputs select {
+    font-size: 1.5vh;
+    height: 3vh;
+  }
+}
+
+@media (min-width: 675px){
+.form-planned-dive .form-body .inputs select {
+    font-size: 1.8vh;
+  }
+}
+
+@media (min-width: 966px){
+.form-planned-dive .form-body .inputs select {
+    font-size: 2.2vh;
+  }
 }
 
 .form-planned-dive .form-body .inputs #profile-image-button {
@@ -538,6 +671,15 @@ body {
   font-size: 2.5vh;
 }
 
+@media (max-width: 830px){
+  .form-planned-dive .form-planned-dive-validation #validate-planned-dive {
+    width: auto;
+    height: 7vh;
+    font-size: 2vh;
+    font-weight: 500;
+  }
+}
+
 .form-planned-dive .form-planned-dive-validation #validate-planned-dive:hover {
   transition: all .1s ease;
   color: var(--text-color);
@@ -553,31 +695,31 @@ body {
 
 
 .div-modal{
-  width  : 70vw;
+  width  : 95vw;
   height: 80vh;
+  margin-top: 15vh;
+  margin-left: 2.5vw;
   background : var(--bg-color);
   display: flex;
   flex-direction: column;
-  margin-top: 15vh;
-  margin-left: 15vw;
   border-radius: 3vw;
 }
 
-@media (min-width: 280px) {
-  .div-modal{
-    width  : 95vw;
-    height: 80vh;
-    margin-top: 15vh;
-    margin-left: 2.5vw;
-  }
-}
-
-@media (min-width: 400px) {
+@media (min-width: 620px) {
   .div-modal{
     width  : 85vw;
     height: 80vh;
     margin-top: 15vh;
     margin-left: 7.5vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .div-modal{
+    width  : 70vw;
+    height: 80vh;
+    margin-top: 15vh;
+    margin-left: 15vw;
   }
 }
 
@@ -593,6 +735,12 @@ body {
 .div-modal .title h1 {
   font-size: 3em;
   margin-left: 2vw;
+}
+
+@media (max-width: 790px){
+  .div-modal .title h1 {
+    font-size: 1.2rem;
+  }
 }
 
 .div-modal .title span {
@@ -686,7 +834,19 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 60vh;
-  width: 35vw;
+  width: 47.5vw;
+}
+
+@media (min-width: 620px) {
+  .div-modal .modal-body .modal-body-left {
+    width  : 42.5vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .div-modal .modal-body .modal-body-left {
+    width  : 35vw;
+  }
 }
 
 .div-modal .modal-body .modal-body-left .modal-site-name {
@@ -716,7 +876,7 @@ body {
 
 .div-modal .modal-body .modal-body-left .modal-price {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   border: 0.5vh solid var(--secondary-color);
@@ -724,11 +884,22 @@ body {
   border-radius: 1.5vh;
 }
 
+@media (min-width: 1200px) {
+  .div-modal .modal-body .modal-body-left .modal-price {
+    flex-direction: row;
+  }
+}
+
 .div-modal .modal-body .modal-body-left .modal-price p {
-  font-size: 2vh;
+  font-size: 3em;
   font-weight: bold;
   text-align: center;
-  width: 16vw;
+}
+
+@media (min-width: 1200px) {
+  .div-modal .modal-body .modal-body-left .modal-price p {
+    font-size: 2em;
+  }
 }
 
 .div-modal .modal-body .modal-body-left .modal-text-zones {
@@ -789,8 +960,20 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 35vw;
+  width: 47.5vw;
   height: 60vh;
+}
+
+@media (min-width: 620px) {
+  .div-modal .modal-body .modal-body-right {
+    width  : 42.5vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .div-modal .modal-body .modal-body-right {
+    width  : 35vw;
+  }
 }
 
 .div-modal .modal-body .modal-body-right .modal-dive-time {
@@ -830,13 +1013,13 @@ body {
 
 @media screen and (min-width: 320px) {
   .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
-    font-size: calc(13px + 30 * ((100vw - 320px) / 680));
+    font-size: calc(5px + 30 * ((100vw - 320px) / 680));
   }
 }
 
 @media screen and (min-width: 1000px) {
   .div-modal .modal-body .modal-body-right .modal-dive-time .modal-dive-month {
-    font-size: 40px;
+    font-size: 35px;
   }
 } 
 
@@ -909,7 +1092,6 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  width: 70vw;
   height: 10vh;
 }
 
@@ -919,12 +1101,37 @@ body {
   cursor: pointer;
   font-weight: 600;
   border-radius: 1vh;
-  padding: 1.3vh 2.5vw;
+  padding: 1.3vh 0vw;
   border: 0;
   color: #fff;
   background: var(--secondary-color);
   line-height: 1.15;
-  font-size: 1.8vh;
+  font-size: calc(10px + 15 * ((100vw - 320px) / 680));
+  width: 20vw;
+}
+
+@media screen and (min-width: 320px) {
+  .div-modal .modal-inscription-planned-dive button {
+    font-size: calc(10px + 15 * ((100vw - 320px) / 680));
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .div-modal .modal-inscription-planned-dive button {
+    font-size: 25px;
+  }
+} 
+
+@media (min-width: 620px) {
+  .div-modal .modal-inscription-planned-dive button {
+    width  : 17vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .div-modal .modal-inscription-planned-dive button {
+    width  : 13vw;
+  }
 }
 
 /********************************************************************/

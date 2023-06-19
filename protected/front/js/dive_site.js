@@ -460,6 +460,12 @@ function hoverlistener() {
         }, false); 
         */
         town_hover[i].addEventListener("click", function( event ){
+            console.log(event);
+            let yposition = event.srcElement.offsetTop-100;
+            if (event.srcElement.localName == "i") {
+                yposition = event.srcElement.parentElement.offsetTop-100;
+            }
+            all_map_div[i].style.top = yposition + "px";
             all_map_div[i].style.visibility = 'visible';
             town_hover[i].classList.add("highlight");
             for (let j = 0 ; j < town_hover.length; j++) {
@@ -653,7 +659,7 @@ function searchDiveSite(){
     let input = document.getElementById("input-search-text");
     let filter = input.value.toUpperCase();
     tabDiveSites.forEach(element => {
-        if(element.get_site_name().toUpperCase().indexOf(filter) > -1){
+        if(element.get_site_name().toUpperCase().indexOf(filter) > -1 || element.get_city().toUpperCase().indexOf(filter) > -1){
             document.getElementById("dive-site-" + element.get_id()).style.display = "block";
         } else {
             document.getElementById("dive-site-" + element.get_id()).style.display = "none";
