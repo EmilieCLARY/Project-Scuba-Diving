@@ -23,22 +23,34 @@
         window.jsPDF = window.jspdf.jsPDF;
 
         function createPDF() {      
-            html2canvas(document.querySelector("#pdf_info"), {
-                
-                allowTaint: true,
-                useCORS: true,
-                scale: 1,
-            }).then(canvas => {
-                document.body.appendChild(canvas);
-                
-                var img = canvas.toDataURL("image/png");
-                var doc = new jsPDF("p", "mm", "a4");
-                //doc.setFont('Arial');
-                //doc.getFontSize(40);
-                doc.addImage(img, 'JPEG', 0, 0, 210, 297);
-                doc.save("TEST"); 
-            });    
+            //html2canvas(document.querySelector("#pdf_info"), {
+            //    
+            //    allowTaint: true,
+            //    useCORS: true,
+            //    scale: 1,
+            //}).then(canvas => {
+            //    //document.body.appendChild(canvas);
+            //    
+            //    var img = canvas.toDataURL("image/png");
+            //    var doc = new jsPDF("p", "mm", "a4");
+            //    //doc.setFont('Arial');
+            //    //doc.getFontSize(40);
+            //    doc.addImage(img, 'JPEG', 0, 0, 1920, 1920);
+            //    doc.save("TEST"); 
+            //});   
+            let doc = new jsPDF(); 
+            doc.html(document.querySelector("#pdf_info"), {
+                callback: function (doc) {
+                    doc.save("TEST");
+                },
+                x: 0,
+                y: 0,
+                autoPaging: "text",
+                width: 1920,
+                windowWidth: 1920,
+            });
         }
+        
 
         function downloadPDF() { setTimeout(createPDF(), 5000); }
     </script>
@@ -48,10 +60,7 @@
 <body>
     <button onclick="downloadPDF()">Create PDF</button>
 
-    <div id="pdf_info">
-        <p>BOUUUUUUUUUUUUUUUUUUUUUUUULES</p>
-    </div>
-
+    <div id="pdf_info"></div>
     
     <!--Chargement-->
     <div id="ring-loading" class="ring">Chargement

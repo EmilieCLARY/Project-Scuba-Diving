@@ -1,3 +1,7 @@
+/******************************************************************/
+/*                         GENERAL                                */
+/******************************************************************/
+
 body {
   margin: 0;
   font-size: 12px;
@@ -108,7 +112,6 @@ body {
     justify-content: center;
   }
 }
-
 
 .cards_item {
   display: flex;
@@ -387,6 +390,11 @@ body {
   background: var(--accent-color);
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
+
+
+/**********************************************************************/
+/*                  MODAL CHANGE PLANNED DIVE                         */
+/**********************************************************************/
 
 .form-planned-dive{
   width : 60vw;
@@ -692,11 +700,9 @@ body {
 /*                      MODAL VOIR PLUS                             */
 /********************************************************************/
 
-
-
 .div-modal{
   width  : 95vw;
-  height: 80vh;
+  /*height: 80vh;*/
   margin-top: 15vh;
   margin-left: 2.5vw;
   background : var(--bg-color);
@@ -708,7 +714,7 @@ body {
 @media (min-width: 620px) {
   .div-modal{
     width  : 85vw;
-    height: 80vh;
+    /*height: 80vh;*/
     margin-top: 15vh;
     margin-left: 7.5vw;
   }
@@ -717,7 +723,7 @@ body {
 @media (min-width: 1200px) {
   .div-modal{
     width  : 70vw;
-    height: 80vh;
+    /*height: 80vh;*/
     margin-top: 15vh;
     margin-left: 15vw;
   }
@@ -825,7 +831,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 60vh;
+  /*height: 60vh;*/
 }
 
 .div-modal .modal-body .modal-body-left {
@@ -837,17 +843,6 @@ body {
   width: 47.5vw;
 }
 
-@media (min-width: 620px) {
-  .div-modal .modal-body .modal-body-left {
-    width  : 42.5vw;
-  }
-}
-
-@media (min-width: 1200px) {
-  .div-modal .modal-body .modal-body-left {
-    width  : 35vw;
-  }
-}
 
 .div-modal .modal-body .modal-body-left .modal-site-name {
   display: flex;
@@ -884,7 +879,7 @@ body {
   border-radius: 1.5vh;
 }
 
-@media (min-width: 1200px) {
+@media (min-aspect-ratio: 1/1) {
   .div-modal .modal-body .modal-body-left .modal-price {
     flex-direction: row;
   }
@@ -964,6 +959,8 @@ body {
   height: 60vh;
 }
 
+/*
+
 @media (min-width: 620px) {
   .div-modal .modal-body .modal-body-right {
     width  : 42.5vw;
@@ -975,6 +972,34 @@ body {
     width  : 35vw;
   }
 }
+
+*/
+
+@media (min-width: 620px) {
+  .div-modal .modal-body .modal-body-left, .div-modal .modal-body .modal-body-right {
+    width  : 42.5vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .div-modal .modal-body .modal-body-left, .div-modal .modal-body .modal-body-right {
+    width  : 35vw;
+  }
+}
+
+@media (max-aspect-ratio: 3/4) {
+  .div-modal .modal-body .modal-body-left, .div-modal .modal-body .modal-body-right {
+    height: 52vh;
+  }
+}
+
+
+@media (max-aspect-ratio: 1/2) {
+  .div-modal .modal-body .modal-body-left, .div-modal .modal-body .modal-body-right {
+    height: 45vh;
+  }
+}
+
 
 .div-modal .modal-body .modal-body-right .modal-dive-time {
   display: flex;
@@ -1134,6 +1159,7 @@ body {
   }
 }
 
+
 /********************************************************************/
 /*               MODAL FORMULAIRE INSCRIPTION                       */
 /********************************************************************/
@@ -1247,6 +1273,7 @@ body {
   background: var(--accent-color);
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
+
 
 /********************************************************************/
 /*                          SEARCH BAR                              */
