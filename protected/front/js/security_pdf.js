@@ -42,6 +42,7 @@ let diver_price;
 let instructor_price;
 let max_ppo2;
 let dive_director_name;
+let dive_director_qualification;
 let dive_city;
 
 
@@ -70,8 +71,50 @@ function getAllInformations() {
     diver_price = dive.get_diver_price();
     instructor_price = dive.get_instructor_price();
     max_ppo2 = dive.get_max_ppo2();
-    dive_director_name = dive.get_id_dive_director();
-
+    
+    dive_director_name = getDiverById(dive.get_id_dive_director()).get_first_name();
+    let qualification = getDiverById(dive.get_id_dive_director()).get_diver_qualification();
+    switch(parseInt(qualification)){
+        case 1:
+            dive_director_qualification = "Etoile de mer 1";
+            break;
+        case 2:
+            dive_director_qualification = "Bronze";
+            break;
+        case 3:
+            dive_director_qualification = "Argent";
+            break;
+        case 4:
+            dive_director_qualification = "Or";
+            break;
+        case 5:
+            dive_director_qualification = "N1";
+            break;
+        case 6:
+            dive_director_qualification = "N2";
+            break;
+        case 7:
+            dive_director_qualification = "N3";
+            break;
+        case 8:
+            dive_director_qualification = "N4";
+            break;
+        case 9:
+            dive_director_qualification = "N5";
+            break;
+        case 11:
+            dive_director_qualification = "Aucun";
+            break;
+        case 12:
+            dive_director_qualification = "Etoile de mer 2";
+            break;
+        case 13:
+            dive_director_qualification = "Etoile de mer 3";
+            break;
+        default:
+            dive_director_qualification = "Inconnu"
+            break;
+    }
     // Get dive city
     tabPlannedDives.forEach(element => {
         if(element.get_id() == dive.get_id_planned_dive()) {
@@ -204,6 +247,15 @@ function getDiveSiteById(id){
     return null;
 }
 
+function getDiverById(id){
+    for(let i = 0; i < tabDivers.length; i++){
+        if(tabDivers[i].get_id() == id){
+            return tabDivers[i];
+        }
+    }
+    return null;
+}
+
 
 /********************************************************************/
 /*                    CREATE HTML PAGE FOR PDF                      */
@@ -211,18 +263,140 @@ function getDiveSiteById(id){
 
 
 function createPdfPage() {
-    // Ajouter les infos dans les divs de la page security_pdf.html
+    // Creation des pages pdf
+
     let container = document.getElementById("pdf_info");
     let page = document.createElement("div");
     page.setAttribute("id", "page");
     page.setAttribute("class", "page");
     container.appendChild(page);
+    createPdfPageHeader(page);
+    createPdrTable(page, 0);
+    //createPDF();
+}
+
+function createPdfPageHeader(page) {
     let header = document.createElement("div");
     header.setAttribute("class", "header");
+
+    let headerTop = document.createElement("div");
+    headerTop.setAttribute("class", "header-top");
+    let logo = document.createElement("div");
+    logo.setAttribute("class", "logo");
+    logo.innerHTML = "<img src='/protected/front/img/logo.jpg' alt='SAGW' onclick='location.href='/';' style='cursor: pointer;'/>";
+    headerTop.appendChild(logo);
+    let headerTitle = document.createElement("div");
+    headerTitle.setAttribute("class", "header-top-right");
+    let headerTitleH1 = document.createElement("h1");
+    headerTitleH1.innerHTML = "Fiche de sécurité - SAGW";
+    headerTitle.appendChild(headerTitleH1);
+    headerTop.appendChild(headerTitle);
+    header.appendChild(headerTop);
+
+    let headerBottom = document.createElement("div");
+    headerBottom.setAttribute("class", "header-bottom");
+    let headerInfo1 = document.createElement("div");
+    headerInfo1.setAttribute("class", "header-info");
+    let site = document.createElement("div");
+    site.setAttribute("id", "site");
+    site.setAttribute("class", "header-info-item");
+    site.innerHTML = "Site de plongée : " + dive_city;
+    headerInfo1.appendChild(site);
+    let date = document.createElement("div");
+    date.setAttribute("id", "date");
+    date.setAttribute("class", "header-info-item");
+    date.innerHTML = "Date : " + begin_date;
+    headerInfo1.appendChild(date);
+    let time = document.createElement("div");
+    time.setAttribute("id", "time");
+    time.setAttribute("class", "header-info-item");
+    time.innerHTML = "Heure : " + begin_time;
+    headerInfo1.appendChild(time);
+    headerBottom.appendChild(headerInfo1);
+    let headerInfo2 = document.createElement("div");
+    headerInfo2.setAttribute("class", "header-info");
+    let diveDirector = document.createElement("div");
+    diveDirector.setAttribute("id", "diveDirector");
+    diveDirector.setAttribute("class", "header-info-item");
+    diveDirector.innerHTML = "Directeur de plongée : " + dive_director_name;
+    headerInfo2.appendChild(diveDirector);
+    let diveDirectorQualification = document.createElement("div");
+    diveDirectorQualification.setAttribute("id", "qualification");
+    diveDirectorQualification.setAttribute("class", "header-info-item");
+    diveDirectorQualification.innerHTML = "Qualification : " + dive_director_qualification;
+    headerInfo2.appendChild(diveDirectorQualification);
+    let DiverNumber = document.createElement("div");
+    DiverNumber.setAttribute("id", "DiverNumber");
+    DiverNumber.setAttribute("class", "header-info-item");
+    DiverNumber.innerHTML = "Nombre de plongeurs : " + tabActualDiveTeamMembers.length;
+    headerInfo2.appendChild(DiverNumber);
+    headerBottom.appendChild(headerInfo2);
+    let headerInfo3 = document.createElement("div");
+    headerInfo3.setAttribute("class", "header-info");
+    let sign = document.createElement("div");
+    sign.setAttribute("id", "sign");
+    sign.setAttribute("class", "header-info-item");
+    sign.innerHTML = "Signature du DP : ";
+    headerInfo3.appendChild(sign);
+    let surfaceSecurity = document.createElement("div");
+    surfaceSecurity.setAttribute("id", "surfaceSecurity");
+    surfaceSecurity.setAttribute("class", "header-info-item");
+    surfaceSecurity.innerHTML = "Sécurité de surface : " + surface_security;
+    headerInfo3.appendChild(surfaceSecurity);
+    headerBottom.appendChild(headerInfo3);
+    header.appendChild(headerBottom);
+    
     page.appendChild(header);
 
-    createPDF();
-}    
+}
+
+function createPdrTable(page,i) {
+    let container = document.createElement("div");
+    container.setAttribute("class", "container");
+    page.appendChild(container);
+    let teamNumber = document.createElement("div");
+    teamNumber.setAttribute("class", "team-number");
+    teamNumber.innerHTML = "Palanquée n°" + (i+1);
+    container.appendChild(teamNumber);
+    let table = document.createElement("table");
+    table.setAttribute("class", "table");
+    container.appendChild(table);
+    let thead = document.createElement("thead");
+    table.appendChild(thead);
+    let tr = document.createElement("tr");
+    thead.appendChild(tr);
+    let th1 = document.createElement("th");
+    th1.innerHTML = "Nom";
+    tr.appendChild(th1);
+    let th2 = document.createElement("th");
+    th2.innerHTML = "Prénom";
+    tr.appendChild(th2);
+    let th3 = document.createElement("th");
+    th3.innerHTML = "fonction";
+    tr.appendChild(th3);
+    let th4 = document.createElement("th");
+    th4.innerHTML = "Qualification";
+    tr.appendChild(th4);
+    let th5 = document.createElement("th");
+    th5.innerHTML = "€";
+    tr.appendChild(th5);
+    let th6 = document.createElement("th");
+    th6.innerHTML = "Nitrox %";
+    tr.appendChild(th6);
+    let th7 = document.createElement("th");
+    th7.innerHTML = "Type de plongée";
+    tr.appendChild(th7);
+    let th8 = document.createElement("th");
+    th7.innerHTML = "Profondeur prévue";
+    tr.appendChild(th8);
+    let th9 = document.createElement("th");
+    th8.innerHTML = "Profondeur réalisée";
+    tr.appendChild(th9);
+    let th10 = document.createElement("th");
+    th9.innerHTML = "Paliers";
+    tr.appendChild(th10);
+
+}
 
 
 /********************************************************************/

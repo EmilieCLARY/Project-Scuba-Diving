@@ -264,7 +264,7 @@ function validerPalanquées(attributionAutomatique){
 
 
     //Check how many child under 16 there are in each table
-    for(let i = 0; i < tablecounter; i++){
+    /*for(let i = 0; i < tablecounter; i++){
 
         let table = document.getElementById(i+1);
         let trElements = table.getElementsByTagName('tr');
@@ -391,7 +391,7 @@ function validerPalanquées(attributionAutomatique){
                     break;
             }
             */
-        
+        /*
             tabMaxDepthForQualification.forEach(element => {
                 //console.log(parseInt(element.get_diver_qualification()) + " " + idQualification);
                 if (parseInt(element.get_diver_qualification()) == idQualification){
@@ -431,9 +431,18 @@ function validerPalanquées(attributionAutomatique){
             confirm("Impossible de valider si il n'y a pas de directeur de plongée \n");
         }
         return;
+    }*/
+
+    for (let i = 1; i <= tablecounter; i++) {
+        if(setDivInfosPalanquee(i) == true){
+            palanqueesValide = false;
+            console.log("Palanquée " + i + " invalide");
+            alert("La palanquée " + i + " est invalide");
+            return;
+        }
     }
 
-    console.log("Je passe");
+    console.log("Palanquées valides");
     palanqueesValide = true;
 
     let dive = créationDive(directeurPlongée);
@@ -512,7 +521,7 @@ function créationDive(directeurPlongée,i){
     let planned_date = 0;
     let prix_plongeur = 0;
     let prix_instructeur = 0;
-    let comment = "";
+    let comment = document.getElementById("general-comment-dive").value;
     let ppo2 = document.getElementById("ppo2").value;
     let surface_security = document.getElementById("surface_security").value;
 
@@ -523,7 +532,7 @@ function créationDive(directeurPlongée,i){
             planned_date = element.get_planned_date();
             prix_plongeur = element.get_diver_dive_price();
             prix_instructeur = element.get_instructor_dive_price();
-            comment = element.get_comments();
+            //comment = element.get_comments();
             //console.log("Planned Time : " + planned_time + " Planned Date : " + planned_date);
         }
     });
@@ -945,7 +954,19 @@ function funcAttributionAutomatique(){
             let child = tableBodyInscription.lastElementChild;
             child.innerHTML = "";
 
-            validerPalanquées(attributionAutomatique)
+            let isError = false;
+            for (let i = 1; i <= tablecounter; i++) {
+                if(setDivInfosPalanquee(i) == true){
+                    isError = true;
+                    console.log("Palanquée " + i + " invalide")
+                }
+            }
+            if(!isError){
+                palanqueesValide = true;
+            }
+
+
+            //validerPalanquées(attributionAutomatique)
 
             //console.log("Attribution automatique" + attributionAutomatique + " : " + palanqueesValide);
             nbEssais++;
@@ -1372,6 +1393,7 @@ function setDivInfosPalanquee(id){
     // Nombre de plongeurs
     let nbPlongeurDiv = document.getElementById("nbPlongeur" + id);
 
+    let errorDiveTeam = false;
     let errorNbPlongeur = false;
     let errorAdditionnalDiver = false;
 
@@ -1537,6 +1559,13 @@ function setDivInfosPalanquee(id){
     else{
         maxDepthDiv.innerHTML = "Profondeur max : " + max + "m";
     }
+
+    //console.log(errorNbPlongeur, errorAdditionnalDiver, isThereGuide);
+    if(errorNbPlongeur || errorAdditionnalDiver || !isThereGuide){
+        errorDiveTeam = true;
+    }
+
+    return errorDiveTeam;
 }
 
 // TABLEAU INSCRITS
@@ -1604,6 +1633,7 @@ function createTableInscrits() {
             idDive = item.get_id();
             document.getElementById("ppo2").value = item.get_max_ppo2();
             document.getElementById("surface_security").value = item.get_surface_security();
+            document.getElementById("general-comment-dive").value = item.get_comment();
         }
     });
 

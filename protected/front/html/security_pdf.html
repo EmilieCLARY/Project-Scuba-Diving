@@ -38,16 +38,22 @@
             //    doc.addImage(img, 'JPEG', 0, 0, 1920, 1920);
             //    doc.save("TEST"); 
             //});   
-            let doc = new jsPDF(); 
+            let doc = new jsPDF({  
+                 unit: 'px',  
+                 format: 'a4'  
+            }); 
             doc.html(document.querySelector("#pdf_info"), {
                 callback: function (doc) {
                     doc.save("TEST");
                 },
                 x: 0,
                 y: 0,
-                autoPaging: "text",
-                width: 1920,
-                windowWidth: 1920,
+                //autoPaging: "text",
+                //width: 793,
+                width: 450,
+                windowWidth: 2480,
+                //windowHeight: 3508,
+                //height: 1122,
             });
         }
         

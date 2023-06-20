@@ -552,13 +552,13 @@ function deleteAllDiveTeamAndDiveTeamMemberOfDiveInDb(id_dive, id_dive_team_tabl
         }
     }    
 
-    console.log(sql);
+    //console.log(sql);
     
     db.run(sql, [],(err) => {
         if(err) {
             return console.log(err.message);
         }
-        console.log('BDD : ALL FUCKING DIVE TEAM MEMBERS was deleted');
+        console.log('BDD : Dive team members was deleted');
     });
 
     sql = `DELETE FROM Dive_team WHERE Dive_Id_Dive = ?`;
@@ -567,7 +567,7 @@ function deleteAllDiveTeamAndDiveTeamMemberOfDiveInDb(id_dive, id_dive_team_tabl
         if(err) {
             return console.log(err.message);
         }
-        console.log('BDD : ALL FUCKING DIVE TEAMS was deleted');
+        console.log('BDD : Dive teams was deleted');
     });
 
     db.close((err) => {
