@@ -362,7 +362,7 @@ function createInfoPlannedDive(id) {
     }        
 
     // Table divers
-    updateTableDivers();
+    updateTableDivers(id);
     
 }
 
@@ -916,7 +916,7 @@ function updatePlannedDive(){
     SocketManager.getAllPlannedDives();
 }
 
-function updateTableDivers(){
+function updateTableDivers(id){
     // Clear the table
     document.getElementById("tbody-pd").innerHTML = "";
     document.getElementById("tr-desc").innerHTML = "";
@@ -1013,6 +1013,33 @@ function updateTableDivers(){
                         console.log("Annulation de la suppression");
                     }
                 });
+
+                if(element.get_diver_role() == "Directeur de plongée"){
+                    let see_more_btn_modal = document.getElementById("buttons-modal-see-more");
+                    // Create 'Modifier' button
+                    let modificationBtn = document.createElement("button");
+                    modificationBtn.setAttribute('id', "modification-planned-dive");
+                    modificationBtn.textContent = "Modifier";
+                    see_more_btn_modal.appendChild(modificationBtn);
+            
+                    // Create 'Supprimer' button
+                    let suppressionBtn = document.createElement("button");
+                    suppressionBtn.setAttribute('id', "suppression-planned-dive");
+                    suppressionBtn.textContent = "Supprimer";
+                    see_more_btn_modal.appendChild(suppressionBtn);
+            
+                    // Create 'Organisation' button
+                    let organisationBtn = document.createElement("button");
+                    organisationBtn.setAttribute('id', "planned-dive-organisation");
+                    organisationBtn.textContent = "Organisation";
+                    see_more_btn_modal.appendChild(organisationBtn);
+                            
+                    setModificationListener(id);
+                    setSuppressionListener(id);
+                    setOrganisationListener(id);
+
+                    SocketManager.setIsAdminForDiveId(id);
+                }
             }
 
             document.getElementById("tbody-pd").appendChild(tr);

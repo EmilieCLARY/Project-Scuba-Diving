@@ -44,7 +44,7 @@
             }); 
             doc.html(document.querySelector("#pdf_info"), {
                 callback: function (doc) {
-                    doc.save("TEST");
+                    doc.save("Fiche_de_securite");
                 },
                 x: 0,
                 y: 0,
@@ -66,7 +66,7 @@
 <body>
     <button onclick="downloadPDF()">Create PDF</button>
 
-    <div id="pdf_info"></div>
+    <div id="pdf_info" style="letter-spacing: 0.01px;"></div>
     
     <!--Chargement-->
     <div id="ring-loading" class="ring">Chargement

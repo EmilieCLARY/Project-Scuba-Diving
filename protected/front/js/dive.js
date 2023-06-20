@@ -433,6 +433,7 @@ function validerPalanquées(attributionAutomatique){
         return;
     }*/
 
+    // Check if the dive is valid
     for (let i = 1; i <= tablecounter; i++) {
         if(setDivInfosPalanquee(i) == true){
             palanqueesValide = false;
@@ -1381,6 +1382,11 @@ function creationTableauPalanquee(rows, columns, isTabToFill, item) {
             setDivInfosPalanquee(evt.to.id.replace("tableBody", ""));
         }
     });
+
+    // Add listener to the dive type input
+    thDiveTypeInput.addEventListener('change', function(){
+        setDivInfosPalanquee(tableId);
+    });
 }
 
 function setDivInfosPalanquee(id){
@@ -1492,7 +1498,7 @@ function setDivInfosPalanquee(id){
             nbPlongeurDiv.innerHTML = "Enfant non autorisé en plongée en autonomie";
         }
         else{
-            nbPlongeurDiv.innerHTML = "Nombre de plongeurs : " + (nbDiver) + " / 3";
+            nbPlongeurDiv.innerHTML = (nbDiver) + " / 3";
         }
     }
 
@@ -1634,6 +1640,7 @@ function createTableInscrits() {
             document.getElementById("ppo2").value = item.get_max_ppo2();
             document.getElementById("surface_security").value = item.get_surface_security();
             document.getElementById("general-comment-dive").value = item.get_comment();
+            document.getElementById("text_dive_site_name").innerHTML = "Plongée à " + getDiveSiteById(getPlannedDiveById(idPlannedDive).get_id_dive_site()).get_site_name();
         }
     });
 
@@ -1927,6 +1934,24 @@ function getDiverById(id){
     for(let i = 0; i < tabDivers.length; i++){
         if(tabDivers[i].get_id() == id){
             return tabDivers[i];
+        }
+    }
+    return null;
+}
+
+function getDiveSiteById(id){
+    for(let i = 0; i < tabDiveSites.length; i++){
+        if(tabDiveSites[i].get_id() == id){
+            return tabDiveSites[i];
+        }
+    }
+    return null;
+}
+
+function getPlannedDiveById(id){
+    for(let i = 0; i < tabPlannedDives.length; i++){
+        if(tabPlannedDives[i].get_id() == id){
+            return tabPlannedDives[i];
         }
     }
     return null;

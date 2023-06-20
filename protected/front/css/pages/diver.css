@@ -227,3 +227,7 @@
   background: var(--accent-color);
   box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
 }
+
+.red {
+  color: red;
+}

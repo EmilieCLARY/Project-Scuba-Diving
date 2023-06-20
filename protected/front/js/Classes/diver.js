@@ -50,7 +50,6 @@ export default class Diver {
         return this.instructor_qualification;
     }
 
-
     set_instructor_qualification(instructor_qualification) {
         this.instructor_qualification = instructor_qualification;
     }

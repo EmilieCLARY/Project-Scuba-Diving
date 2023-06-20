@@ -4,7 +4,6 @@ body,
 	height: 100%;
 }
 
-
 body {
   margin: 0;
   font-size: 12px;
@@ -63,9 +62,17 @@ body {
     padding-top: 1vh;
 }
 
+.container-dive h2 {
+  font-size: 1.6rem;
+  margin: 0;
+  padding-left: 1vw;
+  padding-top: 1vh;
+  text-decoration: underline;
+}
+
 .container-dive .btn-gestion {
-  width: 25vw;
-  height: 3vh;
+  width: 20vw;
+  height: 5vh;
   margin-top: 0.5vh;
   outline: none;
   cursor: pointer;
@@ -75,7 +82,7 @@ body {
   color: #fff;
   background: var(--secondary-color);
   line-height: 1.15;
-  font-size: 1.5vh;
+  font-size: 0.9rem;
 }
 
 .dive-left {
@@ -102,7 +109,7 @@ body {
 .dive-left-bottom {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 1em;
 }
 
@@ -260,8 +267,8 @@ body {
 }
 
 .dive-right .container-inscrits {
-    flex-direction: column;
     display: flex;
+    flex-direction: column;
     align-items: center;
     position: fixed;
     width: 45vw;
@@ -520,3 +527,47 @@ body {
 }
 
 /* Bouton PDF */
+
+
+@media (min-width: 62.5rem) {
+  #pdf-button {
+    width: 11vw;
+    height: 7vh;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 62.5rem) {
+  #pdf-button {
+    width: auto;
+    height: 5vw;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 1.5vh;
+    border: 0;
+    color: #fff;
+    background: var(--secondary-color);
+    line-height: 1.15;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+#pdf-button:hover {
+  transition: all .1s ease;
+  color: var(--text-color);
+  background: var(--accent-color);
+  box-shadow: 0 0 0 0 var(--text-color), 0 0 0 0.3vh var(--text-color);
+}

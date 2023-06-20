@@ -145,6 +145,9 @@ app.get('/dive', (req, res) => {
     if(req.session.isAdmin === 1){
         res.sendFile(__dirname + '/protected/front/html/dive.html');
     }
+    else if(req.session.idPlannedDive == req.session.isAdminForDiveId){
+        res.sendFile(__dirname + '/protected/front/html/dive.html');
+    }
     else{
         res.redirect('/')
     }
@@ -277,6 +280,9 @@ io.on('connection', (socket) =>{
         socket.emit('receiveIdPlannedDive', socket.handshake.session.idPlannedDive);
     });
 
+    socket.on('setIsAdminForDiveId', (id) => {
+        socket.handshake.session.isAdminForDiveId = id;
+    });
     /* ------------------------------ ADD FUNCTIONS ----------------------------- */
 
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {

@@ -1,8 +1,9 @@
 .page {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: #666;
     margin-bottom: 10px;
-    height: 3508px;
+     
     width: 2480px;
     background-color: #fff;
 }
@@ -39,10 +40,10 @@
 }
 
 .page .header .header-top .header-top-right {
-    width: 1370px;
+    width: 1570px;
     height: 320px;
     font-size: 5em;
-    margin-right: 400px;
+    margin-right: 300px;
 }
 
 .page .header .header-bottom {
@@ -71,4 +72,80 @@
     flex-direction: column;
     justify-content: center;
     font-size: 3em;
+}
+
+.page .table-container {
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.page .table-container .title {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 3em;
+}
+
+.page .table-container table {
+    width: 90%;
+    height: 100px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ccc;
+    font-size: 2.5em;
+    margin-left: 5%;
+}
+
+.page .table-container table th {
+    height: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+    width: 10%;
+}
+
+.page .table-container table .thin{
+    width: 7.5%;
+}
+
+.page .table-container table .wide{
+    width: 15%;
+}
+
+.page .table-container table td {
+    height: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.page .comment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 60px;
+    padding-left: 5%;
+    
+}
+
+.page .comment-container .title {
+    height: 100px;
+    font-size: 4em;
+    padding-left: 10%;
+}
+
+.page .comment-container .comment {
+    height: 350px;
+    width: 90%;
+    border: 1px solid #000;
+    font-size: 3.5em;
+    padding-left: 20px;
+    padding-top: 10px;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
 }

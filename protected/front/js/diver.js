@@ -311,9 +311,15 @@ function createDiverTableBody(tabDivers){
 
         let cellule8 = document.createElement("td");
         cellule8.innerHTML = tabDivers[i].get_licence_expiration_date();
+        if(new Date(tabDivers[i].get_licence_expiration_date()) < new Date()){
+            cellule8.classList.add("red");
+        }
         
         let cellule9 = document.createElement("td");
         cellule9.innerHTML = tabDivers[i].get_medical_certificate_expiration_date();
+        if(new Date(tabDivers[i].get_medical_certificate_expiration_date()) < new Date()){
+            cellule9.classList.add("red");
+        }
 
         let cellule10 = document.createElement("td");
         cellule10.innerHTML = tabDivers[i].get_birth_date();

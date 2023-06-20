@@ -134,8 +134,16 @@ function LoadUserProfile(userProfile){
     document.getElementById("profile_full_name").innerHTML = userProfile.Lastname + " " + userProfile.Firstname;
     document.getElementById("profile_add_quali").innerHTML = userProfile.Additional_Qualifications;
     document.getElementById("profile_license_number").innerHTML = userProfile.License_Number;
-    document.getElementById("profile_expi_license").innerHTML = userProfile.License_Expiration_Date;
-    document.getElementById("profile_expi_medic").innerHTML = userProfile.Medical_Certificate_Expiration_Date;
+    let date_lic = document.getElementById("profile_expi_license");
+    date_lic.innerHTML = userProfile.License_Expiration_Date;
+    if(new Date(userProfile.License_Expiration_Date) < new Date()){
+        date_lic.classList.add("red");
+    }
+    let date_med = document.getElementById("profile_expi_medic")
+    date_med.innerHTML = userProfile.Medical_Certificate_Expiration_Date;
+    if(new Date(userProfile.Medical_Certificate_Expiration_Date) < new Date()){
+        date_med.classList.add("red");
+    }
     document.getElementById("profile_birthdate").innerHTML = userProfile.Birthdate;
 
     //console.log(userProfile); // Le tableau est bien reçu par le front

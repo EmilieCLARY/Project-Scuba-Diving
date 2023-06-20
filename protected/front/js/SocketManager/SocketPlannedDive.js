@@ -52,6 +52,10 @@ function deletePlannedDive(id){
     socket.emit('deleteInDb', "Planned_Dive", id);
 }
 
+function setIsAdminForDiveId(id){
+    socket.emit('setIsAdminForDiveId', id);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -98,4 +102,5 @@ export default {
     diverRegistration,
     setPlannedDive,
     deletePlannedDive,
+    setIsAdminForDiveId,
 }

@@ -41,9 +41,11 @@ let surface_security;
 let diver_price;
 let instructor_price;
 let max_ppo2;
-let dive_director_name;
+let dive_director_first_name;
+let dive_director_last_name;
 let dive_director_qualification;
 let dive_city;
+let pageNumber = 1;
 
 
 /********************************************************************/
@@ -72,47 +74,48 @@ function getAllInformations() {
     instructor_price = dive.get_instructor_price();
     max_ppo2 = dive.get_max_ppo2();
     
-    dive_director_name = getDiverById(dive.get_id_dive_director()).get_first_name();
+    dive_director_first_name = getDiverById(dive.get_id_dive_director()).get_first_name();
+    dive_director_last_name = getDiverById(dive.get_id_dive_director()).get_last_name();
     let qualification = getDiverById(dive.get_id_dive_director()).get_diver_qualification();
     switch(parseInt(qualification)){
         case 1:
-            dive_director_qualification = "Etoile de mer 1";
+            qualification = "Etoile de mer 1";
             break;
         case 2:
-            dive_director_qualification = "Bronze";
+            qualification = "Bronze";
             break;
         case 3:
-            dive_director_qualification = "Argent";
+            qualification = "Argent";
             break;
         case 4:
-            dive_director_qualification = "Or";
+            qualification = "Or";
             break;
         case 5:
-            dive_director_qualification = "N1";
+            qualification = "N1";
             break;
         case 6:
-            dive_director_qualification = "N2";
+            qualification = "N2";
             break;
         case 7:
-            dive_director_qualification = "N3";
+            qualification = "N3";
             break;
         case 8:
-            dive_director_qualification = "N4";
+            qualification = "N4";
             break;
         case 9:
-            dive_director_qualification = "N5";
+            qualification = "N5";
             break;
         case 11:
-            dive_director_qualification = "Aucun";
+            qualification = "Aucun";
             break;
         case 12:
-            dive_director_qualification = "Etoile de mer 2";
+            qualification = "Etoile de mer 2";
             break;
         case 13:
-            dive_director_qualification = "Etoile de mer 3";
+            qualification = "Etoile de mer 3";
             break;
         default:
-            dive_director_qualification = "Inconnu"
+            qualification = "Inconnu"
             break;
     }
     // Get dive city
@@ -141,7 +144,7 @@ function getAllInformations() {
     console.log(tabActualDiveTeamMembers);
     console.log(tabActualDiveTeams);
     console.log(dive_city);
-    console.log(dive_director_name);
+    console.log(dive_director_first_name);
     console.log(max_ppo2);
     console.log(instructor_price);
     console.log(diver_price);
@@ -256,6 +259,15 @@ function getDiverById(id){
     return null;
 }
 
+function getDiveTeambyId(id){
+    for(let i = 0; i < tabDiveTeams.length; i++){
+        if(tabDiveTeams[i].get_id() == id){
+            return tabDiveTeams[i];
+        }
+    }
+    return null;
+}
+
 
 /********************************************************************/
 /*                    CREATE HTML PAGE FOR PDF                      */
@@ -271,7 +283,14 @@ function createPdfPage() {
     page.setAttribute("class", "page");
     container.appendChild(page);
     createPdfPageHeader(page);
-    createPdrTable(page, 0);
+    for (let j = 1; j <12; j++) {
+        for (let i = 1; i <= tabActualDiveTeams.length; i++) {
+            createPdrTable(page, i);
+        }
+    }
+    
+    createPdfComment(page);
+    //createPdrTable(page, 1);
     //createPDF();
 }
 
@@ -318,7 +337,7 @@ function createPdfPageHeader(page) {
     let diveDirector = document.createElement("div");
     diveDirector.setAttribute("id", "diveDirector");
     diveDirector.setAttribute("class", "header-info-item");
-    diveDirector.innerHTML = "Directeur de plongée : " + dive_director_name;
+    diveDirector.innerHTML = "Directeur de plongée : " + dive_director_last_name + " " + dive_director_first_name;
     headerInfo2.appendChild(diveDirector);
     let diveDirectorQualification = document.createElement("div");
     diveDirectorQualification.setAttribute("id", "qualification");
@@ -347,20 +366,28 @@ function createPdfPageHeader(page) {
     header.appendChild(headerBottom);
     
     page.appendChild(header);
-
 }
 
 function createPdrTable(page,i) {
     let container = document.createElement("div");
-    container.setAttribute("class", "container");
+    container.setAttribute("class", "table-container");
     page.appendChild(container);
+    let title = document.createElement("div");
+    title.setAttribute("class", "title");
     let teamNumber = document.createElement("div");
     teamNumber.setAttribute("class", "team-number");
-    teamNumber.innerHTML = "Palanquée n°" + (i+1);
-    container.appendChild(teamNumber);
+    teamNumber.innerHTML = "Palanquée n°" + (i);
+    title.appendChild(teamNumber);
+    let diveType = document.createElement("div");
+    diveType.setAttribute("class", "dive-type");
+    diveType.innerHTML = "Type de plongée : " + tabActualDiveTeams[i-1].get_dive_type();
+    title.appendChild(diveType);
+    container.appendChild(title);
     let table = document.createElement("table");
     table.setAttribute("class", "table");
     container.appendChild(table);
+
+    // Create table head
     let thead = document.createElement("thead");
     table.appendChild(thead);
     let tr = document.createElement("tr");
@@ -378,24 +405,163 @@ function createPdrTable(page,i) {
     th4.innerHTML = "Qualification";
     tr.appendChild(th4);
     let th5 = document.createElement("th");
+    th5.setAttribute("class", "thin")
     th5.innerHTML = "€";
     tr.appendChild(th5);
     let th6 = document.createElement("th");
+    th6.setAttribute("class", "thin")
     th6.innerHTML = "Nitrox %";
     tr.appendChild(th6);
     let th7 = document.createElement("th");
-    th7.innerHTML = "Type de plongée";
+    th7.innerHTML = "Horaire";
     tr.appendChild(th7);
     let th8 = document.createElement("th");
-    th7.innerHTML = "Profondeur prévue";
+    th8.innerHTML = "Profondeur";
     tr.appendChild(th8);
     let th9 = document.createElement("th");
-    th8.innerHTML = "Profondeur réalisée";
+    th9.innerHTML = "Durée";
     tr.appendChild(th9);
     let th10 = document.createElement("th");
-    th9.innerHTML = "Paliers";
+    th10.setAttribute("class", "wide")
+    th10.innerHTML = "Paliers";
     tr.appendChild(th10);
 
+    // Create table body
+    let tbody = document.createElement("tbody");
+    table.appendChild(tbody);
+    console.log(tabActualDiveTeams[i-1].get_id());
+    tabActualDiveTeamMembers.forEach(element => {
+        if(element.get_id_palanquée() == tabActualDiveTeams[i-1].get_id()){
+            let tr = document.createElement("tr");
+            tbody.appendChild(tr);
+            let td1 = document.createElement("td");
+            td1.innerHTML = getDiverById(element.get_id()).get_last_name();
+            tr.appendChild(td1);
+            let td2 = document.createElement("td");
+            td2.innerHTML = getDiverById(element.get_id()).get_first_name();
+            tr.appendChild(td2);
+            let td3 = document.createElement("td");
+            td3.innerHTML = element.get_diver_role();
+            tr.appendChild(td3);
+            let td4 = document.createElement("td");
+            td4.innerHTML = element.get_current_diver_qualification();
+            tr.appendChild(td4);
+            let td5 = document.createElement("td");
+            if(element.get_paid_amount() == "") {
+                td5.innerHTML = "0";
+            }
+            else {
+                td5.innerHTML = element.get_paid_amount();
+            }
+            tr.appendChild(td5);
+            let td6 = document.createElement("td");
+            if(element.get_nox_percentage() == "") {
+                td6.innerHTML = "0";
+            }
+            else {
+                td6.innerHTML = element.get_nox_percentage();
+            }
+            tr.appendChild(td6);
+            if (tr.parentElement.firstChild == tr) {
+                let td7 = document.createElement("td");
+                td7.setAttribute("rowspan", tabActualDiveTeamMembers.length);
+                //td7.innerHTML = tabActualDiveTeams[i-1].get_start_time() + " - " + tabActualDiveTeams[i-1].get_stop_time();
+                let divTime = document.createElement("div");
+                divTime.setAttribute("class", "div-time");
+                let divTimeItem1 = document.createElement("div");
+                divTimeItem1.setAttribute("class", "div-time-item");
+                divTimeItem1.innerHTML = "Départ : ";
+                divTime.appendChild(divTimeItem1);
+                let divTimeItem2 = document.createElement("div");
+                divTimeItem2.setAttribute("class", "div-time-item");
+                divTimeItem2.innerHTML = "Retour : ";
+                divTime.appendChild(divTimeItem2);
+                td7.appendChild(divTime);
+                tr.appendChild(td7);
+                let td8 = document.createElement("td");
+                td8.setAttribute("rowspan", tabActualDiveTeamMembers.length);
+                //td8.innerHTML = tabActualDiveTeams[i-1].get_max_depth() + " m";
+                let divDepth = document.createElement("div");
+                divDepth.setAttribute("class", "div-depth");
+                let divDepthItem1 = document.createElement("div");
+                divDepthItem1.setAttribute("class", "div-depth-item");
+                divDepthItem1.innerHTML = "Prévue : " + tabActualDiveTeams[i-1].get_max_depth() + " m";
+                divDepth.appendChild(divDepthItem1);
+                let divDepthItem2 = document.createElement("div");
+                divDepthItem2.setAttribute("class", "div-depth-item");
+                divDepthItem2.innerHTML = "Réelle : ";
+                divDepth.appendChild(divDepthItem2);
+                td8.appendChild(divDepth);
+                tr.appendChild(td8);
+                let td9 = document.createElement("td");
+                td9.setAttribute("rowspan", tabActualDiveTeamMembers.length);
+                //td9.innerHTML = tabActualDiveTeams[i-1].get_max_duration() + " min";
+                let divDuration = document.createElement("div");
+                divDuration.setAttribute("class", "div-duration");
+                let divDurationItem1 = document.createElement("div");
+                divDurationItem1.setAttribute("class", "div-duration-item");
+                divDurationItem1.innerHTML = "Prévue : " + tabActualDiveTeams[i-1].get_max_duration();
+                divDuration.appendChild(divDurationItem1);
+                let divDurationItem2 = document.createElement("div");
+                divDurationItem2.setAttribute("class", "div-duration-item");
+                divDurationItem2.innerHTML = "Réelle : ";
+                divDuration.appendChild(divDurationItem2);
+                td9.appendChild(divDuration);
+                tr.appendChild(td9);
+                td9.setAttribute("rowspan", tabActualDiveTeamMembers.length);
+                let td10 = document.createElement("td");
+                td10.innerHTML = "";
+                tr.appendChild(td10);
+                td10.setAttribute("rowspan", tabActualDiveTeamMembers.length);
+            }
+            
+        }
+
+    });
+    console.log(container);
+    console.log(container.getBoundingClientRect().bottom);
+    if(container.getBoundingClientRect().bottom > 3508*pageNumber){
+        console.log("page " + pageNumber);
+        console.log("top " + container.getBoundingClientRect().top);
+        console.log("bottom " + container.getBoundingClientRect().bottom);
+        console.log("boundary " + 3508*pageNumber);
+        let shift = 3508*pageNumber - container.getBoundingClientRect().top + 50;
+        container.style.marginTop = shift + "px";
+        console.log("décalage " + shift + "px");
+        console.log("page " + pageNumber);
+        console.log("top " + container.getBoundingClientRect().top);
+        console.log("bottom " + container.getBoundingClientRect().bottom);
+        console.log("boundary " + 3508*pageNumber);
+        pageNumber++;
+    }
+}
+
+function createPdfComment(page) {
+    let container = document.createElement("div");
+    container.setAttribute("class", "comment-container");
+    page.appendChild(container);
+    let title = document.createElement("div");
+    title.setAttribute("class", "title");
+    title.innerHTML = "Commentaires";
+    container.appendChild(title);
+    let DivComment = document.createElement("div");
+    DivComment.setAttribute("class", "comment");
+    DivComment.innerHTML = comment;
+    container.appendChild(DivComment);
+    if(container.getBoundingClientRect().bottom > 3508*pageNumber){
+        console.log("page " + pageNumber);
+        console.log("top " + container.getBoundingClientRect().top);
+        console.log("bottom " + container.getBoundingClientRect().bottom);
+        console.log("boundary " + 3508*pageNumber);
+        let shift = 3508*pageNumber - container.getBoundingClientRect().top + 50;
+        container.style.marginTop = shift + "px";
+        console.log("décalage " + shift + "px");
+        console.log("page " + pageNumber);
+        console.log("top " + container.getBoundingClientRect().top);
+        console.log("bottom " + container.getBoundingClientRect().bottom);
+        console.log("boundary " + 3508*pageNumber);
+        pageNumber++;
+    }
 }
 
 
