@@ -352,7 +352,10 @@ function createPdfPageHeader(page) {
     let sign = document.createElement("div");
     sign.setAttribute("id", "sign");
     sign.setAttribute("class", "header-info-item");
-    sign.innerHTML = "Signature du DP : ";
+    sign.innerHTML = "Signature du DP :";
+    let signBox = document.createElement("div");
+    signBox.setAttribute("class", "signBox");
+    sign.appendChild(signBox);
     headerInfo3.appendChild(sign);
     let surfaceSecurity = document.createElement("div");
     surfaceSecurity.setAttribute("id", "surfaceSecurity");
@@ -542,7 +545,7 @@ function createPdrTable(page,i) {
                     divDepthItem1.innerHTML = "Prévue :";
                 }
                 else {
-                    divDepthItem1.innerHTML = "Prévue : <br>&emsp;&emsp;" + tabActualDiveTeams[i-1].get_max_depth() + " m";
+                    divDepthItem1.innerHTML = "Prévue : <br><br>&emsp;&emsp;" + tabActualDiveTeams[i-1].get_max_depth() + " m";
                 }
                 divDepth.appendChild(divDepthItem1);
                 let divDepthItem2 = document.createElement("div");
@@ -561,7 +564,7 @@ function createPdrTable(page,i) {
                     divDurationItem1.innerHTML = "Prévue :";
                 }
                 else {
-                    divDurationItem1.innerHTML = "Prévue : <br>&emsp;&emsp;"+ tabActualDiveTeams[i-1].get_max_duration();
+                    divDurationItem1.innerHTML = "Prévue : <br><br>&emsp;&emsp;"+ tabActualDiveTeams[i-1].get_max_duration();
                 }
                 divDuration.appendChild(divDurationItem1);
                 let divDurationItem2 = document.createElement("div");

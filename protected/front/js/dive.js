@@ -178,6 +178,8 @@ function setButtonListener(){
     const attributionAutomatique = document.getElementById('attribution-automatique');
     attributionAutomatique.addEventListener('click', event => {
         funcAttributionAutomatique(); // Run myFunction with a timeout of 5 seconds (5000 milliseconds)
+        //validerPalanquées(attributionAutomatique);
+        alert("Attribution automatique des palanquées terminée ! Veuillez cliquer sur le bouton valider avant de quitter la page")
     });
 
     const validerButton = document.getElementById('valider');
@@ -978,13 +980,10 @@ function funcAttributionAutomatique(){
         console.log("Attribution automatique" + attributionAutomatique + " : " + palanqueesValide);
     }
 
-
-    //validerPalanquées(attributionAutomatique);
-    alert("Attribution automatique des palanquées terminée ! Veuillez cliquer sur le bouton valider avant de quitter la page")
-
     for(let i = 0; i < nbDiveTeams; i++){
         setDivInfosPalanquee(i+1)
     }
+     
     console.log("Palanquées validées : " + palanqueesValide);
 }
 
@@ -1058,35 +1057,113 @@ function suppressionTableauPalanquée(tableId){
     //console.log("Suppression du tableau " + tableId);
     const table = document.getElementById(tableId);
     const tableBody = document.getElementById('tableBody');
-    var trElements = table.getElementsByTagName('tr');
+    let trElements = table.getElementsByTagName('tr');
 
     //console.log(trElements);
-    //console.log(trElements[4].getElementsByTagName('td')[0].innerHTML);
 
     //Check if the table is empty
     if (trElements.length > 4) {
         //console.log("Tableau rempli");
         //confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
         let length = trElements.length - 4;
-        console.log("length = " + length);
-    }
-    //else{
-        for (let i = tableId; i < tablecounter; i++) {
-            //console.log("Tableau " + i);
-            let tmp = parseInt(i)+1;
-            //console.log(tmp);
-            let table2 = document.getElementById(tmp);
-            //console.log(table2);
-            table2.setAttribute('id', i);
-            // Append
-            let td = table2.getElementsByTagName('th')[0];
-            td.innerHTML = "Palanquée " + table2.id;
+        //console.log("length = " + length);
+        for(let i = 1; i <= length; i++){
+            let id = i + 3;
+            let ligne = document.createElement('tr');
+            ligne.classList.add('tr');
+            //ligne.classList.add('my-handle');
+
+            let celluleNom = document.createElement('td');
+            celluleNom.innerHTML = trElements[id].getElementsByTagName('td')[0].innerHTML;
+
+            let cellulePrenom = document.createElement('td');
+            cellulePrenom.innerHTML = trElements[id].getElementsByTagName('td')[1].innerHTML;
+
+            let celluleNiveau = document.createElement('td');
+            celluleNiveau.innerHTML = trElements[id].getElementsByTagName('td')[2].innerHTML;
+
+            let celluleAge = document.createElement('td');
+            celluleAge.innerHTML = trElements[id].getElementsByTagName('td')[3].innerHTML;
+
+            let celluleRole = document.createElement('td');
+            celluleRole.innerHTML = trElements[id].getElementsByTagName('td')[4].innerHTML;
+
+
+
+            let celluleQualifTemp = document.createElement('td');
+            let qualifTempInput = document.createElement('input');
+            qualifTempInput.setAttribute("type", "text");
+            qualifTempInput.setAttribute("id", trElements[id].getElementsByTagName('td')[5].getElementsByTagName('input')[0].getAttribute('id'));  
+            qualifTempInput.setAttribute("value", trElements[id].getElementsByTagName('td')[5].getElementsByTagName('input')[0].value);
+            celluleQualifTemp.appendChild(qualifTempInput);
+
+            let cellulePourcentageNox = document.createElement('td');
+            let pourcentageNoxInput = document.createElement('input');
+            pourcentageNoxInput.setAttribute("type", "number");
+
+            pourcentageNoxInput.setAttribute("min", "0");
+            pourcentageNoxInput.setAttribute("max", "100");
+
+            pourcentageNoxInput.setAttribute("id", trElements[id].getElementsByTagName('td')[6].getElementsByTagName('input')[0].getAttribute('id'));
+                
+            pourcentageNoxInput.setAttribute("value", trElements[id].getElementsByTagName('td')[6].getElementsByTagName('input')[0].value);
+            cellulePourcentageNox.appendChild(pourcentageNoxInput);
+
+            let celluleMontantPaye = document.createElement('td');
+            let montantPayeInput = document.createElement('input');
+            montantPayeInput.setAttribute("type", "number");
+            montantPayeInput.setAttribute("min", "0");
+            montantPayeInput.setAttribute("id", trElements[id].getElementsByTagName('td')[7].getElementsByTagName('input')[0].getAttribute('id'));
+            //montantPayeInput.setAttribute("max", getDiverById(tabDiveRegistrations[i].get_diver_id()).get_additionnal_qualification());
+            montantPayeInput.setAttribute("value", trElements[id].getElementsByTagName('td')[7].getElementsByTagName('input')[0].value);
+            celluleMontantPaye.appendChild(montantPayeInput);
+
+            let celluleCommentaire = document.createElement('td');
+            let commentaireInput = document.createElement('textarea');
+            commentaireInput.setAttribute("id", trElements[id].getElementsByTagName('td')[8].getElementsByTagName('textarea')[0].getAttribute('id'));
+            console.log(trElements[id].getElementsByTagName('td')[8].getElementsByTagName('textarea')[0].value)
+            commentaireInput.setAttribute("value", trElements[id].getElementsByTagName('td')[8].getElementsByTagName('textarea')[0].value);
+            commentaireInput.setAttribute("placeholder", "Commentaire");
+            commentaireInput.classList.add("commentInput");
+            celluleCommentaire.appendChild(commentaireInput);
+
+
+            let celluleHandle = document.createElement('td');
+            celluleHandle.classList.add('my-handle');
+            celluleHandle.innerHTML = '<i class="fas fa-grip-vertical"></i>';
+
+            ligne.appendChild(celluleNom);
+            ligne.appendChild(cellulePrenom);
+            ligne.appendChild(celluleNiveau);
+            ligne.appendChild(celluleAge);
+            ligne.appendChild(celluleRole);
+            ligne.appendChild(celluleQualifTemp);
+            ligne.appendChild(cellulePourcentageNox);
+            ligne.appendChild(celluleMontantPaye);
+            ligne.appendChild(celluleCommentaire);
+            ligne.appendChild(celluleHandle);
+
+            //console.log(ligne);
+            document.getElementById('tBodyInscrits').appendChild(ligne);
         }
-        // Remove the table
-        //console.log(tableId);
-        table.parentNode.remove();
-        tablecounter--; 
-    //}
+    }
+    
+    for (let i = tableId; i < tablecounter; i++) {
+        //console.log("Tableau " + i);
+        let tmp = parseInt(i)+1;
+        //console.log(tmp);
+        let table2 = document.getElementById(tmp);
+        //console.log(table2);
+        table2.setAttribute('id', i);
+        // Append
+        let td = table2.getElementsByTagName('th')[0];
+        td.innerHTML = "Palanquée " + table2.id;
+    }
+    // Remove the table
+    //console.log(tableId);
+    table.parentNode.remove();
+    tablecounter--; 
+    
     //console.log("Nombre tableaux : " + tablecounter)
 }
 
@@ -1133,11 +1210,14 @@ function supprimerTousLesTableaux(attributionAutomatique){
             tablecounter = 0;
         }
     }
-    else if(nbrRempli == 1){
-        confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau concerné avant la suppression");
-    }
     else{
-        confirm("Impossible de supprimer des tableaux remplis, merci de vider les tableaux concernés avant la suppression. \n Nombre de tableaux remplis : " + nbrRempli + "");
+        if (confirm("Voulez-vous vraiment supprimer tous les tableaux ?")) {
+            let tmp = tablecounter;
+            for(let i = 1; i <= tmp; i++){
+                //console.log("Suppression tableau " + i);
+                suppressionTableauPalanquée(1);
+            }
+        }
     }
 
 }
@@ -1668,7 +1748,7 @@ function createTableInscrits() {
     });
 
     const tbody = document.createElement('tbody');
-    tbody.setAttribute('id', 'tbodyInscrits');
+    tbody.setAttribute('id', 'tBodyInscrits');
 
     for (let i = 0; i < tabDiveRegistrations.length; i++) {
         if(tabDiveRegistrations[i].get_planned_dive_id() == idPlannedDive) { // Mettre l'id de la plongée ici
