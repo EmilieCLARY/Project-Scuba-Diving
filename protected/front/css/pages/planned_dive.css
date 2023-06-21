@@ -257,7 +257,7 @@ body {
 
 .div_bas button {
   width: 10vw;
-  height: 5vh;
+  height: 3vh;
   margin-left: 4vw;
   margin-top: 0.5vh;
   outline: none;
@@ -831,7 +831,6 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /*height: 60vh;*/
 }
 
 .div-modal .modal-body .modal-body-left {
@@ -893,7 +892,7 @@ body {
 
 @media (min-width: 1200px) {
   .div-modal .modal-body .modal-body-left .modal-price p {
-    font-size: 2em;
+    font-size: 1.7em;
   }
 }
 
@@ -953,7 +952,7 @@ body {
 .div-modal .modal-body .modal-body-right {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 47.5vw;
   height: 60vh;
@@ -1098,10 +1097,9 @@ body {
 } 
 
 .div-modal .modal-body .modal-body-right .modal-diver-list {
-  display: flex;
-  height: 30vh;
   overflow-y: scroll;
   border: 0.5vh solid var(--secondary-color);
+  margin-top: 1rem;
 }
 
 .div-modal .modal-body .modal-body-right .modal-diver-list .blueTable {
@@ -1110,6 +1108,7 @@ body {
 
 .div-modal .modal-body .modal-body-right .modal-diver-list .blueTable thead {
   position: initial;
+  max-height: 44px;
 }
 
 .div-modal .modal-inscription-planned-dive {
@@ -1405,6 +1404,7 @@ body {
   .blueTable td, table.blueTable th {
     border: 0.1vh solid #cfe0ee;
     padding: 0.3vh 0.2vh;
+    max-height: 44px;
   }
   
   .blueTable tbody td {
@@ -1441,6 +1441,7 @@ body {
     border-left: 0.2vh solid #D0E4F5;
     min-width: 2em;
     position: relative;
+    max-height: 44px;
   }
   
   .blueTable thead th:first-child {

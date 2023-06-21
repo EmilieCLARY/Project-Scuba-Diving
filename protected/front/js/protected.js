@@ -1,5 +1,9 @@
 import SocketManager from './SocketManager/SocketProtected.js';
 
+let bubble_profile = document.getElementById('bubble-profile');
+let bubble_dive_site = document.getElementById('bubble-dive-site');
+let bubble_planned_dive = document.getElementById('bubble-planned-dive');
+
 let first_name;
 let last_name;
 let id;
@@ -22,6 +26,9 @@ loadInfo();
 
 
 function getIsAdmin(isAdmin){
+    bubble_profile.style.visibility = "visible";
+    bubble_dive_site.style.visibility = "visible";
+    bubble_planned_dive.style.visibility = "visible";
     if(isAdmin == 1){
         createDiverBubble();
         createAppUserBubble();

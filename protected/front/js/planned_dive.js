@@ -168,9 +168,9 @@ function LoadAllPlannedDives(tab) {
     document.getElementById("ring-loading").style.display = "block";
     document.body.style.cursor = "wait";
     setTimeout(function(){
-        sortPlannedDivesAsc();
-        createCardsPlannedDive();
-        setListeners();
+        //sortPlannedDivesAsc();
+        //createCardsPlannedDive();
+        //setListeners();
         loaded++;
         checkLoaded();
         document.getElementById("ring-loading").style.display = "none";
@@ -938,7 +938,7 @@ function updateTableDivers(id){
     if(isAdmin == 1){
         let tr_desc = document.getElementById("tr-desc");
         let td_suppr = document.createElement("td");
-        td_suppr.innerHTML = "Supprimer";
+        td_suppr.innerHTML = "Désinscrire";
         td_suppr.setAttribute("id", "td-suppr");
         tr_desc.appendChild(td_suppr);
     }
@@ -1257,6 +1257,9 @@ function checkLoaded(){
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
         loaded = 0;
+        sortPlannedDivesAsc();
+        createCardsPlannedDive();
+        setListeners();
         setSortAndSearchListeners();
         setButtonRegisterListener();
     }

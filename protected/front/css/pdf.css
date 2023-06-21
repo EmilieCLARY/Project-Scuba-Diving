@@ -84,12 +84,13 @@
 
 .page .table-container .title {
     width: 100%;
-    height: 200px;
+    height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     font-size: 3em;
+    border: 1px solid #ccc;
 }
 
 .page .table-container table {
@@ -100,7 +101,10 @@
     border: 1px solid #ccc;
     font-size: 2.5em;
     margin-left: 5%;
+    margin-top: 50px;
 }
+
+
 
 .page .table-container table th {
     height: 100px;
@@ -126,9 +130,11 @@
 .page .table-container table tbody div{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     height: -webkit-fill-available;
     height: -moz-available;
+    align-items: flex-start;
+    padding-left: 5px;
+    padding-top: 5px;
 }
 
 .page .table-container table tbody div .div-item{

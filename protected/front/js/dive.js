@@ -631,7 +631,8 @@ function créationDiveTeamMember(i, j, trElements, tableGuide, idDiveTeam){
     //console.log("Id du plongeur : " + idDiver);
 
     //Get the current diver role with idDiver
-    let role = tabDiveRegistrations[i].get_diver_role();
+    let role = trElements[j].getElementsByTagName('td')[4].innerHTML;
+    //let role = tabDiveRegistrations[i].get_diver_role();
     //console.log("Rôle du plongeur : " + role);
 
     let qualification = tabDivers[idDiver-1].get_diver_qualification();
@@ -1059,12 +1060,17 @@ function suppressionTableauPalanquée(tableId){
     const tableBody = document.getElementById('tableBody');
     var trElements = table.getElementsByTagName('tr');
 
+    //console.log(trElements);
+    //console.log(trElements[4].getElementsByTagName('td')[0].innerHTML);
+
     //Check if the table is empty
     if (trElements.length > 4) {
         //console.log("Tableau rempli");
-        confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
+        //confirm("Impossible de supprimer un tableau rempli, merci de vider le tableau avant de le supprimer");
+        let length = trElements.length - 4;
+        console.log("length = " + length);
     }
-    else{
+    //else{
         for (let i = tableId; i < tablecounter; i++) {
             //console.log("Tableau " + i);
             let tmp = parseInt(i)+1;
@@ -1080,7 +1086,7 @@ function suppressionTableauPalanquée(tableId){
         //console.log(tableId);
         table.parentNode.remove();
         tablecounter--; 
-    }
+    //}
     //console.log("Nombre tableaux : " + tablecounter)
 }
 
@@ -1662,6 +1668,7 @@ function createTableInscrits() {
     });
 
     const tbody = document.createElement('tbody');
+    tbody.setAttribute('id', 'tbodyInscrits');
 
     for (let i = 0; i < tabDiveRegistrations.length; i++) {
         if(tabDiveRegistrations[i].get_planned_dive_id() == idPlannedDive) { // Mettre l'id de la plongée ici

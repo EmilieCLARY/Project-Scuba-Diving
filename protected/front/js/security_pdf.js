@@ -369,14 +369,23 @@ function createPdrTable(page,i) {
     let container = document.createElement("div");
     container.setAttribute("class", "table-container");
     page.appendChild(container);
-    let title = document.createElement("div");
-    title.setAttribute("class", "title");
-    let teamNumber = document.createElement("div");
-    teamNumber.setAttribute("class", "team-number");
+    
+    let table = document.createElement("table");
+    table.setAttribute("class", "table");
+    container.appendChild(table);
+
+    // Create table head
+    let thead = document.createElement("thead");
+    table.appendChild(thead);
+    let tr1 = document.createElement("tr");
+    tr1.setAttribute("class", "table-title");
+    thead.appendChild(tr1);
+    let teamNumber = document.createElement("th");
+    teamNumber.setAttribute("colspan", "6");
     teamNumber.innerHTML = "Palanquée n°" + (i);
-    title.appendChild(teamNumber);
-    let diveType = document.createElement("div");
-    diveType.setAttribute("class", "dive-type");
+    tr1.appendChild(teamNumber);
+    let diveType = document.createElement("th");
+    diveType.setAttribute("colspan", "4");
     let diveTypeName = "";
     switch (tabActualDiveTeams[i-1].get_dive_type()) {
         case "1":
@@ -392,50 +401,42 @@ function createPdrTable(page,i) {
             break;
     }
     diveType.innerHTML = "Type de plongée : " + diveTypeName;
-    title.appendChild(diveType);
-    container.appendChild(title);
-    let table = document.createElement("table");
-    table.setAttribute("class", "table");
-    container.appendChild(table);
-
-    // Create table head
-    let thead = document.createElement("thead");
-    table.appendChild(thead);
-    let tr = document.createElement("tr");
-    thead.appendChild(tr);
+    tr1.appendChild(diveType);
+    let tr2 = document.createElement("tr");
+    thead.appendChild(tr2);
     let th1 = document.createElement("th");
     th1.innerHTML = "Nom";
-    tr.appendChild(th1);
+    tr2.appendChild(th1);
     let th2 = document.createElement("th");
     th2.innerHTML = "Prénom";
-    tr.appendChild(th2);
+    tr2.appendChild(th2);
     let th3 = document.createElement("th");
     th3.innerHTML = "Fonction";
-    tr.appendChild(th3);
+    tr2.appendChild(th3);
     let th4 = document.createElement("th");
     th4.innerHTML = "Qualification";
-    tr.appendChild(th4);
+    tr2.appendChild(th4);
     let th5 = document.createElement("th");
     th5.setAttribute("class", "thin")
     th5.innerHTML = "€";
-    tr.appendChild(th5);
+    tr2.appendChild(th5);
     let th6 = document.createElement("th");
     th6.setAttribute("class", "thin")
     th6.innerHTML = "Nitrox %";
-    tr.appendChild(th6);
+    tr2.appendChild(th6);
     let th7 = document.createElement("th");
     th7.innerHTML = "Horaire";
-    tr.appendChild(th7);
+    tr2.appendChild(th7);
     let th8 = document.createElement("th");
     th8.innerHTML = "Profondeur";
-    tr.appendChild(th8);
+    tr2.appendChild(th8);
     let th9 = document.createElement("th");
     th9.innerHTML = "Durée";
-    tr.appendChild(th9);
+    tr2.appendChild(th9);
     let th10 = document.createElement("th");
     th10.setAttribute("class", "wide")
     th10.innerHTML = "Paliers";
-    tr.appendChild(th10);
+    tr2.appendChild(th10);
 
     // Create table body
     let tbody = document.createElement("tbody");
@@ -537,7 +538,12 @@ function createPdrTable(page,i) {
                 let divDepth = document.createElement("div");
                 let divDepthItem1 = document.createElement("div");
                 divDepthItem1.setAttribute("class", "div-item");
-                divDepthItem1.innerHTML = "Prévue : " + tabActualDiveTeams[i-1].get_max_depth() + " m";
+                if(tabActualDiveTeams[i-1].get_max_depth() == "") {
+                    divDepthItem1.innerHTML = "Prévue :";
+                }
+                else {
+                    divDepthItem1.innerHTML = "Prévue : <br>&emsp;&emsp;" + tabActualDiveTeams[i-1].get_max_depth() + " m";
+                }
                 divDepth.appendChild(divDepthItem1);
                 let divDepthItem2 = document.createElement("div");
                 divDepthItem2.setAttribute("class", "div-item");
@@ -551,7 +557,12 @@ function createPdrTable(page,i) {
                 let divDuration = document.createElement("div");
                 let divDurationItem1 = document.createElement("div");
                 divDurationItem1.setAttribute("class", "div-item");
-                divDurationItem1.innerHTML = "Prévue : " + tabActualDiveTeams[i-1].get_max_duration();
+                if(tabActualDiveTeams[i-1].get_max_duration() == "00:00") {
+                    divDurationItem1.innerHTML = "Prévue :";
+                }
+                else {
+                    divDurationItem1.innerHTML = "Prévue : <br>&emsp;&emsp;"+ tabActualDiveTeams[i-1].get_max_duration();
+                }
                 divDuration.appendChild(divDurationItem1);
                 let divDurationItem2 = document.createElement("div");
                 divDurationItem2.setAttribute("class", "div-item");
