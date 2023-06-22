@@ -12,59 +12,20 @@
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 
     <link rel="icon" type="image/x-icon" href="/protected/front/img/snorkel.png">
-    <title>Scuba-Diving Manager</title>
+    <title>Gestionnaire de plongée</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 
-    <script>
-        window.html2canvas = html2canvas;
-        window.jsPDF = window.jspdf.jsPDF;
-
-        function createPDF() {      
-            //html2canvas(document.querySelector("#pdf_info"), {
-            //    
-            //    allowTaint: true,
-            //    useCORS: true,
-            //    scale: 1,
-            //}).then(canvas => {
-            //    //document.body.appendChild(canvas);
-            //    
-            //    var img = canvas.toDataURL("image/png");
-            //    var doc = new jsPDF("p", "mm", "a4");
-            //    //doc.setFont('Arial');
-            //    //doc.getFontSize(40);
-            //    doc.addImage(img, 'JPEG', 0, 0, 1920, 1920);
-            //    doc.save("TEST"); 
-            //});   
-            let doc = new jsPDF({  
-                 unit: 'px',  
-                 format: 'a4'  
-            }); 
-            doc.html(document.querySelector("#pdf_info"), {
-                callback: function (doc) {
-                    doc.save("Fiche_de_securite");
-                },
-                x: 0,
-                y: 0,
-                //autoPaging: "text",
-                //width: 793,
-                width: 450,
-                windowWidth: 2480,
-                //windowHeight: 3508,
-                //height: 1122,
-            });
-        }
-        
-
-        function downloadPDF() { setTimeout(createPDF(), 5000); }
-    </script>
+    
+    
+    
 
 </head>
 
 <body>
-    <button id="download-pdf-btn" onclick="downloadPDF()">Create PDF</button>
+    <button id="download-pdf-btn">Creation du PDF</button>
 
     <div id="pdf_info" style="letter-spacing: 0.01px;"></div>
     

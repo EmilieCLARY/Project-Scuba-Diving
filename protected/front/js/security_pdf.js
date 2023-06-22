@@ -141,6 +141,7 @@ function getAllInformations() {
         });
     });
 
+    /*
     console.log(tabActualDiveTeamMembers);
     console.log(tabActualDiveTeams);
     console.log(dive_city);
@@ -155,6 +156,7 @@ function getAllInformations() {
     console.log(begin_date);
     console.log(begin_time);
     console.log(dive_number);
+    */
 }
 
 
@@ -285,10 +287,20 @@ function createPdfPage() {
     for (let i = 1; i <= tabActualDiveTeams.length; i++) {
         createPdrTable(page, i);
     }
-    
     createPdfComment(page);
-    //createPdrTable(page, 1);
-    //createPDF();
+    let allSeparators = document.getElementsByClassName("page-separator");
+    console.log(allSeparators);
+    console.log(document.getElementById("download-pdf-btn"));
+    document.getElementById("download-pdf-btn").addEventListener("click", (e) => {
+        console.log("click");
+        for (let i = 0; i < allSeparators.length; i++) {
+            allSeparators[i].style.display = "none";
+        }
+        createPDF();
+        setTimeout(function(){ for (let i = 0; i < allSeparators.length; i++) {
+            allSeparators[i].style.display = "block";
+        } }, 5000);
+});
 }
 
 function createPdfPageHeader(page) {
@@ -314,17 +326,14 @@ function createPdfPageHeader(page) {
     let headerInfo1 = document.createElement("div");
     headerInfo1.setAttribute("class", "header-info");
     let site = document.createElement("div");
-    site.setAttribute("id", "site");
     site.setAttribute("class", "header-info-item");
     site.innerHTML = "Site de plongée : " + dive_city;
     headerInfo1.appendChild(site);
     let date = document.createElement("div");
-    date.setAttribute("id", "date");
     date.setAttribute("class", "header-info-item");
     date.innerHTML = "Date : " + begin_date;
     headerInfo1.appendChild(date);
     let time = document.createElement("div");
-    time.setAttribute("id", "time");
     time.setAttribute("class", "header-info-item");
     time.innerHTML = "Heure : " + begin_time;
     headerInfo1.appendChild(time);
@@ -332,17 +341,14 @@ function createPdfPageHeader(page) {
     let headerInfo2 = document.createElement("div");
     headerInfo2.setAttribute("class", "header-info");
     let diveDirector = document.createElement("div");
-    diveDirector.setAttribute("id", "diveDirector");
     diveDirector.setAttribute("class", "header-info-item");
     diveDirector.innerHTML = "Directeur de plongée : " + dive_director_last_name + " " + dive_director_first_name;
     headerInfo2.appendChild(diveDirector);
     let diveDirectorQualification = document.createElement("div");
-    diveDirectorQualification.setAttribute("id", "qualification");
     diveDirectorQualification.setAttribute("class", "header-info-item");
     diveDirectorQualification.innerHTML = "Qualification : " + dive_director_qualification;
     headerInfo2.appendChild(diveDirectorQualification);
     let DiverNumber = document.createElement("div");
-    DiverNumber.setAttribute("id", "DiverNumber");
     DiverNumber.setAttribute("class", "header-info-item");
     DiverNumber.innerHTML = "Nombre de plongeurs : " + tabActualDiveTeamMembers.length;
     headerInfo2.appendChild(DiverNumber);
@@ -350,7 +356,6 @@ function createPdfPageHeader(page) {
     let headerInfo3 = document.createElement("div");
     headerInfo3.setAttribute("class", "header-info");
     let sign = document.createElement("div");
-    sign.setAttribute("id", "sign");
     sign.setAttribute("class", "header-info-item");
     sign.innerHTML = "Signature du DP :";
     let signBox = document.createElement("div");
@@ -358,13 +363,15 @@ function createPdfPageHeader(page) {
     sign.appendChild(signBox);
     headerInfo3.appendChild(sign);
     let surfaceSecurity = document.createElement("div");
-    surfaceSecurity.setAttribute("id", "surfaceSecurity");
     surfaceSecurity.setAttribute("class", "header-info-item");
     surfaceSecurity.innerHTML = "Sécurité de surface : " + surface_security;
     headerInfo3.appendChild(surfaceSecurity);
+    let maxPpo2 = document.createElement("div");
+    maxPpo2.setAttribute("class", "header-info-item");
+    maxPpo2.innerHTML = "PPO2 max : " + max_ppo2;
+    headerInfo3.appendChild(maxPpo2);
     headerBottom.appendChild(headerInfo3);
     header.appendChild(headerBottom);
-    
     page.appendChild(header);
 }
 
@@ -444,7 +451,7 @@ function createPdrTable(page,i) {
     // Create table body
     let tbody = document.createElement("tbody");
     table.appendChild(tbody);
-    console.log(tabActualDiveTeams[i-1].get_id());
+    //console.log(tabActualDiveTeams[i-1].get_id());
     tabActualDiveTeamMembers.forEach(element => {
         if(element.get_id_palanquée() == tabActualDiveTeams[i-1].get_id()){
             let tr = document.createElement("tr");
@@ -583,21 +590,27 @@ function createPdrTable(page,i) {
         }
 
     });
-    console.log(container);
-    console.log(container.getBoundingClientRect().bottom);
+    //console.log(container);
+    //console.log(container.getBoundingClientRect().bottom);
     if(container.getBoundingClientRect().bottom > 3508*pageNumber){
-        console.log("page " + pageNumber);
-        console.log("top " + container.getBoundingClientRect().top);
-        console.log("bottom " + container.getBoundingClientRect().bottom);
-        console.log("boundary " + 3508*pageNumber);
+        //console.log("page " + pageNumber);
+        //console.log("top " + container.getBoundingClientRect().top);
+        //console.log("bottom " + container.getBoundingClientRect().bottom);
+        //console.log("boundary " + 3508*pageNumber);
         let shift = 3508*pageNumber - container.getBoundingClientRect().top + 50;
         container.style.marginTop = shift + "px";
-        console.log("décalage " + shift + "px");
-        console.log("page " + pageNumber);
-        console.log("top " + container.getBoundingClientRect().top);
-        console.log("bottom " + container.getBoundingClientRect().bottom);
-        console.log("boundary " + 3508*pageNumber);
+        //console.log("décalage " + shift + "px");
+        //console.log("page " + pageNumber);
+        //console.log("top " + container.getBoundingClientRect().top);
+        //console.log("bottom " + container.getBoundingClientRect().bottom);
+        //console.log("boundary " + 3508*pageNumber);
         pageNumber++;
+        page.style.height = 3508*pageNumber + "px";
+        let pageSeparator = document.createElement("div");
+        pageSeparator.setAttribute("class", "page-separator");
+        pageSeparator.style.top = 3508*(pageNumber-1) + "px";
+        page.appendChild(pageSeparator);
+
     }
 }
 
@@ -614,21 +627,63 @@ function createPdfComment(page) {
     DivComment.innerHTML = comment;
     container.appendChild(DivComment);
     if(container.getBoundingClientRect().bottom > 3508*pageNumber){
-        console.log("page " + pageNumber);
-        console.log("top " + container.getBoundingClientRect().top);
-        console.log("bottom " + container.getBoundingClientRect().bottom);
-        console.log("boundary " + 3508*pageNumber);
+        //console.log("page " + pageNumber);
+        //console.log("top " + container.getBoundingClientRect().top);
+        //console.log("bottom " + container.getBoundingClientRect().bottom);
+        //console.log("boundary " + 3508*pageNumber);
         let shift = 3508*pageNumber - container.getBoundingClientRect().top + 50;
         container.style.marginTop = shift + "px";
-        console.log("décalage " + shift + "px");
-        console.log("page " + pageNumber);
-        console.log("top " + container.getBoundingClientRect().top);
-        console.log("bottom " + container.getBoundingClientRect().bottom);
-        console.log("boundary " + 3508*pageNumber);
+        //console.log("décalage " + shift + "px");
+        //console.log("page " + pageNumber);
+        //console.log("top " + container.getBoundingClientRect().top);
+        //console.log("bottom " + container.getBoundingClientRect().bottom);
+        //console.log("boundary " + 3508*pageNumber);
         pageNumber++;
+        page.style.height = 3508*pageNumber + "px";
     }
 }
 
+
+window.html2canvas = html2canvas;
+window.jsPDF = window.jspdf.jsPDF;
+
+function createPDF() {      
+    //html2canvas(document.querySelector("#pdf_info"), {
+    //    
+    //    allowTaint: true,
+    //    useCORS: true,
+    //    scale: 1,
+    //}).then(canvas => {
+        //    //document.body.appendChild(canvas);
+        //    
+        //    var img = canvas.toDataURL("image/png");
+        //    var doc = new jsPDF("p", "mm", "a4");
+        //    //doc.setFont('Arial');
+        //    //doc.getFontSize(40);
+        //    doc.addImage(img, 'JPEG', 0, 0, 1920, 1920);
+        //    doc.save("TEST"); 
+        //});   
+        let doc = new jsPDF({  
+            unit: 'px',  
+            format: 'a4'  
+        }); 
+        doc.html(document.querySelector("#pdf_info"), {
+            callback: function (doc) {
+                doc.save("Fiche_de_securite");
+            },
+            x: 0,
+            y: 0,
+            //autoPaging: "text",
+            //width: 793,
+            width: 450,
+            windowWidth: 2480,
+            //windowHeight: 3508,
+            //height: 1122,
+        });
+    }
+    
+    
+function downloadPDF() { setTimeout(createPDF(), 5000);}
 
 /********************************************************************/
 export default {

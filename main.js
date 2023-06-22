@@ -283,6 +283,11 @@ io.on('connection', (socket) =>{
     socket.on('setIsAdminForDiveId', (id) => {
         socket.handshake.session.isAdminForDiveId = id;
     });
+
+    socket.on('actualizeBDD', (id, currentPage) => {
+        console.log("BDD : Actualizing BDD.");
+        socket.broadcast.emit('updatePage', id, currentPage);
+    });
     /* ------------------------------ ADD FUNCTIONS ----------------------------- */
 
     socket.on('addDiver', (id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date) => {

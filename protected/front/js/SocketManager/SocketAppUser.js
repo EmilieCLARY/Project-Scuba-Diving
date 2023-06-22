@@ -18,6 +18,10 @@ function modifyAppUser(id, id_diver, isAdmin){
     //console.log("emitModifyAppUser");
 }
 
+function updateInfosForAllUsers(id){
+    socket.emit('actualizeBDD', id , window.location.pathname);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllAppUsers', (tabAppUsers) => {
@@ -29,8 +33,14 @@ socket.on('receiveAllDivers', (tabDivers) => {
     AppUser.LoadAllDivers(tabDivers);
 });
 
+socket.on('updatePage', (id, currentPage) => {
+    console.log("updatePage");
+    AppUser.updatePage(id, currentPage);
+});
+
 export default {
     getAllAppUsers,
     getAllDivers,
     modifyAppUser,
+    updateInfosForAllUsers
 }

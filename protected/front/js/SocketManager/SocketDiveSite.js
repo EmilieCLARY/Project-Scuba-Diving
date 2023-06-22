@@ -32,6 +32,10 @@ function getIsAdmin(){
     socket.emit('getIsAdmin');
 }
 
+function updateInfosForAllUsers(id){
+    socket.emit('actualizeBDD', id , window.location.pathname);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllDiveSites', (tabDiveSites) => {
@@ -46,6 +50,11 @@ socket.on('receiveIsAdmin', (isAdmin) => {
     DiveSite.LoadIsAdmin(isAdmin);
 });
 
+socket.on('updatePage', (id, currentPage) => {
+    console.log("updatePage");
+    DiveSite.updatePage(id, currentPage);
+});
+
 // EXPORT
 export default {
     getAllDiveSites,
@@ -54,4 +63,5 @@ export default {
     deleteDiveSite,
     modifyDiveSite,
     getIsAdmin,
+    updateInfosForAllUsers
 }

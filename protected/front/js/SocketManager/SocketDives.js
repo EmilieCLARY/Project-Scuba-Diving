@@ -48,6 +48,10 @@ function getIdPlannedDive(){
     socket.emit('getIdPlannedDive');
 }
 
+function updateInfosForAllUsers(id){
+    socket.emit('actualizeBDD', id , window.location.pathname);
+}
+
 // ADD
 
 function addDive(Id_Dive, Begin_Time, Begin_Date, End_Date, End_Time, Comment, Surface_Security, Diver_Price, Instructor_Price, Max_Ppo2, Diver_Id_Diver, Planned_Dive_Id_Planned_Dive) {
@@ -129,6 +133,11 @@ socket.on('receiveIdPlannedDive', (idPlannedDive) => {
     Dive.LoadIdPlannedDive(idPlannedDive);
 });
 
+socket.on('updatePage', (id, currentPage) => {
+    console.log("updatePage");
+    Dive.updatePage(id, currentPage);
+});
+
 // EXPORT
 export default {
     getAllDiveSites,
@@ -146,5 +155,6 @@ export default {
     addDiveTeam,
     addDiveTeamMember,
     updateDive,
-    deleteAllDiveTeamsInfos
+    deleteAllDiveTeamsInfos,
+    updateInfosForAllUsers
 }

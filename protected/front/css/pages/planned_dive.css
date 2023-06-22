@@ -1340,6 +1340,7 @@ body {
     border-radius: 1vh;
     border: 0.2vh solid var(--accent-color);
     font-size: 1rem;
+    padding-left: 0.5em;
   }
 }
 

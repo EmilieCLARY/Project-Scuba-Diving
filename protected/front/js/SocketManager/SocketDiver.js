@@ -26,11 +26,20 @@ function modifyDiver(id,first_name,last_name,diver_qualification,instructor_qual
     //console.log("emitModifyDiver");
 }
 
+function updateInfosForAllUsers(id){
+    socket.emit('actualizeBDD', id , window.location.pathname);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllDivers', (tabDivers) => {
     console.log("receiveAllDivers");
     Divers.LoadAllDivers(tabDivers);
+});
+
+socket.on('updatePage', (id, currentPage) => {
+    console.log("updatePage");
+    Divers.updatePage(id, currentPage);
 });
 
 // EXPORT
@@ -39,4 +48,5 @@ export default {
     addDiver,
     deleteDiver,
     modifyDiver,
+    updateInfosForAllUsers
 }

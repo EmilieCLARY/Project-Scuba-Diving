@@ -48,6 +48,11 @@ window.onclick = function(event) {
 
 function LoadUserProfile(userProfile){
 
+    if(userProfile == null){
+        alert("Attendez qu'un administrateur vous assigne un profil pour accéder à l'application");
+        window.location.href = "/protected";
+    }
+
     userId_Diver = userProfile.Id_Diver;
 
     switch(parseInt(userProfile.Diver_Qualifications)){
@@ -217,7 +222,7 @@ document.getElementById("validate-profile").addEventListener("click", (e) => {
 
     // Update the list
     
-    console.log("Modifying diver " + userId_Diver + " in database");
+    //console.log("Modifying diver " + userId_Diver + " in database");
     
     
     document.getElementById("ring-loading").style.display = "block";

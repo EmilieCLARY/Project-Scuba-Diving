@@ -380,7 +380,7 @@ function setListeners(){
         let btn_suppr = document.getElementById("btn_suppr" + tabDivers[i].get_id());
 
         btn_modif.addEventListener("click", function(){
-            console.log("Modification du plongeur " + tabDivers[i].get_id());
+            //console.log("Modification du plongeur " + tabDivers[i].get_id());
             modifierDiver(tabDivers[i].get_id());
         });
 
@@ -388,11 +388,11 @@ function setListeners(){
             // Demande de confirmation
             let text = "Êtes-vous sûr de vouloir supprimer " + tabDivers[i].get_first_name()+ " " + tabDivers[i].get_last_name() + "de la base de données ?\nCette action est irréversible !";
             if(confirm(text) == true){
-                console.log("Suppression du plongeur " + tabDivers[i].get_id());
+                //console.log("Suppression du plongeur " + tabDivers[i].get_id());
                 supprimerDiver(tabDivers[i].get_id());
             }
             else{
-                console.log("Suppression annulée");
+                //console.log("Suppression annulée");
             }
         });
     }
@@ -456,10 +456,12 @@ function setButtonValidateListener(){
         //console.log(id);
         if(modifyMode == false){
             SocketManager.addDiver(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+            setTimeout(function(){SocketManager.updateInfosForAllUsers(0);}, 100);
             //console.log(id,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
         }
         else{
             SocketManager.modifyDiver(modifiedDiver,first_name,last_name,diver_qualification,instructor_qualification,nox_level,additionnal_qualification,licence_number,licence_expiration_date,medical_certificate_expiration_date,birth_date);
+            setTimeout(function(){SocketManager.updateInfosForAllUsers(0);}, 100);
         }
 
         // Clear all input
@@ -479,10 +481,10 @@ function setButtonValidateListener(){
 
         // Update the list
         if(modifyMode == false){
-            console.log("Adding diver in database");
+            //console.log("Adding diver in database");
         }
         else{
-            console.log("Modifying diver " + modifiedDiver + " in database");
+            //console.log("Modifying diver " + modifiedDiver + " in database");
             modifyMode = false;
             modifiedDiver = -1;
         }
@@ -554,6 +556,7 @@ function supprimerDiver(id){
     document.getElementById("ring-loading").style.display = "block";
     document.body.style.cursor = "wait";        
     setTimeout(function() {
+        SocketManager.updateInfosForAllUsers(0);
         updateDiver();
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
@@ -578,9 +581,9 @@ function checkLoaded(){
 }
 
 function sortTable(n) {
-    console.log("Sorting table by column " + n);
+    //console.log("Sorting table by column " + n);
     // Tri de tabDivers
-    console.log(tabDivers);
+    //console.log(tabDivers);
     const distantFuture = new Date(8640000000000000)
     let dateA, dateB;
     tabDivers.sort(function(a, b){
@@ -648,7 +651,7 @@ function sortTable(n) {
         }
     });
 
-    console.log(tabDivers);
+    //console.log(tabDivers);
 }
 
 function sortTableView(n){
@@ -663,63 +666,15 @@ function sortTableView(n){
     }, 100);
 }
 
-//function sortTable(n) {
-//    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-//    table = document.getElementById("liste_diver");
-//    switching = true;
-//    //Set the sorting direction to ascending:
-//    dir = "asc"; 
-//    /*Make a loop that will continue until
-//    no switching has been done:*/
-//    while (switching) {
-//        //start by saying: no switching is done:
-//        switching = false;
-//        rows = table.getElementsByTagName("tr");
-//        //console.log(rows.length);
-//        //rows = table.rows;
-//        /*Loop through all table rows (except the
-//        first, which contains table headers):*/
-//        for (i = 1; i < (rows.length - 1); i++) {
-//            //start by saying there should be no switching:
-//            shouldSwitch = false;
-//            /*Get the two elements you want to compare,
-//            one from current row and one from the next:*/
-//            x = rows[i].getElementsByTagName("td")[n];
-//            y = rows[i + 1].getElementsByTagName("td")[n];
-//            /*check if the two rows should switch place,
-//            based on the direction, asc or desc:*/
-//            if (dir == "asc") {
-//                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-//                    //if so, mark as a switch and break the loop:
-//                    shouldSwitch= true;
-//                    break;
-//                }
-//            } else if (dir == "desc") {
-//                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-//                    //if so, mark as a switch and break the loop:
-//                    shouldSwitch = true;
-//                    break;
-//                }
-//            }
-//        }
-//        if (shouldSwitch) {
-//            /*If a switch has been marked, make the switch
-//            and mark that a switch has been done:*/
-//            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-//            switching = true;
-//            //Each time a switch is done, increase this count by 1:
-//            switchcount ++;      
-//        } else {
-//            /*If no switching has been done AND the direction is "asc",
-//            set the direction to "desc" and run the while loop again.*/
-//            if (switchcount == 0 && dir == "asc") {
-//                dir = "desc";
-//                switching = true;
-//            }
-//        }
-//    }
-//  }
+function updatePage(id, path){
+    //console.log(id, idPlannedDive, path, window.location.pathname)
+    if(path == window.location.pathname){
+        alert("Les informations ont été mises à jour par un autre utilisateur. La page va se recharger.");
+        window.location.reload();
+    }
+}
 
 export default {
     LoadAllDivers,
+    updatePage
 }

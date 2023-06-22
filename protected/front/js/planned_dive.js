@@ -726,17 +726,19 @@ function setButtonValidateListener(){
 
         // Update the list
         if(modifyMode == false){
-            console.log("Adding planned dive in database");
+            //console.log("Adding planned dive in database");
         }
         else{
-            console.log("Modifying planned dive " + modifiedPlannedDive + " in database");
+            //console.log("Modifying planned dive " + modifiedPlannedDive + " in database");
             modifyMode = false;
         }
 
         document.getElementById("ring-loading").style.display = "block";
         document.body.style.cursor = "wait";        
         setTimeout(function() {
+            SocketManager.updateInfosForAllUsers(0);
             updatePlannedDive();
+            window.location.reload();
             //document.getElementById("ring-loading").style.display = "none";
             //document.body.style.cursor = "default";
         }, 1000);
@@ -766,21 +768,21 @@ function setInscriptionListener(){
 
 function setModificationListener(id){
     document.getElementById("modification-planned-dive").addEventListener("click", (e) => {
-        console.log("Modification planned dive " + id);
+        //console.log("Modification planned dive " + id);
         modifierPlannedDive(id);
     });
 }
 
 function setSuppressionListener(id){
     document.getElementById("suppression-planned-dive").addEventListener("click", (e) => {
-        console.log("Suppression planned dive " + id);
+        //console.log("Suppression planned dive " + id);
         supprimerPlannedDive(id);
     });
 }
 
 function setOrganisationListener(id){
     document.getElementById("planned-dive-organisation").addEventListener("click", (e) => {
-        console.log("Organisation planned dive " + id);
+        //console.log("Organisation planned dive " + id);
         SocketManager.setPlannedDive(id);
 
         document.getElementById("ring-loading").style.display = "block";
@@ -864,6 +866,7 @@ function setButtonRegisterListener(){
         document.getElementById("ring-loading").style.display = "block";
         document.body.style.cursor = "wait";
         setTimeout(function(){
+            SocketManager.updateInfosForAllUsers(0);
             updateDiveRegistration();
             updatePlannedDive();
             //document.getElementById("ring-loading").style.display = "none";
@@ -925,14 +928,17 @@ function updateTableDivers(id){
     let tdh1 = document.createElement("td");
     let tdh2 = document.createElement("td");
     let tdh3 = document.createElement("td");
+    let tdh4 = document.createElement("td");
 
     tdh1.innerHTML = "Nom";
     tdh2.innerHTML = "Prénom";
     tdh3.innerHTML = "Rôle";
+    tdh4.innerHTML = 'Covoiturage';
 
     document.getElementById("tr-desc").appendChild(tdh1);
     document.getElementById("tr-desc").appendChild(tdh2);
     document.getElementById("tr-desc").appendChild(tdh3);
+    document.getElementById("tr-desc").appendChild(tdh4);
 
     
     if(isAdmin == 1){
@@ -951,17 +957,30 @@ function updateTableDivers(id){
             let td1 = document.createElement("td");
             let td2 = document.createElement("td");
             let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
 
             td1.innerHTML = getDiverById(element.get_diver_id()).get_last_name();
             td2.innerHTML = getDiverById(element.get_diver_id()).get_first_name();
             td3.innerHTML = element.get_diver_role();
+            if(element.get_car_pooling_seat_offered() == 0){
+                if(element.get_car_pooling_seat_request() == 0){
+                    td4.innerHTML = "Non";
+                }
+                else{
+                    td4.innerHTML = "Besoin d'une place";
+                }
+            }
+            else{
+                td4.innerHTML = element.get_car_pooling_seat_offered() +" places disponibles";
+            }
 
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
+            tr.appendChild(td4);
 
             if(isAdmin == 1){
-                let td4 = document.createElement("td");
+                let td5 = document.createElement("td");
                 let span_trash = document.createElement("span");
                 let i_trash = document.createElement("i");
                 i_trash.setAttribute("id", "btn_suppr", + element.get_diver_id());
@@ -970,17 +989,17 @@ function updateTableDivers(id){
                 i_trash.classList.add("fa-trash-can");
 
                 span_trash.appendChild(i_trash);
-                td4.appendChild(span_trash);
-                tr.appendChild(td4);
+                td5.appendChild(span_trash);
+                tr.appendChild(td5);
 
                 i_trash.addEventListener("click", (e) => {
                     let text = "Êtes-vous sûr de vouloir supprimer cette inscription ?";
                     if(confirm(text) == true){
                         supprimerRegistration(element.get_diver_id(), element.get_planned_dive_id());
-                        console.log("Suppression de l'inscription");
+                        //console.log("Suppression de l'inscription");
                     }
                     else{
-                        console.log("Annulation de la suppression");
+                        //console.log("Annulation de la suppression");
                     }
                 });
             }            
@@ -991,7 +1010,7 @@ function updateTableDivers(id){
                 td_suppr.setAttribute("id", "td-suppr");
                 tr_desc.appendChild(td_suppr);
 
-                let td4 = document.createElement("td");
+                let td5 = document.createElement("td");
                 let span_trash = document.createElement("span");
                 let i_trash = document.createElement("i");
                 i_trash.setAttribute("id", "btn_suppr", + element.get_diver_id());
@@ -1000,17 +1019,17 @@ function updateTableDivers(id){
                 i_trash.classList.add("fa-trash-can");
 
                 span_trash.appendChild(i_trash);
-                td4.appendChild(span_trash);
-                tr.appendChild(td4);
+                td5.appendChild(span_trash);
+                tr.appendChild(td5);
 
                 i_trash.addEventListener("click", (e) => {
                     let text = "Êtes-vous sûr de vouloir supprimer cette inscription ?";
                     if(confirm(text) == true){
                         supprimerRegistration(element.get_diver_id(), element.get_planned_dive_id());
-                        console.log("Suppression de l'inscription");
+                        //console.log("Suppression de l'inscription");
                     }
                     else{
-                        console.log("Annulation de la suppression");
+                        //console.log("Annulation de la suppression");
                     }
                 });
 
@@ -1061,6 +1080,7 @@ function supprimerRegistration(id_diver, id_planned_dive){
     document.getElementById("ring-loading").style.display = "block";
     document.body.style.cursor = "wait";
     setTimeout(function(){
+        SocketManager.updateInfosForAllUsers(0);
         updateDiveRegistration();
         updatePlannedDive();
         //document.getElementById("ring-loading").style.display = "none";
@@ -1100,13 +1120,14 @@ function supprimerPlannedDive(id){
         SocketManager.deletePlannedDive(id);
         tabDiveRegistrations.forEach(element => {
             if(element.get_planned_dive_id() == id){
-                console.log("Suppression de l'inscription");
+                //console.log("Suppression de l'inscription");
                 SocketManager.deleteDiveRegistration(element.get_diver_id(), element.get_planned_dive_id());
             }
         });
         document.getElementById("ring-loading").style.display = "block";
         document.body.style.cursor = "wait";
         setTimeout(function(){
+            SocketManager.updateInfosForAllUsers(0);
             updatePlannedDive();
             updateDiveRegistration();
             document.getElementById("ring-loading").style.display = "none";
@@ -1115,7 +1136,7 @@ function supprimerPlannedDive(id){
         }, 1000);
     }
     else{
-        console.log("Annulation de la suppression");
+        //console.log("Annulation de la suppression");
     }
 }
     
@@ -1183,7 +1204,7 @@ function createCalendar() {
                 titre = "Prévue"
                 break;
             default:
-                console.log("Erreur de statut");
+                //console.log("Erreur de statut");
                 statut_color = "blue";
                 titre = "Indisponible"
                 break;
@@ -1257,6 +1278,10 @@ function checkLoaded(){
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
         loaded = 0;
+        if(userProfile == null){
+            alert("Attendez qu'un administrateur vous assigne un profil pour accéder à l'application");
+            window.location.href = "/protected";
+        }
         sortPlannedDivesAsc();
         createCardsPlannedDive();
         setListeners();
@@ -1359,6 +1384,14 @@ function sortPlannedDivesAsc(){
     nextSort = "desc";
 }
 
+function updatePage(id, path){
+    //console.log(id, idPlannedDive, path, window.location.pathname)
+    if(path == window.location.pathname){
+        alert("Les informations ont été mises à jour par un autre utilisateur. La page va se recharger.");
+        window.location.reload();
+    }
+}
+
 // Exports
 export default {
     LoadAllPlannedDives,
@@ -1367,4 +1400,5 @@ export default {
     LoadAllDiveRegistrations,
     LoadIsAdmin,
     LoadUserProfile,
+    updatePage
 }

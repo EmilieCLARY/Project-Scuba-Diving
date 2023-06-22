@@ -454,9 +454,11 @@
   .div-top-dive-site {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding-top: 14vh;
+    padding-left: 32vw;
+    padding-right: 5vw;
   }
 
   #open-site-modal {
@@ -663,5 +665,6 @@
     border-radius: 1vh;
     border: 0.2vh solid var(--accent-color);
     font-size: 1rem;
+    padding-left: 0.5em;
   }
 }

@@ -121,7 +121,7 @@ function LoadAllDiveSites(tab){
         let tmp = new DiveSite(element.Id_Dive_Site,element.Site_Name, element.Gps_Latitude, element.Gps_Longitude, element.Track_Type, element.Track_Number, element.Track_Name, element.Zip_Code, element.City_Name, element.Country_Name, element.Additional_Address, element.Tel_Number, element.Information_URL, element.Image);
         tabDiveSites.push(tmp);
     });
-    console.log(tabDiveSites);
+    //console.log(tabDiveSites);
     create_elements(tabDiveSites);
     hoverlistener();
     setListeners();
@@ -134,7 +134,7 @@ function LoadAllPlannedDives(tab){
         let tmp = new PlannedDive(element.Id_Planned_Dive, element.Planned_Date, element.Planned_Time, element.Comments, element.Special_Needs, element.Status, element.Diver_Price, element.Instructor_Price, element.Dive_Site_Id_Dive_Site);
         tabPlannedDives.push(tmp);
     });
-    console.log(tabPlannedDives);
+    //console.log(tabPlannedDives);
     loaded++;
     checkLoaded();
 }
@@ -346,10 +346,12 @@ function setButtonValidateListener(){
         id++;
         if(modifyMode == false){
             SocketManager.addDiveSite(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
-            console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+            setTimeout(function(){SocketManager.updateInfosForAllUsers(0);}, 1000);
+            //console.log(id, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
         }
         else{
             SocketManager.modifyDiveSite(modifiedDiveSite, name, latitude, longitude, track_type, track_number, track_name, zip_code, city, coutntry, aditionnal_info, telephone, url, image);
+            setTimeout(function(){SocketManager.updateInfosForAllUsers(0);}, 1000);
         }
         
         // Clear all input
@@ -372,10 +374,10 @@ function setButtonValidateListener(){
             
         // Update the list
         if(modifyMode == false){
-            console.log("Adding divesite in database");
+            //console.log("Adding divesite in database");
         }
         else{
-            console.log("Modifying divesite " + modifiedDiveSite+ " in database");
+            //console.log("Modifying divesite " + modifiedDiveSite+ " in database");
             modifyMode = false;
             modifiedDiveSite = -1;
         }
@@ -408,7 +410,7 @@ function setListeners(){
             let btn_suppr = document.getElementById("btn_suppr" + tabDiveSites[i].get_id());
 
             btn_modif.addEventListener("click", function(){
-                console.log("Modification du site de plongée " + tabDiveSites[i].get_id());
+                //console.log("Modification du site de plongée " + tabDiveSites[i].get_id());
                 modifierDiveSite(tabDiveSites[i].get_id());
             });
 
@@ -428,11 +430,11 @@ function setListeners(){
                 else {    
                     let text = "Êtes-vous sûr de vouloir supprimer " + tabDiveSites[i].get_site_name() + " de la base de données ?\nCette action est irréversible !";
                     if(confirm(text) == true){
-                        console.log("Suppression du plongeur " + tabDiveSites[i].get_id());
+                        //console.log("Suppression du plongeur " + tabDiveSites[i].get_id());
                         supprimerDiveSite(tabDiveSites[i].get_id());
                     }
                     else{
-                        console.log("Suppression annulée");
+                        //console.log("Suppression annulée");
                     }
                 }
 
@@ -460,7 +462,7 @@ function hoverlistener() {
         }, false); 
         */
         town_hover[i].addEventListener("click", function( event ){
-            console.log(event);
+            //console.log(event);
             let yposition = event.srcElement.offsetTop-100;
             if (event.srcElement.localName == "i") {
                 yposition = event.srcElement.parentElement.offsetTop-100;
@@ -529,10 +531,11 @@ function modifierDiveSite(id){
 function supprimerDiveSite(id){
     SocketManager.deleteDiveSite(id);
     // Update de la page
-    console.log("Updating dive site in database");
+    //console.log("Updating dive site in database");
     document.getElementById("ring-loading").style.display = "block";
     document.body.style.cursor = "wait";        
     setTimeout(function() {
+        SocketManager.updateInfosForAllUsers(0);
         updateDiveSite();
         document.getElementById("ring-loading").style.display = "none";
         document.body.style.cursor = "default";
@@ -565,7 +568,7 @@ function createCalendar(id) {
         
         eventClick: function(event, element) {
             // Affichage détaillé de l'événement cliqué
-            console.log(event)
+            //console.log(event)
         },
 
         customButtons: {
@@ -608,7 +611,7 @@ function createCalendar(id) {
                         titre = "Prévue"
                         break;
                     default:
-                        console.log("Erreur de statut");
+                        //console.log("Erreur de statut");
                         statut_color = "blue";
                         titre = "Indisponible"
                         break;
@@ -668,9 +671,18 @@ function searchDiveSite(){
 
 }
 
+function updatePage(id, path){
+    //console.log(id, idPlannedDive, path, window.location.pathname)
+    if(path == window.location.pathname){
+        alert("Les informations ont été mises à jour par un autre utilisateur. La page va se recharger.");
+        window.location.reload();
+    }
+}
+
 // Exports
 export default {
     LoadAllDiveSites,
     LoadAllPlannedDives,
     LoadIsAdmin,
+    updatePage
 }

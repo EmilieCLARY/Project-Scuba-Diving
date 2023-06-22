@@ -56,6 +56,10 @@ function setIsAdminForDiveId(id){
     socket.emit('setIsAdminForDiveId', id);
 }
 
+function updateInfosForAllUsers(id){
+    socket.emit('actualizeBDD', id , window.location.pathname);
+}
+
 // SOCKET ON
 
 socket.on('receiveAllPlannedDives', (tabPlannedDives) => {
@@ -88,6 +92,11 @@ socket.on('receiveUserProfile', (tabUserProfile) => {
     PlannedDive.LoadUserProfile(tabUserProfile);
 });
 
+socket.on('updatePage', (id, currentPage) => {
+    console.log("updatePage");
+    PlannedDive.updatePage(id, currentPage);
+});
+
 // EXPORT
 export default {
     getAllPlannedDives,
@@ -103,4 +112,5 @@ export default {
     setPlannedDive,
     deletePlannedDive,
     setIsAdminForDiveId,
+    updateInfosForAllUsers
 }

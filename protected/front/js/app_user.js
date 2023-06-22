@@ -62,7 +62,7 @@ function LoadAllAppUsers(tab){
         let tmp = new AppUser(element.Id_Application_User, element.Lastname, element.Firstname, element.Id_Diver, element.isAdmin);
         tabAppUsers.push(tmp);
     });
-    console.log(tabAppUsers);
+    //console.log(tabAppUsers);
     createAppUserTable(tabAppUsers);
     setListeners();
 }
@@ -72,7 +72,7 @@ function LoadAllDivers(tab){
         let tmp = new Diver(element.Id_Diver,element.Lastname,element.Firstname,element.Diver_Qualifications,element.Instructor_Qualification,element.Nox_Level,element.Additional_Qualifications,element.License_Number,element.License_Expiration_Date,element.Medical_Certificate_Expiration_Date,element.Birthdate);
         tabDivers.push(tmp);
     });
-    console.log(tabDivers);
+    //console.log(tabDivers);
 }
 
 /********************************************************************/
@@ -83,7 +83,7 @@ function setListeners(){
     for(let i = 0; i < tabAppUsers.length; i++){
         let btn = document.getElementById("btn_modif" + tabAppUsers[i].get_id());
         btn.addEventListener("click", function(){
-            console.log("Modification de l'utilisateur " + tabAppUsers[i].get_id());
+            //console.log("Modification de l'utilisateur " + tabAppUsers[i].get_id());
             modifierAppUser(tabAppUsers[i].get_id());
         });
     }
@@ -97,7 +97,7 @@ function setButtonValidateListener(){
 
         // Send to server
         // Check if Id_Diver exist
-        console.log(Id_Diver);
+        //console.log(Id_Diver);
         if(tabDivers.find(element => element.get_id() == Id_Diver) == undefined){
             alert("Le plongeur avec cet ID n'existe pas");
             return;
@@ -114,6 +114,7 @@ function setButtonValidateListener(){
         document.getElementById("ring-loading").style.display = "block";
         document.body.style.cursor = "wait";        
         setTimeout(function() {
+            SocketManager.updateInfosForAllUsers(0);
             updateAppUser();
             document.getElementById("ring-loading").style.display = "none";
             document.body.style.cursor = "default";
@@ -130,7 +131,7 @@ setButtonValidateListener();
 function createAppUserTable(tabAppUsers){
     let table = document.getElementById("liste_user");
     table.innerHTML = "";
-    console.log(tabAppUsers);
+    //console.log(tabAppUsers);
 
     let tableau = document.createElement("table");
     tableau.classList.add("blueTable");
@@ -143,7 +144,7 @@ function createAppUserTable(tabAppUsers){
     tr.classList.add("tr");
 
     let th1 = document.createElement("th");
-    th1.innerHTML = "Id Application User";
+    th1.innerHTML = "Id Utilisateur";
     tr.appendChild(th1);
 
     let th2 = document.createElement("th");
@@ -155,7 +156,7 @@ function createAppUserTable(tabAppUsers){
     tr.appendChild(th3);
 
     let th4 = document.createElement("th");
-    th4.innerHTML = "Id Diver";
+    th4.innerHTML = "Id Plongeur";
     tr.appendChild(th4);
 
     let th5 = document.createElement("th");
@@ -262,8 +263,17 @@ function getUserById(id){
     return null;
 }
 
+function updatePage(id, path){
+    //console.log(id, idPlannedDive, path, window.location.pathname)
+    if(path == window.location.pathname){
+        alert("Les informations ont été mises à jour par un autre utilisateur. La page va se recharger.");
+        window.location.reload();
+    }
+}
+
 // Exports
 export default {
     LoadAllAppUsers,
     LoadAllDivers,
+    updatePage
 }
